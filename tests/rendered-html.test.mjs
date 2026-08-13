@@ -74,7 +74,8 @@ test("keeps motion, responsiveness, and reduced-motion support intentional", asy
   assert.match(scene, /hero-video__media/);
   assert.match(scene, /hero__video-type/);
   assert.match(scene, /brand-interlude/);
-  assert.match(scene, /brand-interlude__wordmark", \{ scale: 16/);
+  assert.match(scene, /brand-interlude__wordmark", \{ scale: 11/);
+  assert.match(scene, /brand-interlude__wordmark-type/);
   assert.match(scene, /narrative-portal/);
   assert.match(scene, /narrative-owl/);
   assert.doesNotMatch(scene, /className="axis"|className="horizon"/);
@@ -87,6 +88,7 @@ test("keeps motion, responsiveness, and reduced-motion support intentional", asy
   assert.match(css, /\.hero-video/);
   assert.match(css, /\.owl-mark/);
   assert.match(css, /\.brand-interlude/);
-  assert.match(css, /\.narrative-services__list[\s\S]*display: block/);
+  assert.match(css, /\.narrative-services__list[\s\S]*grid-template-columns: repeat\(2,minmax\(0,1fr\)\)/);
+  assert.match(css, /\.plane--floor \{ border: 0 !important; \}/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton|drizzle/);
 });

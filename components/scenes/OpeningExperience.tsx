@@ -251,6 +251,7 @@ export function OpeningExperience() {
         gsap.set(".brand-interlude", { opacity: 0, scale: 0.96 });
         gsap.set(".brand-interlude__owl", { rotate: -18, scale: 0.82 });
         gsap.set(".brand-interlude__wordmark", { scale: 0.94 });
+        gsap.set(".brand-interlude__wordmark-type", { opacity: 0 });
         gsap.set(".brand-interlude__blackout", { opacity: 0 });
         gsap.set(".hero__video-type", { opacity: 0 });
         gsap.set(".narrative-panel", { opacity: 0 });
@@ -329,8 +330,10 @@ export function OpeningExperience() {
           .to(".brand-interlude", { opacity: 1, scale: 1, duration: 0.26, ease: "power2.out" }, 2.64)
           .to(".brand-interlude__owl", { rotate: 0, scale: 1, duration: 0.34, ease: "power3.out" }, 2.64)
           .to(".brand-interlude__owl, .brand-interlude__rule", { opacity: 0, scale: 0.92, duration: 0.2, ease: "power2.in" }, 2.92)
-          .to(".brand-interlude__wordmark", { scale: 16, duration: 0.58, ease: "power3.in" }, 2.9)
-          .to(".brand-interlude__blackout", { opacity: 1, duration: 0.18, ease: "power2.in" }, 3.28);
+          .to(".brand-interlude__wordmark-art", { opacity: 0, duration: 0.1 }, 2.86)
+          .to(".brand-interlude__wordmark-type", { opacity: 1, duration: 0.1 }, 2.86)
+          .to(".brand-interlude__wordmark", { scale: 11, duration: 0.46, ease: "power3.in" }, 2.92)
+          .to(".brand-interlude__blackout", { opacity: 1, duration: 0.06, ease: "power2.in" }, 3.32);
 
         gsap.timeline({
             defaults: { ease: "none", force3D: true },
@@ -344,11 +347,11 @@ export function OpeningExperience() {
               fastScrollEnd: false,
             },
           })
-          .to(".narrative-portal", { opacity: 0, scale: 1.08, duration: 0.24, ease: "power2.inOut" }, 0)
-          .to(".narrative-about", { opacity: 1, duration: 0.18 }, 0.12)
-          .to(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 0, duration: 0.34, stagger: 0.08 }, 0.16)
-          .to(".narrative-about .narrative-copy p", { opacity: 1, yPercent: 0, duration: 0.28, stagger: 0.1 }, 0.39)
-          .to(".narrative-signoff", { opacity: 1, yPercent: 0, duration: 0.2 }, 0.66)
+          .to(".narrative-portal", { opacity: 0, scale: 1.03, duration: 0.06, ease: "power2.out" }, 0)
+          .to(".narrative-about", { opacity: 1, duration: 0.1 }, 0)
+          .to(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 0, duration: 0.28, stagger: 0.06 }, 0.02)
+          .to(".narrative-about .narrative-copy p", { opacity: 1, yPercent: 0, duration: 0.28, stagger: 0.1 }, 0.3)
+          .to(".narrative-signoff", { opacity: 1, yPercent: 0, duration: 0.2 }, 0.58)
           .to(".narrative-about", { opacity: 1, duration: 0.18 }, 0.8)
           .to(".narrative-about", { opacity: 0, yPercent: -8, scale: 0.985, duration: 0.26 }, 0.98)
           .to(".narrative-services", { opacity: 1, duration: 0.18 }, 1.16)
@@ -455,8 +458,11 @@ export function OpeningExperience() {
             <span className="brand-interlude__rule" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="brand-interlude__owl" src="/assets/brand/socialhaus-owl.png" alt="" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="brand-interlude__wordmark" src="/assets/brand/socialhaus-wordmark.png" alt="" />
+            <div className="brand-interlude__wordmark">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="brand-interlude__wordmark-art" src="/assets/brand/socialhaus-wordmark.png" alt="" />
+              <span className="brand-interlude__wordmark-type">SOCIALHAUS</span>
+            </div>
             <span className="brand-interlude__rule" />
             <div className="brand-interlude__blackout" />
           </div>
