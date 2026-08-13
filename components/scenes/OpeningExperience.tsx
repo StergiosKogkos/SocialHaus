@@ -30,6 +30,8 @@ function VideoWordmark() {
     const context = canvas.getContext("2d");
     if (!context) return;
 
+    void video.play().catch(() => undefined);
+
     let animationFrame = 0;
     const drawLetteredText = (text: string, x: number, baseline: number, letterSpacing: number) => {
       let cursor = x;
@@ -272,10 +274,10 @@ export function OpeningExperience() {
               fastScrollEnd: false,
             },
           })
-          .to(".hero-video__media", { scale: 1.07, duration: 0.28 }, 0.02)
-          .to(".hero-video", { opacity: 0, duration: 0.24, ease: "power2.inOut" }, 0.04)
-          .to(".hero__video-type", { opacity: 1, duration: 0.12, ease: "power2.out" }, 0.06)
-          .to(".hero__brand", { color: "rgba(255,255,255,0)", textShadow: "none", duration: 0.12 }, 0.06)
+          .to(".hero-video__media", { scale: 1.07, duration: 0.3 }, 0.02)
+          .to(".hero__video-type", { opacity: 1, duration: 0.14, ease: "power2.out" }, 0.025)
+          .to(".hero__brand", { color: "rgba(255,255,255,0)", textShadow: "none", duration: 0.14 }, 0.04)
+          .to(".hero-video", { opacity: 0, duration: 0.28, ease: "power2.inOut" }, 0.08)
           .to(".hero__brand", { scale: 1.08, duration: 0.13 }, 0.04)
           .fromTo(
             ".scene-entrance .location",
@@ -302,7 +304,7 @@ export function OpeningExperience() {
             0.34,
           )
           .to(".hero__brand", { scale: 5.8, opacity: 0, duration: 0.16 }, 0.51)
-          .to(".hero__video-type", { opacity: 0, duration: 0.17, ease: "power2.in" }, 0.45)
+          .to(".hero__video-type", { opacity: 0, duration: 0.14, ease: "power2.in" }, 0.55)
           .to(".entrance-statement", { opacity: 1, yPercent: 0, scale: 1, duration: 0.15 }, 0.56)
           .to(".entrance-statement", { opacity: 1, duration: 0.12 }, 0.71)
           .to(".entrance-statement", { opacity: 0, yPercent: -8, scale: 1.035, duration: 0.12 }, 0.83)

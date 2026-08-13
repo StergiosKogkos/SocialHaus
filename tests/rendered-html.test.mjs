@@ -72,6 +72,8 @@ test("keeps motion, responsiveness, and reduced-motion support intentional", asy
   assert.match(scene, /narrative-blackout/);
   assert.match(scene, /hero-video__media/);
   assert.match(scene, /hero__video-type/);
+  assert.match(scene, /hero__video-type", \{ opacity: 1, duration: 0\.14/);
+  assert.match(scene, /hero__video-type", \{ opacity: 0, duration: 0\.14[\s\S]*\}, 0\.55\)/);
   assert.match(scene, /brand-interlude/);
   assert.match(scene, /brand-interlude__wordmark-far", \{ scale: 4/);
   assert.match(scene, /brand-interlude__wordmark-near", \{ scale: 1\.04/);
