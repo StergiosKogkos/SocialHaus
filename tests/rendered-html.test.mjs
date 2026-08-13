@@ -26,6 +26,7 @@ test("server-renders the SocialHaus narrative journey", async () => {
   assert.match(html, /We don&#x27;t create content\./);
   assert.match(html, /We create/);
   assert.match(html, /Presence\./);
+  assert.doesNotMatch(html, /presence-particle/);
   assert.match(html, /One studio\. Three distinct worlds\./);
   assert.match(html, /Selected collaborations/);
   assert.match(html, /Your brand/);

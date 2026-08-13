@@ -904,8 +904,6 @@ body.is-loading { overflow: hidden; }
 .statement-image img { filter: saturate(.62) sepia(.1) contrast(1.12) brightness(.65); }
 .entrance-statement p { position: relative; z-index: 3; color: #f5f1e8; text-shadow: 0 1rem 3rem rgba(0,0,0,.7); }
 
-.presence-particles { position: absolute; z-index: 4; grid-column: 2; grid-row: 3; inset: 0; overflow: visible; pointer-events: none; }
-.presence-particle { position: absolute; top: 50%; left: 50%; width: clamp(2px,.32vw,5px); aspect-ratio: 1; border-radius: 50%; background: #fff6da; box-shadow: 0 0 7px #fff, 0 0 18px rgba(207,169,108,.95); will-change: transform, opacity; }
 .presence-word { position: relative; z-index: 5; text-shadow: 0 0 26px rgba(255,246,218,.12); }
 .presence-letter::after { display: none; }
 
@@ -1027,10 +1025,6 @@ body.is-loading { overflow: hidden; }
 .presence-cinema-frame i:nth-child(1) { top: 0; }
 .presence-cinema-frame i:nth-child(2) { top: 50%; opacity: .35; }
 .presence-cinema-frame i:nth-child(3) { bottom: 0; }
-.presence-particle {
-  background: #8e7759;
-  box-shadow: 0 0 7px rgba(181,154,114,.8), 0 0 18px rgba(181,154,114,.46);
-}
 .presence-word { text-shadow: 0 1.4rem 3rem rgba(100,82,58,.16); }
 
 .brand-carousel {

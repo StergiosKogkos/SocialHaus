@@ -168,7 +168,6 @@ export function OpeningExperience() {
         gsap.set(".entrance-statement", { opacity: 0, yPercent: 12, scale: 0.97 });
         gsap.set(".presence-kicker, .presence-word, .presence-meta, .presence-subline, .presence-rule", { opacity: 0 });
         gsap.set(".presence-word", { clipPath: "inset(0 100% 0 0)", filter: "blur(10px)", letterSpacing: "0.04em" });
-        gsap.set(".presence-particle", { opacity: 0, scale: 0 });
         gsap.set(".presence-beam", { opacity: 0, scaleX: 0.12, rotate: -14 });
         gsap.set(".presence-cinema-frame i", { scaleX: 0 });
         gsap.set(".brand-carousel", { opacity: 0, yPercent: 8 });
@@ -225,10 +224,7 @@ export function OpeningExperience() {
           .to(".entrance-threshold", { opacity: 0, duration: 0.08 }, 0.96)
           .to(".scene-entrance .architecture", { opacity: 0.06, duration: 0.15 }, 0.96)
           .fromTo(".presence-kicker", { yPercent: 45 }, { opacity: 1, yPercent: 0, duration: 0.13 }, 1.1)
-          .to(".presence-particle", { opacity: 1, scale: 1, duration: 0.08, stagger: 0.006 }, 1.14)
-          .to(".presence-particle", { x: 0, y: 0, duration: 0.28, stagger: 0.004, ease: "power2.inOut" }, 1.16)
           .to(".presence-word", { opacity: 1, clipPath: "inset(0 0% 0 0)", filter: "blur(0px)", letterSpacing: "-0.095em", duration: 0.34, ease: "power2.inOut" }, 1.19)
-          .to(".presence-particle", { opacity: 0, scale: 0.2, duration: 0.16, stagger: 0.002 }, 1.43)
           .to(".presence-word", { scale: 1.08, duration: 0.2 }, 1.43)
           .to(".presence-rule", { opacity: 1, scaleX: 1, duration: 0.14 }, 1.48)
           .fromTo(".presence-meta", { yPercent: 38 }, { opacity: 1, yPercent: 0, duration: 0.16 }, 1.58)
@@ -349,7 +345,6 @@ export function OpeningExperience() {
             <div className="presence-beam" aria-hidden="true" />
             <div className="presence-cinema-frame" aria-hidden="true"><i /><i /><i /></div>
             <p className="presence-kicker">We create</p>
-            <div className="presence-particles" aria-hidden="true">{Array.from({ length: 64 }, (_, index) => <i className="presence-particle" key={index} style={{ transform: `translate(${((index * 47) % 620) - 310}px, ${((index * 83) % 360) - 180}px)` }} />)}</div>
             <h2 className="presence-word">Presence.</h2>
             <div className="presence-rule" aria-hidden="true" />
             <p className="presence-meta">Athens — Mykonos — Northern Greece</p>
