@@ -1,10 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #050505;
-  --bone: #e7e2d7;
-  --bone-muted: rgba(231, 226, 215, 0.55);
-  --hairline: rgba(231, 226, 215, 0.18);
+  --ink: #f3f1ec;
+  --bone: #191918;
+  --bone-muted: rgba(25, 25, 24, 0.56);
+  --hairline: rgba(25, 25, 24, 0.17);
+  --paper-deep: #e8e3da;
+  --paper-soft: #f8f6f1;
+  --champagne: #b59a72;
+  --taupe: #a89d8e;
   --display: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
   --editorial: Iowan Old Style, Baskerville, "Times New Roman", serif;
   --mono: "Courier New", monospace;
@@ -16,7 +20,7 @@ html {
   background: var(--ink);
   color: var(--bone);
   scrollbar-width: thin;
-  scrollbar-color: rgba(231, 226, 215, 0.32) transparent;
+  scrollbar-color: rgba(25, 25, 24, 0.28) transparent;
 }
 
 body {
@@ -35,7 +39,7 @@ body.is-loading { overflow: hidden; }
 .experience {
   position: relative;
   overflow: visible;
-  background: radial-gradient(circle at 50% 18%, rgba(255, 250, 235, 0.045), transparent 30%), var(--ink);
+  background: radial-gradient(circle at 50% 18%, rgba(181, 154, 114, 0.14), transparent 32%), var(--ink);
 }
 
 .noise {
@@ -43,11 +47,11 @@ body.is-loading { overflow: hidden; }
   inset: 0;
   z-index: 50;
   pointer-events: none;
-  opacity: 0.075;
-  mix-blend-mode: soft-light;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
   background-image:
-    repeating-radial-gradient(circle at 17% 31%, transparent 0, rgba(255,255,255,.18) 1px, transparent 2px, transparent 5px),
-    repeating-radial-gradient(circle at 73% 67%, transparent 0, rgba(255,255,255,.12) 1px, transparent 2px, transparent 7px);
+    repeating-radial-gradient(circle at 17% 31%, transparent 0, rgba(25,25,24,.16) 1px, transparent 2px, transparent 5px),
+    repeating-radial-gradient(circle at 73% 67%, transparent 0, rgba(25,25,24,.1) 1px, transparent 2px, transparent 7px);
   background-size: 9px 11px, 13px 15px;
 }
 
@@ -57,7 +61,7 @@ body.is-loading { overflow: hidden; }
   z-index: 100;
   display: grid;
   place-items: center;
-  background: #020202;
+  background: #e9e4da;
   transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1), visibility 1s;
   clip-path: inset(0 0 0 0);
 }
@@ -821,6 +825,104 @@ body.is-loading { overflow: hidden; }
   background: var(--hairline);
 }
 
+/* Warm architectural light palette */
+.loader__line { background: rgba(25, 25, 24, 0.11); }
+
+.cinematic-scene,
+.scene-viewport { background: var(--ink); }
+
+.scene-presence,
+.scene-viewport--presence { background: var(--paper-deep); }
+
+.architecture {
+  background:
+    radial-gradient(ellipse at center, rgba(181, 154, 114, 0.2), transparent 22%),
+    #eeeae2;
+}
+
+.plane {
+  background: linear-gradient(90deg, rgba(25, 25, 24, 0.07), rgba(181, 154, 114, 0.035));
+}
+
+.plane--left { border-right-color: rgba(25, 25, 24, 0.14); }
+.plane--right { border-left-color: rgba(25, 25, 24, 0.14); }
+
+.plane--ceiling {
+  background: linear-gradient(180deg, rgba(181, 154, 114, 0.12), transparent);
+  border-bottom-color: rgba(25, 25, 24, 0.08);
+}
+
+.plane--floor {
+  background: linear-gradient(0deg, rgba(168, 157, 142, 0.16), transparent);
+  border-top-color: rgba(25, 25, 24, 0.08);
+}
+
+.portal {
+  background: #ddd6ca;
+  border-color: rgba(25, 25, 24, 0.22);
+  box-shadow: 0 0 9rem rgba(181, 154, 114, 0.18);
+}
+
+.portal__ring { border-color: rgba(25, 25, 24, 0.1); }
+.axis { background: linear-gradient(transparent, rgba(25, 25, 24, 0.14), transparent); }
+.horizon { background: linear-gradient(90deg, transparent, rgba(25, 25, 24, 0.14), transparent); }
+
+.architecture--presence {
+  background:
+    radial-gradient(ellipse at 50% 48%, rgba(181, 154, 114, 0.13), transparent 24%),
+    #ece8e0;
+}
+
+.architecture--presence .portal { border-color: rgba(25, 25, 24, 0.12); }
+
+.presence-rule {
+  background: linear-gradient(90deg, rgba(25, 25, 24, 0.42), rgba(181, 154, 114, 0.12));
+}
+
+.descent-gate {
+  background: radial-gradient(ellipse at 50% 68%, rgba(181, 154, 114, 0.2), transparent 35%);
+}
+
+.descent-aperture__frame { border-color: rgba(25, 25, 24, 0.18); }
+
+.descent-aperture__void {
+  background: #d4ccbf;
+  border-color: rgba(25, 25, 24, 0.3);
+  box-shadow:
+    inset 0 0 7rem rgba(96, 84, 67, 0.18),
+    0 0 7rem rgba(181, 154, 114, 0.17);
+}
+
+.descent-rail {
+  background: linear-gradient(transparent, rgba(25, 25, 24, 0.24) 45%, rgba(181, 154, 114, 0.08));
+}
+
+.continuation-space { background: linear-gradient(#e8e3da, var(--ink)); }
+
+.showreel-intro__label,
+.chapter-outro__index { color: rgba(25, 25, 24, 0.68); }
+
+.work-media__surface {
+  background: #ddd7cd;
+  border-color: rgba(25, 25, 24, 0.16);
+}
+
+.work-media__surface::before { border-color: rgba(25, 25, 24, 0.11); }
+.work-media__surface::after { background: rgba(25, 25, 24, 0.09); }
+.work-media__placeholder { color: rgba(25, 25, 24, 0.7); }
+.work-media__caption { color: rgba(25, 25, 24, 0.56); }
+
+.work-media--charcoal .work-media__surface { background: #d6d0c6; color: #191918; }
+.work-media--stone .work-media__surface { background: #cdbfae; color: #191918; }
+.work-media--silver .work-media__surface { background: #ebe7df; color: #191918; }
+.work-media--ink .work-media__surface { background: #b9ad9e; color: #191918; }
+.work-media--bone .work-media__surface { background: #faf8f3; color: #191918; }
+.work-media--graphite .work-media__surface { background: #d4c9ba; color: #191918; }
+
+.chapter-outro { background: var(--paper-soft); }
+.chapter-outro__rule { background: rgba(25, 25, 24, 0.26); }
+.chapter-outro > p:last-child { color: rgba(25, 25, 24, 0.68); }
+
 @media (max-width: 720px) {
   .scene-entrance { height: 610vh; }
   .scene-presence { height: 1120vh; }
@@ -923,7 +1025,7 @@ body.is-loading { overflow: hidden; }
   .presence-kicker, .presence-word, .presence-meta, .presence-subline, .presence-rule { opacity: 1; transform: none; }
   .descent-gate, .descent-copy { display: none; }
 
-  .scene-presence { min-height: auto; background: #0a0a09; }
+  .scene-presence { min-height: auto; background: var(--paper-deep); }
   .scene-viewport--presence {
     display: block;
     min-height: auto;

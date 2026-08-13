@@ -245,7 +245,7 @@ export function OpeningExperience() {
           .to(".descent-copy", { opacity: 0, yPercent: -20, duration: 0.12 }, 2.26)
           .to(".descent-aperture", { scale: 4.2, yPercent: -4, duration: 0.3 }, 2.22)
           .to(".descent-rail", { opacity: 0, duration: 0.14 }, 2.34)
-          .to(".descent-gate", { backgroundColor: "#0a0a09", duration: 0.18 }, 2.38);
+          .to(".descent-gate", { backgroundColor: "#e8e3da", duration: 0.18 }, 2.38);
 
         const isMobile = window.matchMedia("(max-width: 720px)").matches;
 
