@@ -2126,27 +2126,47 @@ body.is-loading { overflow: hidden; }
   width: clamp(14rem,32vw,34rem);
   place-items: center;
   transform-origin: 50% 50%;
+  backface-visibility: hidden;
   will-change: transform;
 }
-.brand-interlude__wordmark-art,
-.brand-interlude__wordmark-type { grid-area: 1 / 1; }
-.brand-interlude__wordmark-art {
+.brand-interlude__wordmark span {
   display: block;
-  width: 100%;
-  opacity: 1;
-  will-change: opacity;
-}
-.brand-interlude__wordmark-type {
-  font-family: "Arial Black", var(--display);
-  font-size: clamp(1.75rem,3.2vw,3.5rem);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: .035em;
+  font-family: var(--display);
+  font-size: clamp(2.3rem,4.4vw,5rem);
+  font-weight: 700;
+  line-height: .72;
+  letter-spacing: -.09em;
   color: #111;
-  opacity: 0;
   white-space: nowrap;
-  transform: scaleX(1.08);
-  will-change: opacity;
+  text-rendering: geometricPrecision;
+}
+.brand-interlude__about-tease {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(5.5rem,9vh,8rem) clamp(1.2rem,5vw,6rem);
+  color: #fff;
+  font-size: clamp(4rem,9.5vw,10rem);
+  line-height: .76;
+  letter-spacing: -.085em;
+  text-transform: uppercase;
+  mix-blend-mode: difference;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: center;
+  will-change: transform,opacity;
+}
+.brand-interlude__about-tease span,
+.brand-interlude__about-tease em { display: block; width: fit-content; }
+.brand-interlude__about-tease em {
+  margin-left: clamp(2rem,14vw,14rem);
+  font-family: var(--editorial);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
 }
 .brand-interlude__blackout {
   position: absolute;
@@ -2160,7 +2180,7 @@ body.is-loading { overflow: hidden; }
 .narrative-portal {
   position: absolute;
   inset: -4%;
-  z-index: 20;
+  z-index: 9;
   background: #050505;
   pointer-events: none;
   transform-origin: center;
@@ -2235,7 +2255,9 @@ body.is-loading { overflow: hidden; }
   .brand-carousel__heading { align-items: flex-start; gap: .55rem; }
   .brand-carousel__heading span { max-width: 10ch; font-size: clamp(1.9rem,10vw,3.3rem); }
   .brand-carousel__heading strong { font-size: 1.45rem; }
-  .brand-interlude__wordmark-type { font-size: clamp(1.55rem,7.2vw,2.5rem); }
+  .brand-interlude__wordmark span { font-size: clamp(2rem,10vw,3.5rem); }
+  .brand-interlude__about-tease { padding: 5.7rem 1.1rem 2rem; font-size: clamp(3.3rem,16vw,5.8rem); }
+  .brand-interlude__about-tease em { margin-left: 0; }
   .narrative-services { display: block; }
   .narrative-services__list { display: block; margin-top: 4vh; }
   .narrative-service,

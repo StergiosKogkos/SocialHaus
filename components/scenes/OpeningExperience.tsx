@@ -251,14 +251,15 @@ export function OpeningExperience() {
         gsap.set(".brand-interlude", { opacity: 0, scale: 0.96 });
         gsap.set(".brand-interlude__owl", { rotate: -18, scale: 0.82 });
         gsap.set(".brand-interlude__wordmark", { scale: 0.94 });
-        gsap.set(".brand-interlude__wordmark-type", { opacity: 0 });
+        gsap.set(".brand-interlude__about-tease", { opacity: 0, scale: 0.94 });
         gsap.set(".brand-interlude__blackout", { opacity: 0 });
         gsap.set(".hero__video-type", { opacity: 0 });
         gsap.set(".narrative-panel", { opacity: 0 });
         gsap.set(".narrative-portal", { opacity: 1, scale: 1 });
         gsap.set(".narrative-owl", { opacity: 0, scale: 0.78, rotate: -12 });
         gsap.set(".narrative-blackout", { opacity: 0, scale: 1.08 });
-        gsap.set(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 120 });
+        gsap.set(".narrative-about h2", { color: "#f2f2ef" });
+        gsap.set(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 0 });
         gsap.set(".narrative-about .narrative-copy p, .narrative-signoff", { opacity: 0, yPercent: 24 });
         gsap.set(".narrative-services header, .narrative-service", { opacity: 0, yPercent: 16 });
 
@@ -330,10 +331,10 @@ export function OpeningExperience() {
           .to(".brand-interlude", { opacity: 1, scale: 1, duration: 0.26, ease: "power2.out" }, 2.64)
           .to(".brand-interlude__owl", { rotate: 0, scale: 1, duration: 0.34, ease: "power3.out" }, 2.64)
           .to(".brand-interlude__owl, .brand-interlude__rule", { opacity: 0, scale: 0.92, duration: 0.2, ease: "power2.in" }, 2.92)
-          .to(".brand-interlude__wordmark-art", { opacity: 0, duration: 0.1 }, 2.86)
-          .to(".brand-interlude__wordmark-type", { opacity: 1, duration: 0.1 }, 2.86)
-          .to(".brand-interlude__wordmark", { scale: 11, duration: 0.46, ease: "power3.in" }, 2.92)
-          .to(".brand-interlude__blackout", { opacity: 1, duration: 0.06, ease: "power2.in" }, 3.32);
+          .to(".brand-interlude__wordmark", { scale: 10, duration: 0.56, ease: "sine.inOut" }, 2.92)
+          .to(".brand-interlude__about-tease", { opacity: 0.18, scale: 0.98, duration: 0.2, ease: "power2.out" }, 3.02)
+          .to(".brand-interlude__about-tease", { opacity: 1, scale: 1, duration: 0.24, ease: "power2.out" }, 3.2)
+          .to(".brand-interlude__blackout", { opacity: 1, duration: 0.08, ease: "power2.inOut" }, 3.4);
 
         gsap.timeline({
             defaults: { ease: "none", force3D: true },
@@ -349,7 +350,7 @@ export function OpeningExperience() {
           })
           .to(".narrative-portal", { opacity: 0, scale: 1.03, duration: 0.06, ease: "power2.out" }, 0)
           .to(".narrative-about", { opacity: 1, duration: 0.1 }, 0)
-          .to(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 0, duration: 0.28, stagger: 0.06 }, 0.02)
+          .to(".narrative-about h2", { color: "#171715", duration: 0.08, ease: "power1.out" }, 0)
           .to(".narrative-about .narrative-copy p", { opacity: 1, yPercent: 0, duration: 0.28, stagger: 0.1 }, 0.3)
           .to(".narrative-signoff", { opacity: 1, yPercent: 0, duration: 0.2 }, 0.58)
           .to(".narrative-about", { opacity: 1, duration: 0.18 }, 0.8)
@@ -366,15 +367,9 @@ export function OpeningExperience() {
         if (window.matchMedia("(pointer: fine)").matches) {
           const cursorDotX = gsap.quickTo(".haus-cursor__dot", "x", { duration: .18, ease: "power3.out" });
           const cursorDotY = gsap.quickTo(".haus-cursor__dot", "y", { duration: .18, ease: "power3.out" });
-          const cursorRingX = gsap.quickTo(".haus-cursor__ring", "x", { duration: .55, ease: "power3.out" });
-          const cursorRingY = gsap.quickTo(".haus-cursor__ring", "y", { duration: .55, ease: "power3.out" });
-          const cursorMove = (event: PointerEvent) => { cursorDotX(event.clientX); cursorDotY(event.clientY); cursorRingX(event.clientX); cursorRingY(event.clientY); };
-          const cursorEnter = () => root.current?.classList.add("cursor-is-active");
-          const cursorLeave = () => root.current?.classList.remove("cursor-is-active");
-          const cursorTargets = root.current?.querySelectorAll("a, .brand-slide, .narrative-service") ?? [];
-          cursorTargets.forEach((target) => { target.addEventListener("pointerenter", cursorEnter); target.addEventListener("pointerleave", cursorLeave); });
+          const cursorMove = (event: PointerEvent) => { cursorDotX(event.clientX); cursorDotY(event.clientY); };
           window.addEventListener("pointermove", cursorMove, { passive: true });
-          cleanups.push(() => { window.removeEventListener("pointermove", cursorMove); cursorTargets.forEach((target) => { target.removeEventListener("pointerenter", cursorEnter); target.removeEventListener("pointerleave", cursorLeave); }); });
+          cleanups.push(() => window.removeEventListener("pointermove", cursorMove));
         }
 
       }, root);
@@ -399,7 +394,7 @@ export function OpeningExperience() {
   return (
     <main ref={root} className="experience">
       <div className="noise" aria-hidden="true" />
-      <div className="haus-cursor" aria-hidden="true"><i className="haus-cursor__ring" /><i className="haus-cursor__dot" /></div>
+      <div className="haus-cursor" aria-hidden="true"><i className="haus-cursor__dot" /></div>
       <header className="site-nav">
         <nav aria-label="Primary navigation">
           <a className="instagram-link" href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">
@@ -458,12 +453,11 @@ export function OpeningExperience() {
             <span className="brand-interlude__rule" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="brand-interlude__owl" src="/assets/brand/socialhaus-owl.png" alt="" />
-            <div className="brand-interlude__wordmark">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="brand-interlude__wordmark-art" src="/assets/brand/socialhaus-wordmark.png" alt="" />
-              <span className="brand-interlude__wordmark-type">SOCIALHAUS</span>
-            </div>
+            <div className="brand-interlude__wordmark"><span>SOCIALHAUS</span></div>
             <span className="brand-interlude__rule" />
+            <div className="brand-interlude__about-tease">
+              <span>This is what</span><em>presence looks like.</em>
+            </div>
             <div className="brand-interlude__blackout" />
           </div>
 

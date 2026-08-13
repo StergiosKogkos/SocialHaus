@@ -47,7 +47,6 @@ test("server-renders the SocialHaus narrative journey", async () => {
   assert.match(html, /socialhaus-hero\.mp4/);
   assert.match(html, /socialhaus-hero-poster\.jpg/);
   assert.match(html, /socialhaus-owl\.png/);
-  assert.match(html, /socialhaus-wordmark\.png/);
   assert.match(html, /aposskamnos@gmail\.com/);
   assert.match(html, /\+30 698 018 3236/);
   assert.match(html, /Νήλεως 32/);
@@ -74,8 +73,10 @@ test("keeps motion, responsiveness, and reduced-motion support intentional", asy
   assert.match(scene, /hero-video__media/);
   assert.match(scene, /hero__video-type/);
   assert.match(scene, /brand-interlude/);
-  assert.match(scene, /brand-interlude__wordmark", \{ scale: 11/);
-  assert.match(scene, /brand-interlude__wordmark-type/);
+  assert.match(scene, /brand-interlude__wordmark", \{ scale: 10/);
+  assert.match(scene, /brand-interlude__about-tease/);
+  assert.doesNotMatch(scene, /brand-interlude__wordmark-art|brand-interlude__wordmark-type/);
+  assert.doesNotMatch(scene, /haus-cursor__ring/);
   assert.match(scene, /narrative-portal/);
   assert.match(scene, /narrative-owl/);
   assert.doesNotMatch(scene, /className="axis"|className="horizon"/);
