@@ -29,6 +29,7 @@ test("server-renders the SocialHaus narrative journey", async () => {
   assert.doesNotMatch(html, /presence-particle/);
   assert.match(html, /One studio\. Three distinct worlds\./);
   assert.match(html, /Selected collaborations/);
+  assert.doesNotMatch(html, /Selected collaborations \/ 01—14/);
   assert.match(html, /Who we work with\./);
   assert.match(html, /instagram\.com\/casadigiorgio\.mykonos/);
   assert.match(html, /instagram\.com\/promenademykonos/);
@@ -71,7 +72,12 @@ test("keeps motion, responsiveness, and reduced-motion support intentional", asy
   assert.doesNotMatch(scene, /narrative-services__list", \{ yPercent/);
   assert.match(scene, /narrative-blackout/);
   assert.match(scene, /hero-video__media/);
+  assert.match(scene, /hero__video-type/);
   assert.match(scene, /brand-interlude/);
+  assert.match(scene, /brand-interlude__wordmark", \{ scale: 16/);
+  assert.match(scene, /narrative-portal/);
+  assert.match(scene, /narrative-owl/);
+  assert.doesNotMatch(scene, /className="axis"|className="horizon"/);
   assert.doesNotMatch(scene, /ChapterChrome|entrance-threshold/);
   assert.doesNotMatch(scene, /campaignImage|premium-carousel|statement-image/);
   assert.match(scene, /gsap\.ticker\.add/);
@@ -81,5 +87,6 @@ test("keeps motion, responsiveness, and reduced-motion support intentional", asy
   assert.match(css, /\.hero-video/);
   assert.match(css, /\.owl-mark/);
   assert.match(css, /\.brand-interlude/);
+  assert.match(css, /\.narrative-services__list[\s\S]*display: block/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton|drizzle/);
 });

@@ -14,10 +14,78 @@ function ArchitecturalSpace({ className = "" }: { className?: string }) {
       <div className="plane plane--right" />
       <div className="plane plane--ceiling" />
       <div className="plane plane--floor" />
-      <div className="axis" />
-      <div className="horizon" />
     </div>
   );
+}
+
+function VideoWordmark() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const video = document.querySelector<HTMLVideoElement>(".hero-video__media");
+    const brand = document.querySelector<HTMLElement>(".hero__brand");
+    if (!canvas || !video || !brand || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const context = canvas.getContext("2d");
+    if (!context) return;
+
+    let animationFrame = 0;
+    const drawLetteredText = (text: string, x: number, baseline: number, letterSpacing: number) => {
+      let cursor = x;
+      for (const character of text) {
+        context.fillText(character, cursor, baseline);
+        cursor += context.measureText(character).width + letterSpacing;
+      }
+    };
+
+    const draw = () => {
+      const opacity = Number.parseFloat(canvas.style.opacity || "0");
+      if (opacity > 0.001 && video.readyState >= 2 && video.videoWidth > 0) {
+        const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const targetWidth = Math.round(width * pixelRatio);
+        const targetHeight = Math.round(height * pixelRatio);
+
+        if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
+          canvas.width = targetWidth;
+          canvas.height = targetHeight;
+        }
+
+        context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        context.clearRect(0, 0, width, height);
+
+        const coverScale = Math.max(width / video.videoWidth, height / video.videoHeight);
+        const videoWidth = video.videoWidth * coverScale;
+        const videoHeight = video.videoHeight * coverScale;
+        context.drawImage(video, (width - videoWidth) / 2, (height - videoHeight) / 2, videoWidth, videoHeight);
+
+        context.globalCompositeOperation = "destination-in";
+        context.fillStyle = "#fff";
+        context.textBaseline = "alphabetic";
+
+        const brandStyle = window.getComputedStyle(brand);
+        const transformScale = brand.offsetWidth > 0 ? brand.getBoundingClientRect().width / brand.offsetWidth : 1;
+        const fontSize = Number.parseFloat(brandStyle.fontSize) * transformScale;
+        const letterSpacing = Number.parseFloat(brandStyle.letterSpacing) * transformScale;
+        context.font = `${brandStyle.fontStyle} ${brandStyle.fontWeight} ${fontSize}px ${brandStyle.fontFamily}`;
+
+        brand.querySelectorAll<HTMLElement>("span").forEach((word) => {
+          const rect = word.getBoundingClientRect();
+          drawLetteredText(word.textContent ?? "", rect.left, rect.top + rect.height * 0.84, letterSpacing);
+        });
+        context.globalCompositeOperation = "source-over";
+      }
+
+      animationFrame = window.requestAnimationFrame(draw);
+    };
+
+    animationFrame = window.requestAnimationFrame(draw);
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, []);
+
+  return <canvas ref={canvasRef} className="hero__video-type" aria-hidden="true" />;
 }
 
 const services = [
@@ -57,7 +125,7 @@ function PartnerCarousel() {
   return (
     <div className="brand-carousel" aria-label="Selected collaborations">
       <div className="brand-carousel__heading">
-        <span>Selected collaborations / 01—14</span>
+        <span>Selected collaborations</span>
         <strong>Who we work with.</strong>
       </div>
       <div className="brand-carousel__track">
@@ -112,6 +180,11 @@ function NarrativeChapter() {
             ))}
           </div>
         </article>
+        <div className="narrative-portal" aria-hidden="true" />
+        <div className="narrative-owl" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/assets/brand/socialhaus-owl.png" alt="" />
+        </div>
         <div className="narrative-blackout" aria-hidden="true" />
       </div>
     </section>
@@ -177,7 +250,12 @@ export function OpeningExperience() {
         gsap.set(".brand-invitation span", { yPercent: 110 });
         gsap.set(".brand-interlude", { opacity: 0, scale: 0.96 });
         gsap.set(".brand-interlude__owl", { rotate: -18, scale: 0.82 });
+        gsap.set(".brand-interlude__wordmark", { scale: 0.94 });
+        gsap.set(".brand-interlude__blackout", { opacity: 0 });
+        gsap.set(".hero__video-type", { opacity: 0 });
         gsap.set(".narrative-panel", { opacity: 0 });
+        gsap.set(".narrative-portal", { opacity: 1, scale: 1 });
+        gsap.set(".narrative-owl", { opacity: 0, scale: 0.78, rotate: -12 });
         gsap.set(".narrative-blackout", { opacity: 0, scale: 1.08 });
         gsap.set(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 120 });
         gsap.set(".narrative-about .narrative-copy p, .narrative-signoff", { opacity: 0, yPercent: 24 });
@@ -196,7 +274,9 @@ export function OpeningExperience() {
             },
           })
           .to(".hero-video__media", { scale: 1.07, duration: 0.28 }, 0.02)
-          .to(".hero-video", { opacity: 0, duration: 0.26, ease: "power2.inOut" }, 0.04)
+          .to(".hero-video", { opacity: 0, duration: 0.24, ease: "power2.inOut" }, 0.04)
+          .to(".hero__video-type", { opacity: 1, duration: 0.12, ease: "power2.out" }, 0.06)
+          .to(".hero__brand", { color: "rgba(255,255,255,0)", textShadow: "none", duration: 0.12 }, 0.06)
           .to(".hero__brand", { scale: 1.08, duration: 0.13 }, 0.04)
           .fromTo(
             ".scene-entrance .location",
@@ -223,6 +303,7 @@ export function OpeningExperience() {
             0.34,
           )
           .to(".hero__brand", { scale: 5.8, opacity: 0, duration: 0.16 }, 0.51)
+          .to(".hero__video-type", { opacity: 0, duration: 0.17, ease: "power2.in" }, 0.45)
           .to(".entrance-statement", { opacity: 1, yPercent: 0, scale: 1, duration: 0.15 }, 0.56)
           .to(".entrance-statement", { opacity: 1, duration: 0.12 }, 0.71)
           .to(".entrance-statement", { opacity: 0, yPercent: -8, scale: 1.035, duration: 0.12 }, 0.83)
@@ -247,7 +328,9 @@ export function OpeningExperience() {
           .to(".scene-entrance .architecture", { opacity: 0, duration: 0.2 }, 2.56)
           .to(".brand-interlude", { opacity: 1, scale: 1, duration: 0.26, ease: "power2.out" }, 2.64)
           .to(".brand-interlude__owl", { rotate: 0, scale: 1, duration: 0.34, ease: "power3.out" }, 2.64)
-          .to(".brand-interlude", { opacity: 0, scale: 1.035, duration: 0.2, ease: "power2.inOut" }, 2.98);
+          .to(".brand-interlude__owl, .brand-interlude__rule", { opacity: 0, scale: 0.92, duration: 0.2, ease: "power2.in" }, 2.92)
+          .to(".brand-interlude__wordmark", { scale: 16, duration: 0.58, ease: "power3.in" }, 2.9)
+          .to(".brand-interlude__blackout", { opacity: 1, duration: 0.18, ease: "power2.in" }, 3.28);
 
         gsap.timeline({
             defaults: { ease: "none", force3D: true },
@@ -261,10 +344,11 @@ export function OpeningExperience() {
               fastScrollEnd: false,
             },
           })
-          .to(".narrative-about", { opacity: 1, duration: 0.18 }, 0.08)
-          .to(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 0, duration: 0.34, stagger: 0.08 }, 0.12)
-          .to(".narrative-about .narrative-copy p", { opacity: 1, yPercent: 0, duration: 0.28, stagger: 0.1 }, 0.35)
-          .to(".narrative-signoff", { opacity: 1, yPercent: 0, duration: 0.2 }, 0.62)
+          .to(".narrative-portal", { opacity: 0, scale: 1.08, duration: 0.24, ease: "power2.inOut" }, 0)
+          .to(".narrative-about", { opacity: 1, duration: 0.18 }, 0.12)
+          .to(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 0, duration: 0.34, stagger: 0.08 }, 0.16)
+          .to(".narrative-about .narrative-copy p", { opacity: 1, yPercent: 0, duration: 0.28, stagger: 0.1 }, 0.39)
+          .to(".narrative-signoff", { opacity: 1, yPercent: 0, duration: 0.2 }, 0.66)
           .to(".narrative-about", { opacity: 1, duration: 0.18 }, 0.8)
           .to(".narrative-about", { opacity: 0, yPercent: -8, scale: 0.985, duration: 0.26 }, 0.98)
           .to(".narrative-services", { opacity: 1, duration: 0.18 }, 1.16)
@@ -272,7 +356,9 @@ export function OpeningExperience() {
           .to(".narrative-service", { opacity: 1, yPercent: 0, duration: 0.28, stagger: 0.025 }, 1.3)
           .to(".narrative-services", { opacity: 1, duration: 0.2 }, 1.62)
           .to(".narrative-services", { opacity: 0, yPercent: -2, scale: 0.99, duration: 0.24 }, 1.84)
-          .to(".narrative-blackout", { opacity: 1, scale: 1, duration: 0.42, ease: "power2.inOut" }, 1.78);
+          .to(".narrative-owl", { opacity: 1, scale: 1, rotate: 0, duration: 0.36, ease: "power3.out" }, 1.78)
+          .to(".narrative-blackout", { opacity: 1, scale: 1, duration: 0.42, ease: "power2.inOut" }, 1.92)
+          .to(".narrative-owl", { opacity: 0, scale: 1.16, duration: 0.28, ease: "power2.in" }, 2.16);
 
         if (window.matchMedia("(pointer: fine)").matches) {
           const cursorDotX = gsap.quickTo(".haus-cursor__dot", "x", { duration: .18, ease: "power3.out" });
@@ -336,6 +422,7 @@ export function OpeningExperience() {
           <ArchitecturalSpace />
 
           <div className="hero">
+            <VideoWordmark />
             <p className="location">Athens — Mykonos — Northern Greece</p>
             <div className="hero__brand-wrap">
               <h1 className="hero__brand"><span>SOCIAL</span><span>HAUS</span></h1>
@@ -371,6 +458,7 @@ export function OpeningExperience() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="brand-interlude__wordmark" src="/assets/brand/socialhaus-wordmark.png" alt="" />
             <span className="brand-interlude__rule" />
+            <div className="brand-interlude__blackout" />
           </div>
 
         </div>
