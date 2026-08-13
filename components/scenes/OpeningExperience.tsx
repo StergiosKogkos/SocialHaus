@@ -116,9 +116,13 @@ export function OpeningExperience() {
 
         gsap.set(".scene-entrance .architecture", { opacity: 0 });
         gsap.set(".entrance-statement", { opacity: 0, yPercent: 12, scale: 0.97 });
+        gsap.set(".presence-kicker, .presence-word, .presence-meta, .presence-subline, .presence-rule", { opacity: 0 });
+        gsap.set(".presence-word", { scale: 0.62, yPercent: 14 });
+        gsap.set(".descent-gate, .descent-copy", { opacity: 0 });
+        gsap.set(".descent-aperture", { scale: 0.12, yPercent: 38 });
+        gsap.set(".descent-rail", { scaleY: 0 });
 
-        gsap
-          .timeline({
+        gsap.timeline({
             defaults: { ease: "none", force3D: true },
             scrollTrigger: {
               id: "scene-entrance",
@@ -162,40 +166,25 @@ export function OpeningExperience() {
           .to(".entrance-statement", { opacity: 1, duration: 0.12 }, 0.71)
           .to(".entrance-statement", { opacity: 0, yPercent: -8, scale: 1.035, duration: 0.12 }, 0.83)
           .to(".scene-entrance .architecture", { opacity: 0.22, duration: 0.13 }, 0.84)
-          .to(".entrance-threshold", { opacity: 1, duration: 0.08 }, 0.82);
-
-        gsap.set(".presence-kicker, .scene-presence .chrome", { opacity: 0 });
-        gsap.set(".presence-word", { opacity: 0, scale: 0.62, yPercent: 14 });
-        gsap.set(".presence-meta, .presence-subline, .presence-rule", { opacity: 0 });
-        gsap.set(".scene-presence .architecture", { opacity: 0 });
-
-        gsap
-          .timeline({
-            defaults: { ease: "none", force3D: true },
-            scrollTrigger: {
-              id: "scene-presence",
-              trigger: ".scene-presence",
-              start: "top top",
-              end: "bottom bottom",
-              scrub: 1.25,
-              invalidateOnRefresh: true,
-              fastScrollEnd: false,
-            },
-          })
-          .to(".scene-presence .architecture", { opacity: 0.16, duration: 0.15 }, 0.12)
-          .to(".scene-presence .portal", { scale: 1.7, duration: 0.24 }, 0.12)
-          .to(".scene-presence .chrome", { opacity: 1, duration: 0.12 }, 0.17)
-          .to(".presence-kicker", { opacity: 1, yPercent: 0, duration: 0.12 }, 0.2)
-          .fromTo(".presence-kicker", { yPercent: 45 }, { yPercent: 0 }, 0.2)
-          .to(".presence-word", { opacity: 1, scale: 1, yPercent: 0, duration: 0.22 }, 0.26)
-          .to(".presence-word", { scale: 1.08, duration: 0.18 }, 0.48)
-          .to(".presence-rule", { opacity: 1, scaleX: 1, duration: 0.12 }, 0.54)
-          .to(".presence-meta", { opacity: 1, yPercent: 0, duration: 0.15 }, 0.61)
-          .fromTo(".presence-meta", { yPercent: 38 }, { yPercent: 0 }, 0.61)
-          .to(".presence-subline", { opacity: 1, yPercent: 0, duration: 0.13 }, 0.72)
-          .fromTo(".presence-subline", { yPercent: 45 }, { yPercent: 0 }, 0.72)
-          .to(".scene-presence .architecture", { opacity: 0.05, duration: 0.15 }, 0.76)
-          .to(".presence-continuation", { opacity: 1, duration: 0.1 }, 0.86);
+          .to(".entrance-threshold", { opacity: 1, duration: 0.08 }, 0.82)
+          .to(".entrance-threshold", { opacity: 0, duration: 0.08 }, 0.96)
+          .to(".scene-entrance .architecture", { opacity: 0.06, duration: 0.15 }, 0.96)
+          .fromTo(".presence-kicker", { yPercent: 45 }, { opacity: 1, yPercent: 0, duration: 0.13 }, 1.1)
+          .to(".presence-word", { opacity: 1, scale: 1, yPercent: 0, duration: 0.25 }, 1.18)
+          .to(".presence-word", { scale: 1.08, duration: 0.2 }, 1.43)
+          .to(".presence-rule", { opacity: 1, scaleX: 1, duration: 0.14 }, 1.48)
+          .fromTo(".presence-meta", { yPercent: 38 }, { opacity: 1, yPercent: 0, duration: 0.16 }, 1.58)
+          .fromTo(".presence-subline", { yPercent: 45 }, { opacity: 1, yPercent: 0, duration: 0.15 }, 1.7)
+          .to(".scene-entrance .portal", { scale: 1.7, duration: 0.28 }, 1.15)
+          .to(".scene-entrance .architecture", { opacity: 0.04, duration: 0.2 }, 1.54)
+          .to(".presence-composition", { yPercent: -14, scale: 1.04, opacity: 0.12, duration: 0.22 }, 1.9)
+          .to(".chrome", { opacity: 0, yPercent: -20, duration: 0.16 }, 1.9)
+          .to(".descent-gate", { opacity: 1, duration: 0.12 }, 1.94)
+          .to(".descent-aperture", { scale: 1, yPercent: 0, duration: 0.3 }, 1.94)
+          .to(".descent-rail", { scaleY: 1, duration: 0.24 }, 2.0)
+          .to(".descent-copy", { opacity: 1, yPercent: 0, duration: 0.18 }, 2.08)
+          .fromTo(".descent-copy", { yPercent: 35 }, { yPercent: 0 }, 2.08)
+          .to(".descent-aperture", { scale: 1.28, duration: 0.2 }, 2.22);
 
         if (window.matchMedia("(pointer: fine)").matches) {
           const portalX = gsap.quickTo(".portal", "x", { duration: 0.9, ease: "power3.out" });
@@ -252,14 +241,6 @@ export function OpeningExperience() {
           <div className="entrance-statement">
             <p>We don&apos;t create content.</p>
           </div>
-          <div className="threshold entrance-threshold">Threshold / 01</div>
-        </div>
-      </section>
-
-      <section className="cinematic-scene scene-presence" aria-label="Scene 02 — Presence">
-        <div className="scene-viewport">
-          <ArchitecturalSpace className="architecture--presence" />
-          <ChapterChrome chapter="02" label="Presence" />
 
           <div className="presence-composition">
             <p className="presence-kicker">We create</p>
@@ -269,7 +250,22 @@ export function OpeningExperience() {
             <p className="presence-subline">One studio. Three distinct worlds.</p>
           </div>
 
-          <div className="threshold presence-continuation">The worlds / Next</div>
+          <div className="descent-gate" aria-hidden="true">
+            <div className="descent-aperture">
+              <div className="descent-aperture__frame descent-aperture__frame--one" />
+              <div className="descent-aperture__frame descent-aperture__frame--two" />
+              <div className="descent-aperture__void" />
+            </div>
+            <div className="descent-rail descent-rail--left" />
+            <div className="descent-rail descent-rail--right" />
+          </div>
+
+          <div className="descent-copy">
+            <span>Next passage</span>
+            <strong>Descend into the worlds</strong>
+          </div>
+
+          <div className="threshold entrance-threshold">Threshold / 01</div>
         </div>
       </section>
 
