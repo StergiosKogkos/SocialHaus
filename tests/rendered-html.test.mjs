@@ -74,7 +74,7 @@ test("keeps motion, responsiveness, and reduced-motion support intentional", asy
   assert.match(scene, /hero__video-type/);
   assert.match(scene, /brand-interlude/);
   assert.match(scene, /brand-interlude__wordmark", \{ scale: 10/);
-  assert.match(scene, /brand-interlude__about-tease/);
+  assert.doesNotMatch(scene, /brand-interlude__about-tease/);
   assert.doesNotMatch(scene, /brand-interlude__wordmark-art|brand-interlude__wordmark-type/);
   assert.doesNotMatch(scene, /haus-cursor__ring/);
   assert.match(scene, /narrative-portal/);

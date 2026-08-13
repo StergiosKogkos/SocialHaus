@@ -251,7 +251,6 @@ export function OpeningExperience() {
         gsap.set(".brand-interlude", { opacity: 0, scale: 0.96 });
         gsap.set(".brand-interlude__owl", { rotate: -18, scale: 0.82 });
         gsap.set(".brand-interlude__wordmark", { scale: 0.94 });
-        gsap.set(".brand-interlude__about-tease", { opacity: 0, scale: 0.94 });
         gsap.set(".brand-interlude__blackout", { opacity: 0 });
         gsap.set(".hero__video-type", { opacity: 0 });
         gsap.set(".narrative-panel", { opacity: 0 });
@@ -332,8 +331,6 @@ export function OpeningExperience() {
           .to(".brand-interlude__owl", { rotate: 0, scale: 1, duration: 0.34, ease: "power3.out" }, 2.64)
           .to(".brand-interlude__owl, .brand-interlude__rule", { opacity: 0, scale: 0.92, duration: 0.2, ease: "power2.in" }, 2.92)
           .to(".brand-interlude__wordmark", { scale: 10, duration: 0.56, ease: "sine.inOut" }, 2.92)
-          .to(".brand-interlude__about-tease", { opacity: 0.18, scale: 0.98, duration: 0.2, ease: "power2.out" }, 3.02)
-          .to(".brand-interlude__about-tease", { opacity: 1, scale: 1, duration: 0.24, ease: "power2.out" }, 3.2)
           .to(".brand-interlude__blackout", { opacity: 1, duration: 0.08, ease: "power2.inOut" }, 3.4);
 
         gsap.timeline({
@@ -455,9 +452,6 @@ export function OpeningExperience() {
             <img className="brand-interlude__owl" src="/assets/brand/socialhaus-owl.png" alt="" />
             <div className="brand-interlude__wordmark"><span>SOCIALHAUS</span></div>
             <span className="brand-interlude__rule" />
-            <div className="brand-interlude__about-tease">
-              <span>This is what</span><em>presence looks like.</em>
-            </div>
             <div className="brand-interlude__blackout" />
           </div>
 
