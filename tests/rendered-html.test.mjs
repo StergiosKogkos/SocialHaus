@@ -14,35 +14,36 @@ async function render() {
   );
 }
 
-test("server-renders the SocialHaus opening", async () => {
+test("server-renders the SocialHaus narrative journey", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>SocialHaus — Enter the Haus<\/title>/i);
+  assert.match(html, /<title>SocialHaus.*Enter the Haus<\/title>/i);
   assert.match(html, /SOCIAL.*HAUS/s);
   assert.match(html, /Enter the Haus/);
   assert.match(html, /We don&#x27;t create content\./);
   assert.match(html, /We create/);
   assert.match(html, /Presence\./);
   assert.match(html, /One studio\. Three distinct worlds\./);
-  assert.match(html, /Descend into the worlds/);
-  assert.match(html, /Scene 02 — Presence/);
-  assert.match(html, /Selected moments \/ SocialHaus/);
+  assert.match(html, /Selected collaborations/);
+  assert.match(html, /Your brand/);
+  assert.match(html, /belongs here\./);
   assert.match(html, /This is what/);
   assert.match(html, /presence looks like\./);
-  assert.match(html, /Strategy\./);
-  assert.match(html, /Identity\./);
-  assert.match(html, /Content\./);
-  assert.match(html, /Production\./);
-  assert.match(html, /From idea/);
-  assert.match(html, /to identity\./);
-  assert.match(html, /A complete creative process, built inside the Haus\./);
+  assert.match(html, /About us \/ SocialHaus/);
+  assert.match(html, /Our services \/ 01—08/);
+  assert.match(html, /Content Creation/);
+  assert.match(html, /Strategic Communications/);
+  assert.match(html, /href="#about"/);
+  assert.match(html, /href="#services"/);
+  assert.match(html, /aria-label="Instagram"/);
+  assert.doesNotMatch(html, /statement-image|premium-carousel|carousel-card|unsplash\.com/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });
 
-test("keeps the motion foundation intentional and accessible", async () => {
+test("keeps motion, responsiveness, and reduced-motion support intentional", async () => {
   const [scene, css, packageJson] = await Promise.all([
     readFile(new URL("../components/scenes/OpeningExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
@@ -52,9 +53,10 @@ test("keeps the motion foundation intentional and accessible", async () => {
   assert.match(scene, /ScrollTrigger/);
   assert.match(scene, /new Lenis/);
   assert.match(scene, /scrub: 1\.15/);
-  assert.match(scene, /id: "scene-presence"/);
-  assert.match(scene, /scrub: 1\.25/);
-  assert.match(scene, /workMedia\.map/);
+  assert.match(scene, /id: "scene-narrative"/);
+  assert.match(scene, /scrub: 1\.2/);
+  assert.match(scene, /partnerLogos\.map/);
+  assert.doesNotMatch(scene, /campaignImage|premium-carousel|statement-image/);
   assert.match(scene, /gsap\.ticker\.add/);
   assert.match(scene, /lenis\.on\("scroll", updateScrollTrigger\)/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);

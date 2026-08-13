@@ -4,8 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
-import { WorkMedia } from "../work/WorkMediaFrame";
-import { workMedia } from "../work/workMedia";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,11 +16,6 @@ function ArchitecturalSpace({ className = "" }: { className?: string }) {
       <div className="plane plane--floor" />
       <div className="axis" />
       <div className="horizon" />
-      <div className="portal">
-        <div className="portal__ring" />
-        <div className="portal__ring portal__ring--2" />
-        <div className="portal__ring portal__ring--3" />
-      </div>
     </div>
   );
 }
@@ -36,103 +29,90 @@ function ChapterChrome({ chapter, label }: { chapter: string; label: string }) {
   );
 }
 
-const interruptions = ["Strategy.", "Identity.", "Content.", "Production.", "Presence."];
-const campaignImage = "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=2200&q=90";
 const services = [
-  ["01", "Content Creation", "Περιεχόμενο με αφηγηματική συνέπεια και αισθητική ακρίβεια."],
-  ["02", "Social Media Management", "Ολιστική διαχείριση, στρατηγική δημοσιεύσεων και ανάλυση απόδοσης."],
-  ["03", "Photography", "Φωτογραφικό υλικό υψηλής αισθητικής για προϊόντα, χώρους και events."],
-  ["04", "Drone & Aerial", "Σπάνιες εναέριες οπτικές για hospitality, real estate και εμπειρίες."],
-  ["05", "Graphic Design", "Μία συνεπής οπτική γλώσσα που παραμένει αναγνωρίσιμη παντού."],
-  ["06", "Campaign Design", "Προωθητικό υλικό που μεταφέρει το μήνυμα με σαφήνεια και στιλ."],
-  ["07", "Branding", "Λογότυπο, παλέτα, τυπογραφία και guidelines διαχρονικής αξίας."],
-  ["08", "Strategic Communications", "Όραμα, μήνυμα και κοινό σε μία μετρήσιμη στρατηγική."],
+  ["01", "Content Creation", "Σχεδιάζουμε περιεχόμενο με αφηγηματική συνέπεια και αισθητική επιμέλεια, που αντικατοπτρίζει με ακρίβεια τον χαρακτήρα του brand."],
+  ["02", "Social Media Management", "Αναλαμβάνουμε την ολιστική διαχείριση της παρουσίας σας στα social media, με προσεκτικό σχεδιασμό περιεχομένου, στρατηγική δημοσιεύσεων και συνεχή ανάλυση απόδοσης."],
+  ["03", "Photography", "Παράγουμε φωτογραφικό υλικό υψηλής αισθητικής για προϊόντα, χώρους και εκδηλώσεις, με προσοχή στη λεπτομέρεια που διακρίνει τα premium brands."],
+  ["04", "Drone & Aerial Shots", "Προσφέρουμε εναέριες λήψεις που αποτυπώνουν χώρους και τοποθεσίες με μια σπάνια, εντυπωσιακή προοπτική — ιδανικές για τουριστικές μονάδες, ακίνητα και events υψηλών προδιαγραφών."],
+  ["05", "Graphic Design", "Δημιουργούμε οπτικό υλικό με καθαρές γραμμές και συνέπεια ύφους, χτίζοντας μια αισθητική γλώσσα που παραμένει αναγνωρίσιμη σε κάθε εφαρμογή."],
+  ["06", "Flyer Design", "Σχεδιάζουμε προωθητικό υλικό που συνδυάζει λειτουργικότητα και κομψότητα, μεταφέροντας το μήνυμά σας με σαφήνεια και στιλ."],
+  ["07", "Logo Creation & Branding", "Αποτυπώνουμε την ουσία του brand σας σε μια οπτική ταυτότητα διαχρονικής αξίας — λογότυπο, χρωματική παλέτα, τυπογραφία και brand guidelines που χτίζουν εμπιστοσύνη."],
+  ["08", "Strategic Communications", "Σχεδιάζουμε στρατηγικές επικοινωνίας που ευθυγραμμίζουν όραμα, μήνυμα και κοινό-στόχο, με έμφαση στα μετρήσιμα, μακροπρόθεσμα αποτελέσματα."],
 ];
 const partnerNames = ["Στην Αυλή", "Myconian", "Nuera Mykonos", "Maya Experience", "Casa di Giorgio", "Anema", "Tabu Mykonos", "Εμπορικό Βιομηχανικό Επιμελητήριο Ροδόπης", "You Nails Hair", "Promenade Mykonos", "BOHO Nature Seaside", "Moana", "La Corte", "Βιβλιοχαρτεμπορική"];
 const partnerLogos = partnerNames.map((name, index) => ({ name, src: `/assets/partners/${String(index + 1).padStart(2, "0")}.png` }));
 
-function PresenceChapter() {
+const aboutParagraphs = [
+  "Η SocialHaus είναι ένα creative studio μάρκετινγκ που χτίζει brands με ταυτότητα, χαρακτήρα και διάρκεια. Με έδρα την Αθήνα και παρουσία στη Μύκονο και στη Βόρεια Ελλάδα, συνδυάζουμε τον παλμό της πρωτεύουσας, τη διεθνή αύρα του νησιού και τη δυναμική της βόρειας αγοράς σε μία ενιαία, εξειδικευμένη προσέγγιση.",
+  "Πιστεύουμε ότι η πολυτέλεια δεν είναι απλώς αισθητική επιλογή, αλλά αποτέλεσμα λεπτομέρειας, συνέπειας και στρατηγικής σκέψης. Για αυτό, κάθε έργο που αναλαμβάνουμε ξεκινά από μια βαθιά κατανόηση του brand και καταλήγει σε μια ολοκληρωμένη, συνεκτική εμπειρία επικοινωνίας — από τη στρατηγική έως το τελικό visual.",
+  "Η ομάδα μας λειτουργεί ως επέκταση της δικής σας επιχείρησης, φέρνοντας μαζί δημιουργικό όραμα και τεχνική αρτιότητα, ώστε κάθε brand που συνεργάζεται μαζί μας να αποκτά μια παρουσία διακριτή, αναγνωρίσιμη και διαχρονική.",
+];
+
+function PartnerCarousel() {
   return (
-    <section className="cinematic-scene scene-presence" aria-label="Scene 02 — Presence">
-      <div className="scene-viewport scene-viewport--presence">
-        <div className="chrome chrome--presence" aria-hidden="true">
-          <div className="chapter">Scene <span>02</span> / Presence</div>
-          <div className="chrome__mark" />
-        </div>
-
-        <div className="showreel-intro">
-          <p className="showreel-intro__label">Selected moments / SocialHaus</p>
-          <h2>
-            <span>This is what</span>
-            <span>presence looks like.</span>
-          </h2>
-        </div>
-
-        <div className="showreel-stage">
-          {workMedia.map((item, index) => (
-            <WorkMedia
-              key={item.id}
-              item={item}
-              priority={index === 0}
-              className={`media-frame media-frame--0${index + 1}`}
-            />
-          ))}
-        </div>
-
-        <div className="interruptions" aria-hidden="true">
-          {interruptions.map((word, index) => (
-            <p key={word} className={`interrupt interrupt--0${index + 1}`}>{word}</p>
-          ))}
-        </div>
-
-        <div className="chapter-outro">
-          <p className="chapter-outro__index">End frame / 02</p>
-          <h2><span>From idea</span><span>to identity.</span></h2>
-          <div className="chapter-outro__rule" aria-hidden="true" />
-          <p>A complete creative process, built inside the Haus.</p>
-        </div>
+    <div className="brand-carousel" aria-label="Selected collaborations">
+      <div className="brand-carousel__heading">
+        <span>Selected collaborations</span>
+        <strong>Inside the Haus</strong>
       </div>
-    </section>
+      <div className="brand-carousel__track">
+        {partnerLogos.map((logo, index) => (
+          <figure className="brand-slide" key={logo.src}>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            {/* Local partner marks are supplied as transparent PNG assets. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={logo.src} alt={logo.name} />
+            <figcaption>{logo.name}</figcaption>
+          </figure>
+        ))}
+        <a className="brand-slide brand-slide--invitation" href="#contact">
+          <span>15 / Next</span>
+          <strong>Your brand<br />belongs here.</strong>
+          <i>Enter the Haus ↗</i>
+        </a>
+      </div>
+      <div className="brand-invitation" aria-hidden="true">
+        <span>Your brand</span><span>belongs here.</span>
+      </div>
+    </div>
   );
 }
 
-function StudioChapters() {
+function NarrativeChapter() {
   return (
-    <>
-      <section id="about" className="manifesto-section">
-        <div className="manifesto-orbit" aria-hidden="true"><span>DETAIL</span><span>CONSISTENCY</span><span>STRATEGY</span></div>
-        <p className="section-index">03 / The studio</p>
-        <div className="manifesto-copy">
-          <p className="manifesto-lead">Η πολυτέλεια δεν είναι αισθητική επιλογή.</p>
-          <h2>Είναι το αποτέλεσμα της <em>λεπτομέρειας.</em></h2>
-          <div className="manifesto-body">
-            <p>Η SocialHaus είναι ένα creative studio μάρκετινγκ που χτίζει brands με ταυτότητα, χαρακτήρα και διάρκεια.</p>
-            <p>Αθήνα, Μύκονος και Βόρεια Ελλάδα ενώνονται σε μία εξειδικευμένη προσέγγιση — από τη στρατηγική έως το τελικό visual.</p>
-          </div>
+    <section className="cinematic-scene scene-narrative" aria-label="About SocialHaus and services">
+      <span id="about" className="narrative-anchor narrative-anchor--about" />
+      <span id="services" className="narrative-anchor narrative-anchor--services" />
+      <div className="scene-viewport scene-viewport--narrative">
+        <div className="chrome chrome--narrative" aria-hidden="true">
+          <div className="chapter">Scene <span>03</span> / The studio</div>
+          <div className="chrome__mark" />
         </div>
-      </section>
 
-      <section className="services-section" aria-label="Οι υπηρεσίες μας">
-        <header><p className="section-index">04 / Capabilities</p><h2>Everything a brand needs.<br /><em>Nothing it doesn&apos;t.</em></h2></header>
-        <div className="services-list">
-          {services.map(([number, title, description]) => <article className="service-row" key={number}>
-            <span>{number}</span><h3>{title}</h3><p>{description}</p><i>↗</i>
-          </article>)}
-        </div>
-      </section>
-
-      <section className="partners-section" aria-label="Selected collaborations">
-        <div className="partners-sticky">
-          <p className="section-index">05 / House of brands</p>
-          <h2>Trusted to shape<br /><em>their presence.</em></h2>
-          <div className="partner-wall">
-            {partnerLogos.map((logo) => <figure key={logo.src}><img src={logo.src} alt={logo.name} /></figure>)}
-            <a className="partner-next" href="#contact"><span>15</span><strong>Your brand<br />belongs here.</strong><i>Start a project ↗</i></a>
+        <article className="narrative-panel narrative-about">
+          <p className="narrative-eyebrow">About us / SocialHaus</p>
+          <h2><span>This is what</span><em>presence looks like.</em></h2>
+          <div className="narrative-copy">
+            {aboutParagraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
           </div>
-          <p className="partners-note">Selected collaborations · Hospitality · Food &amp; Beverage · Lifestyle · Culture</p>
-        </div>
-      </section>
-    </>
+          <strong className="narrative-signoff">SocialHaus — Enter the Haus</strong>
+        </article>
+
+        <article className="narrative-panel narrative-services">
+          <header>
+            <p className="narrative-eyebrow">Our services / 01—08</p>
+            <h2>One Haus.<br /><em>A complete process.</em></h2>
+          </header>
+          <div className="narrative-services__list">
+            {services.map(([number, title, description]) => (
+              <section className="narrative-service" key={number}>
+                <span>{number}</span><h3>{title}</h3><p>{description}</p>
+              </section>
+            ))}
+          </div>
+        </article>
+      </div>
+    </section>
   );
 }
 
@@ -189,18 +169,15 @@ export function OpeningExperience() {
         gsap.set(".presence-kicker, .presence-word, .presence-meta, .presence-subline, .presence-rule", { opacity: 0 });
         gsap.set(".presence-word", { clipPath: "inset(0 100% 0 0)", filter: "blur(10px)", letterSpacing: "0.04em" });
         gsap.set(".presence-particle", { opacity: 0, scale: 0 });
-        gsap.set(".statement-image", { opacity: 0, scale: 1.14, clipPath: "inset(20% 20% 20% 20%)" });
-        gsap.set(".premium-carousel", { opacity: 0, yPercent: 12 });
-        gsap.set(".carousel-card", { opacity: 0, yPercent: 22, rotateY: -12 });
-        gsap.set(".chrome--presence, .showreel-intro, .chapter-outro", { opacity: 0 });
-        gsap.set(".showreel-intro__label", { yPercent: 70 });
-        gsap.set(".showreel-intro h2 span", { yPercent: 115 });
-        gsap.set(".media-frame", { opacity: 0, force3D: true });
-        gsap.set(".media-frame--01", { opacity: 1, scale: 1.04 });
-        gsap.set(".interrupt", { opacity: 0, yPercent: 20 });
-        gsap.set(".chapter-outro h2 span", { yPercent: 115 });
-        gsap.set(".chapter-outro__index, .chapter-outro > p:last-child", { opacity: 0, yPercent: 40 });
-        gsap.set(".chapter-outro__rule", { scaleX: 0 });
+        gsap.set(".presence-beam", { opacity: 0, scaleX: 0.12, rotate: -14 });
+        gsap.set(".presence-cinema-frame i", { scaleX: 0 });
+        gsap.set(".brand-carousel", { opacity: 0, yPercent: 8 });
+        gsap.set(".brand-slide", { opacity: 0, yPercent: 18, rotateY: -10 });
+        gsap.set(".brand-invitation span", { yPercent: 110 });
+        gsap.set(".chrome--narrative, .narrative-panel", { opacity: 0 });
+        gsap.set(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 120 });
+        gsap.set(".narrative-about .narrative-copy p, .narrative-signoff", { opacity: 0, yPercent: 24 });
+        gsap.set(".narrative-services header, .narrative-service", { opacity: 0, yPercent: 16 });
 
         gsap.timeline({
             defaults: { ease: "none", force3D: true },
@@ -228,7 +205,6 @@ export function OpeningExperience() {
             0.07,
           )
           .to(".scene-entrance .architecture", { opacity: 1, duration: 0.2 }, 0.12)
-          .fromTo(".scene-entrance .portal", { scale: 0.48 }, { scale: 0.86, duration: 0.24 }, 0.12)
           .fromTo(".scene-entrance .plane--left", { xPercent: -16 }, { xPercent: 0, duration: 0.24 }, 0.12)
           .fromTo(".scene-entrance .plane--right", { xPercent: 16 }, { xPercent: 0, duration: 0.24 }, 0.12)
           .fromTo(".scene-entrance .plane--ceiling", { yPercent: -18 }, { yPercent: 0, duration: 0.24 }, 0.12)
@@ -241,9 +217,7 @@ export function OpeningExperience() {
             0.34,
           )
           .to(".hero__brand", { scale: 5.8, opacity: 0, duration: 0.16 }, 0.51)
-          .to(".scene-entrance .portal", { scale: 1.18, duration: 0.25 }, 0.34)
           .to(".entrance-statement", { opacity: 1, yPercent: 0, scale: 1, duration: 0.15 }, 0.56)
-          .to(".statement-image", { opacity: 1, scale: 1, clipPath: "inset(0% 0% 0% 0%)", duration: 0.2 }, 0.58)
           .to(".entrance-statement", { opacity: 1, duration: 0.12 }, 0.71)
           .to(".entrance-statement", { opacity: 0, yPercent: -8, scale: 1.035, duration: 0.12 }, 0.83)
           .to(".scene-entrance .architecture", { opacity: 0.22, duration: 0.13 }, 0.84)
@@ -259,146 +233,47 @@ export function OpeningExperience() {
           .to(".presence-rule", { opacity: 1, scaleX: 1, duration: 0.14 }, 1.48)
           .fromTo(".presence-meta", { yPercent: 38 }, { opacity: 1, yPercent: 0, duration: 0.16 }, 1.58)
           .fromTo(".presence-subline", { yPercent: 45 }, { opacity: 1, yPercent: 0, duration: 0.15 }, 1.7)
-          .to(".scene-entrance .portal", { scale: 1.7, duration: 0.28 }, 1.15)
           .to(".scene-entrance .architecture", { opacity: 0.04, duration: 0.2 }, 1.54)
-          .to(".presence-composition", { yPercent: -14, scale: 1.04, opacity: 0.08, duration: 0.18 }, 1.9)
-          .to(".premium-carousel", { opacity: 1, yPercent: 0, duration: 0.18 }, 1.96)
-          .to(".carousel-card", { opacity: 1, yPercent: 0, rotateY: 0, duration: 0.3, stagger: 0.035 }, 2.0)
-          .to(".premium-carousel", { opacity: 1, duration: 0.34 }, 2.08)
-          .to(".premium-carousel", { opacity: 0, scale: 1.035, filter: "blur(10px)", duration: 0.24 }, 2.46)
+          .to(".presence-beam", { opacity: 0.72, scaleX: 1, rotate: 0, duration: 0.32 }, 1.16)
+          .to(".presence-cinema-frame i", { scaleX: 1, duration: 0.28, stagger: 0.035 }, 1.22)
+          .to(".presence-beam", { xPercent: 42, opacity: 0, duration: 0.32 }, 1.5)
+          .to(".presence-composition", { yPercent: -8, scale: 1.09, opacity: 0, duration: 0.24 }, 1.9)
+          .to(".brand-carousel", { opacity: 1, yPercent: 0, duration: 0.22 }, 1.98)
+          .to(".brand-slide", { opacity: 1, yPercent: 0, rotateY: 0, duration: 0.34, stagger: 0.018 }, 2.02)
+          .to(".brand-carousel__track", { xPercent: -54, duration: 0.72 }, 2.15)
+          .to(".brand-invitation span", { yPercent: 0, duration: 0.3, stagger: 0.08 }, 2.24)
+          .to(".brand-carousel", { opacity: 1, duration: 0.3 }, 2.48)
+          .to(".brand-carousel", { opacity: 0, yPercent: -5, duration: 0.22 }, 2.78)
           .to(".chrome", { opacity: 0, yPercent: -20, duration: 0.16 }, 1.9)
-          .to(".scene-entrance .architecture", { opacity: 0, duration: 0.22 }, 2.44);
-
-        const isMobile = window.matchMedia("(max-width: 720px)").matches;
+          .to(".scene-entrance .architecture", { opacity: 0, duration: 0.22 }, 2.72);
 
         gsap.timeline({
             defaults: { ease: "none", force3D: true },
             scrollTrigger: {
-              id: "scene-presence",
-              trigger: ".scene-presence",
+              id: "scene-narrative",
+              trigger: ".scene-narrative",
               start: "top top",
               end: "bottom bottom",
-              scrub: 1.25,
+              scrub: 1.2,
               invalidateOnRefresh: true,
               fastScrollEnd: false,
             },
           })
-          .to(".chrome--presence", { opacity: 1, duration: 0.16 }, 0.08)
-          .to(".showreel-intro", { opacity: 1, duration: 0.14 }, 0.12)
-          .to(".showreel-intro__label", { yPercent: 0, duration: 0.16 }, 0.12)
-          .to(".showreel-intro h2 span", { yPercent: 0, duration: 0.28, stagger: 0.07 }, 0.18)
-          .to(".media-frame--01", { scale: 1, duration: 0.34 }, 0)
-          .to(".showreel-intro", { opacity: 0, yPercent: -10, duration: 0.18 }, 0.68)
-          .to(".media-frame--01", {
-            scale: isMobile ? 0.58 : 0.38,
-            xPercent: isMobile ? -24 : -68,
-            yPercent: isMobile ? -18 : 8,
-            duration: 0.44,
-          }, 0.72)
-          .fromTo(".media-frame--02", {
-            opacity: 0,
-            xPercent: isMobile ? 110 : 135,
-            yPercent: isMobile ? 20 : 8,
-            scale: 0.82,
-          }, {
-            opacity: 1,
-            xPercent: isMobile ? 24 : 45,
-            yPercent: isMobile ? 20 : 8,
-            scale: 1,
-            duration: 0.48,
-          }, 0.84)
-          .to(".interrupt--01", { opacity: 1, yPercent: 0, duration: 0.16 }, 1.02)
-          .to(".interrupt--01", { opacity: 0, yPercent: -18, duration: 0.16 }, 1.36)
-          .to(".media-frame--01", { yPercent: isMobile ? -42 : -22, opacity: 0.3, duration: 0.38 }, 1.2)
-          .to(".media-frame--02", {
-            xPercent: isMobile ? 0 : 4,
-            yPercent: 0,
-            scale: isMobile ? 1.82 : 2.35,
-            duration: 0.54,
-          }, 1.36)
-          .to(".interrupt--02", { opacity: 1, yPercent: 0, duration: 0.18 }, 1.66)
-          .fromTo(".media-frame--03", {
-            opacity: 0,
-            xPercent: isMobile ? -95 : -130,
-            yPercent: 38,
-            scale: 0.72,
-          }, {
-            opacity: 1,
-            xPercent: isMobile ? -20 : -48,
-            yPercent: isMobile ? 18 : 22,
-            scale: 1,
-            duration: 0.48,
-          }, 1.72)
-          .to(".media-frame--02", { xPercent: isMobile ? 32 : 55, scale: isMobile ? 0.78 : 0.72, duration: 0.48 }, 1.82)
-          .to(".interrupt--02", { opacity: 0, yPercent: -18, duration: 0.16 }, 2.02)
-          .fromTo(".media-frame--04", { opacity: 0, xPercent: 120 }, {
-            opacity: 1,
-            xPercent: isMobile ? 18 : 28,
-            duration: 0.5,
-          }, 2.12)
-          .to(".media-frame--03", { yPercent: -18, duration: 0.55 }, 2.12)
-          .to(".interrupt--03", { opacity: 1, yPercent: 0, duration: 0.18 }, 2.34)
-          .to(".media-frame--04", { xPercent: isMobile ? -18 : -34, scale: 1.18, duration: 0.55 }, 2.52)
-          .to(".interrupt--03", { opacity: 0, yPercent: -16, duration: 0.16 }, 2.76)
-          .to(".media-frame--02, .media-frame--03", { opacity: 0, duration: 0.28 }, 2.74)
-          .fromTo(".media-frame--05", {
-            opacity: 0,
-            xPercent: isMobile ? -75 : -105,
-            yPercent: -28,
-            scale: 0.68,
-          }, {
-            opacity: 1,
-            xPercent: isMobile ? -20 : -48,
-            yPercent: isMobile ? -14 : -20,
-            scale: 1,
-            duration: 0.46,
-          }, 2.86)
-          .fromTo(".media-frame--06", {
-            opacity: 0,
-            xPercent: isMobile ? 100 : 125,
-            yPercent: 34,
-            scale: 0.76,
-          }, {
-            opacity: 1,
-            xPercent: isMobile ? 18 : 42,
-            yPercent: isMobile ? 25 : 18,
-            scale: 1,
-            duration: 0.46,
-          }, 2.96)
-          .to(".interrupt--04", { opacity: 1, yPercent: 0, duration: 0.18 }, 3.15)
-          .to(".media-frame--04", { yPercent: -34, scale: 0.82, duration: 0.58 }, 3.1)
-          .to(".media-frame--05", { yPercent: isMobile ? 8 : 12, scale: 1.14, duration: 0.58 }, 3.18)
-          .to(".media-frame--06", { yPercent: isMobile ? -12 : -18, scale: 1.18, duration: 0.58 }, 3.18)
-          .to(".interrupt--04", { opacity: 0, yPercent: -16, duration: 0.16 }, 3.55)
-          .to(".interrupt--05", { opacity: 1, yPercent: 0, scale: 1, duration: 0.22 }, 3.62)
-          .to(".media-frame--05", { xPercent: isMobile ? -60 : -95, duration: 0.46 }, 3.64)
-          .to(".media-frame--06", { xPercent: isMobile ? 52 : 74, duration: 0.46 }, 3.64)
-          .to(".media-frame--04", { scale: 1.7, opacity: 0.18, duration: 0.48 }, 3.64)
-          .to(".interrupt--05", { scale: isMobile ? 1.18 : 1.34, duration: 0.4 }, 3.72)
-          .to(".media-frame, .interrupt--05", { opacity: 0, duration: 0.42 }, 4.12)
-          .to(".chrome--presence", { opacity: 0, duration: 0.24 }, 4.12)
-          .to(".chapter-outro", { opacity: 1, duration: 0.2 }, 4.44)
-          .to(".chapter-outro__index", { opacity: 1, yPercent: 0, duration: 0.18 }, 4.48)
-          .to(".chapter-outro h2 span", { yPercent: 0, duration: 0.32, stagger: 0.08 }, 4.52)
-          .to(".chapter-outro__rule", { scaleX: 1, duration: 0.26 }, 4.78)
-          .to(".chapter-outro > p:last-child", { opacity: 1, yPercent: 0, duration: 0.22 }, 4.9)
-          .to(".chapter-outro", { opacity: 1, duration: 0.4 }, 5.08);
-
-        gsap.fromTo(".manifesto-copy h2", { yPercent: 18, opacity: 0 }, { yPercent: 0, opacity: 1, ease: "power3.out", scrollTrigger: { trigger: ".manifesto-section", start: "top 68%", end: "top 28%", scrub: 1 } });
-        gsap.fromTo(".manifesto-body p", { y: 70, opacity: 0 }, { y: 0, opacity: 1, stagger: .12, ease: "power3.out", scrollTrigger: { trigger: ".manifesto-body", start: "top 88%", end: "top 58%", scrub: 1 } });
-        gsap.fromTo(".service-row", { xPercent: -5, opacity: .15 }, { xPercent: 0, opacity: 1, stagger: .04, ease: "none", scrollTrigger: { trigger: ".services-list", start: "top 82%", end: "center 55%", scrub: 1 } });
-        gsap.fromTo(".partner-wall figure", { scale: .78, opacity: 0 }, { scale: 1, opacity: 1, stagger: .025, ease: "power2.out", scrollTrigger: { trigger: ".partner-wall", start: "top 86%", end: "center 60%", scrub: 1 } });
+          .to(".chrome--narrative", { opacity: 1, duration: 0.15 }, 0.05)
+          .to(".narrative-about", { opacity: 1, duration: 0.18 }, 0.08)
+          .to(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 0, duration: 0.34, stagger: 0.08 }, 0.12)
+          .to(".narrative-about .narrative-copy p", { opacity: 1, yPercent: 0, duration: 0.28, stagger: 0.1 }, 0.35)
+          .to(".narrative-signoff", { opacity: 1, yPercent: 0, duration: 0.2 }, 0.62)
+          .to(".narrative-about", { opacity: 1, duration: 0.32 }, 0.8)
+          .to(".narrative-about", { opacity: 0, yPercent: -10, scale: 0.98, duration: 0.3 }, 1.18)
+          .to(".narrative-services", { opacity: 1, duration: 0.2 }, 1.38)
+          .to(".narrative-services header", { opacity: 1, yPercent: 0, duration: 0.28 }, 1.42)
+          .to(".narrative-service", { opacity: 1, yPercent: 0, duration: 0.38, stagger: 0.045 }, 1.58)
+          .to(".narrative-services__list", { yPercent: -28, duration: 0.75 }, 1.78)
+          .to(".narrative-services", { opacity: 1, duration: 0.32 }, 2.38)
+          .to(".chrome--narrative", { opacity: 0, duration: 0.18 }, 2.55);
 
         if (window.matchMedia("(pointer: fine)").matches) {
-          const portalX = gsap.quickTo(".portal", "x", { duration: 0.9, ease: "power3.out" });
-          const portalY = gsap.quickTo(".portal", "y", { duration: 0.9, ease: "power3.out" });
-          const move = (event: PointerEvent) => {
-            portalX((event.clientX / window.innerWidth - 0.5) * 8);
-            portalY((event.clientY / window.innerHeight - 0.5) * 5);
-          };
-          window.addEventListener("pointermove", move, { passive: true });
-          cleanups.push(() => window.removeEventListener("pointermove", move));
-
           const cursorDotX = gsap.quickTo(".haus-cursor__dot", "x", { duration: .18, ease: "power3.out" });
           const cursorDotY = gsap.quickTo(".haus-cursor__dot", "y", { duration: .18, ease: "power3.out" });
           const cursorRingX = gsap.quickTo(".haus-cursor__ring", "x", { duration: .55, ease: "power3.out" });
@@ -406,7 +281,7 @@ export function OpeningExperience() {
           const cursorMove = (event: PointerEvent) => { cursorDotX(event.clientX); cursorDotY(event.clientY); cursorRingX(event.clientX); cursorRingY(event.clientY); };
           const cursorEnter = () => root.current?.classList.add("cursor-is-active");
           const cursorLeave = () => root.current?.classList.remove("cursor-is-active");
-          const cursorTargets = root.current?.querySelectorAll("a, .service-row, .partner-wall figure") ?? [];
+          const cursorTargets = root.current?.querySelectorAll("a, .brand-slide, .narrative-service") ?? [];
           cursorTargets.forEach((target) => { target.addEventListener("pointerenter", cursorEnter); target.addEventListener("pointerleave", cursorLeave); });
           window.addEventListener("pointermove", cursorMove, { passive: true });
           cleanups.push(() => { window.removeEventListener("pointermove", cursorMove); cursorTargets.forEach((target) => { target.removeEventListener("pointerenter", cursorEnter); target.removeEventListener("pointerleave", cursorLeave); }); });
@@ -440,7 +315,11 @@ export function OpeningExperience() {
       <header className="site-nav">
         <a href="#top" className="site-nav__logo">SH®</a>
         <nav aria-label="Primary navigation">
-          <a href="#work">Work</a><a href="#about">About</a><a className="nav-contact" href="#contact"><span>Info &amp; contact</span><i>↘</i></a>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a className="instagram-link" href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">
+            <span aria-hidden="true"><i /></span>
+          </a>
         </nav>
       </header>
 
@@ -464,10 +343,11 @@ export function OpeningExperience() {
 
           <div className="entrance-statement">
             <p>We don&apos;t create content.</p>
-            <div className="statement-image"><img src={campaignImage} alt="SocialHaus campaign atmosphere" /></div>
           </div>
 
           <div className="presence-composition">
+            <div className="presence-beam" aria-hidden="true" />
+            <div className="presence-cinema-frame" aria-hidden="true"><i /><i /><i /></div>
             <p className="presence-kicker">We create</p>
             <div className="presence-particles" aria-hidden="true">{Array.from({ length: 64 }, (_, index) => <i className="presence-particle" key={index} style={{ transform: `translate(${((index * 47) % 620) - 310}px, ${((index * 83) % 360) - 180}px)` }} />)}</div>
             <h2 className="presence-word">Presence.</h2>
@@ -476,23 +356,12 @@ export function OpeningExperience() {
             <p className="presence-subline">One studio. Three distinct worlds.</p>
           </div>
 
-          <div className="premium-carousel" aria-label="Selected campaign images">
-            <div className="carousel-heading"><span>Selected atmospheres</span><strong>Inside the Haus</strong></div>
-            <div className="carousel-track">
-              {["01", "02", "03", "04", "05", "06", "07", "08", "09", "10"].map((item, index) => (
-                <figure className={`carousel-card carousel-card--${index + 1}`} key={item}>
-                  <img src={campaignImage} alt="" />
-                  <figcaption><span>SocialHaus / {item}</span><span>Presence study</span></figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
+          <PartnerCarousel />
 
           <div className="threshold entrance-threshold">Threshold / 01</div>
         </div>
       </section>
-      <div id="work"><PresenceChapter /></div>
-      <StudioChapters />
+      <NarrativeChapter />
       <footer id="contact" className="site-footer">
         <div className="site-footer__headline"><span>Let&apos;s create</span><strong>something felt.</strong></div>
         <a className="site-footer__email" href="mailto:hello@socialhaus.gr">hello@socialhaus.gr</a>
