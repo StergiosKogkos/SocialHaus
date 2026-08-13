@@ -180,7 +180,6 @@ function NarrativeChapter() {
             ))}
           </div>
         </article>
-        <div className="narrative-portal" aria-hidden="true" />
         <div className="narrative-owl" aria-hidden="true">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/brand/socialhaus-owl.png" alt="" />
@@ -250,14 +249,13 @@ export function OpeningExperience() {
         gsap.set(".brand-invitation span", { yPercent: 110 });
         gsap.set(".brand-interlude", { opacity: 0, scale: 0.96 });
         gsap.set(".brand-interlude__owl", { rotate: -18, scale: 0.82 });
-        gsap.set(".brand-interlude__wordmark", { scale: 0.94 });
-        gsap.set(".brand-interlude__blackout", { opacity: 0 });
+        gsap.set(".brand-interlude__wordmark-far", { opacity: 1, scale: 0.94 });
+        gsap.set(".brand-interlude__wordmark-near", { opacity: 0, scale: 0.38, xPercent: -50, yPercent: -50 });
         gsap.set(".hero__video-type", { opacity: 0 });
         gsap.set(".narrative-panel", { opacity: 0 });
-        gsap.set(".narrative-portal", { opacity: 1, scale: 1 });
+        gsap.set(".narrative-about", { opacity: 1 });
         gsap.set(".narrative-owl", { opacity: 0, scale: 0.78, rotate: -12 });
         gsap.set(".narrative-blackout", { opacity: 0, scale: 1.08 });
-        gsap.set(".narrative-about h2", { color: "#f2f2ef" });
         gsap.set(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 0 });
         gsap.set(".narrative-about .narrative-copy p, .narrative-signoff", { opacity: 0, yPercent: 24 });
         gsap.set(".narrative-services header, .narrative-service", { opacity: 0, yPercent: 16 });
@@ -330,8 +328,11 @@ export function OpeningExperience() {
           .to(".brand-interlude", { opacity: 1, scale: 1, duration: 0.26, ease: "power2.out" }, 2.64)
           .to(".brand-interlude__owl", { rotate: 0, scale: 1, duration: 0.34, ease: "power3.out" }, 2.64)
           .to(".brand-interlude__owl, .brand-interlude__rule", { opacity: 0, scale: 0.92, duration: 0.2, ease: "power2.in" }, 2.92)
-          .to(".brand-interlude__wordmark", { scale: 10, duration: 0.56, ease: "sine.inOut" }, 2.92)
-          .to(".brand-interlude__blackout", { opacity: 1, duration: 0.08, ease: "power2.inOut" }, 3.4);
+          .to(".brand-interlude__wordmark-far", { scale: 4, duration: 0.28, ease: "sine.inOut" }, 2.92)
+          .to(".brand-interlude__wordmark-near", { opacity: 1, duration: 0.12, ease: "power1.inOut" }, 3.08)
+          .to(".brand-interlude__wordmark-far", { opacity: 0, duration: 0.12, ease: "power1.inOut" }, 3.08)
+          .to(".brand-interlude__wordmark-near", { scale: 1.04, duration: 0.36, ease: "sine.inOut" }, 3.08)
+          .to(".brand-interlude", { opacity: 0, duration: 0.08, ease: "power2.inOut" }, 3.44);
 
         gsap.timeline({
             defaults: { ease: "none", force3D: true },
@@ -345,9 +346,6 @@ export function OpeningExperience() {
               fastScrollEnd: false,
             },
           })
-          .to(".narrative-portal", { opacity: 0, scale: 1.03, duration: 0.06, ease: "power2.out" }, 0)
-          .to(".narrative-about", { opacity: 1, duration: 0.1 }, 0)
-          .to(".narrative-about h2", { color: "#171715", duration: 0.08, ease: "power1.out" }, 0)
           .to(".narrative-about .narrative-copy p", { opacity: 1, yPercent: 0, duration: 0.28, stagger: 0.1 }, 0.3)
           .to(".narrative-signoff", { opacity: 1, yPercent: 0, duration: 0.2 }, 0.58)
           .to(".narrative-about", { opacity: 1, duration: 0.18 }, 0.8)
@@ -450,9 +448,11 @@ export function OpeningExperience() {
             <span className="brand-interlude__rule" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="brand-interlude__owl" src="/assets/brand/socialhaus-owl.png" alt="" />
-            <div className="brand-interlude__wordmark"><span>SOCIALHAUS</span></div>
+            <div className="brand-interlude__wordmark">
+              <span className="brand-interlude__wordmark-far">SOCIALHAUS</span>
+              <span className="brand-interlude__wordmark-near">SOCIALHAUS</span>
+            </div>
             <span className="brand-interlude__rule" />
-            <div className="brand-interlude__blackout" />
           </div>
 
         </div>

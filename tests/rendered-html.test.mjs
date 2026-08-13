@@ -73,11 +73,12 @@ test("keeps motion, responsiveness, and reduced-motion support intentional", asy
   assert.match(scene, /hero-video__media/);
   assert.match(scene, /hero__video-type/);
   assert.match(scene, /brand-interlude/);
-  assert.match(scene, /brand-interlude__wordmark", \{ scale: 10/);
+  assert.match(scene, /brand-interlude__wordmark-far", \{ scale: 4/);
+  assert.match(scene, /brand-interlude__wordmark-near", \{ scale: 1\.04/);
   assert.doesNotMatch(scene, /brand-interlude__about-tease/);
   assert.doesNotMatch(scene, /brand-interlude__wordmark-art|brand-interlude__wordmark-type/);
   assert.doesNotMatch(scene, /haus-cursor__ring/);
-  assert.match(scene, /narrative-portal/);
+  assert.doesNotMatch(scene, /narrative-portal/);
   assert.match(scene, /narrative-owl/);
   assert.doesNotMatch(scene, /className="axis"|className="horizon"/);
   assert.doesNotMatch(scene, /ChapterChrome|entrance-threshold/);

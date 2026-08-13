@@ -2122,41 +2122,35 @@ body.is-loading { overflow: hidden; }
 .brand-interlude__owl,
 .brand-interlude__wordmark { position: relative; z-index: 1; }
 .brand-interlude__wordmark {
+  position: relative;
   display: grid;
   width: clamp(14rem,32vw,34rem);
   place-items: center;
   transform-origin: 50% 50%;
   backface-visibility: hidden;
-  will-change: transform;
 }
 .brand-interlude__wordmark span {
   display: block;
   font-family: var(--display);
-  font-size: clamp(2.3rem,4.4vw,5rem);
   font-weight: 700;
   line-height: .72;
   letter-spacing: -.09em;
   color: #111;
   white-space: nowrap;
   text-rendering: geometricPrecision;
-}
-.brand-interlude__blackout {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  background: #050505;
-  opacity: 0;
-  will-change: opacity;
-}
-
-.narrative-portal {
-  position: absolute;
-  inset: -4%;
-  z-index: 9;
-  background: #050505;
-  pointer-events: none;
-  transform-origin: center;
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
   will-change: transform,opacity;
+}
+.brand-interlude__wordmark-far {
+  font-size: clamp(2.3rem,4.4vw,5rem);
+}
+.brand-interlude__wordmark-near {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 46vw;
+  opacity: 0;
 }
 .narrative-owl {
   position: absolute;
@@ -2223,11 +2217,15 @@ body.is-loading { overflow: hidden; }
   opacity: .58;
 }
 
+.scene-entrance { height: 560vh; }
+
 @media (max-width: 720px) {
   .brand-carousel__heading { align-items: flex-start; gap: .55rem; }
   .brand-carousel__heading span { max-width: 10ch; font-size: clamp(1.9rem,10vw,3.3rem); }
   .brand-carousel__heading strong { font-size: 1.45rem; }
-  .brand-interlude__wordmark span { font-size: clamp(2rem,10vw,3.5rem); }
+  .brand-interlude__wordmark-far { font-size: clamp(2rem,10vw,3.5rem); }
+  .brand-interlude__wordmark-near { font-size: 88vw; }
+  .scene-entrance { height: 500vh; }
   .narrative-services { display: block; }
   .narrative-services__list { display: block; margin-top: 4vh; }
   .narrative-service,
@@ -2244,6 +2242,6 @@ body.is-loading { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   .hero__video-type,
-  .narrative-portal,
   .narrative-owl { display: none; }
+  .scene-entrance { height: auto; }
 }
