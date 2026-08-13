@@ -251,9 +251,7 @@ export function OpeningExperience() {
         gsap.set(".brand-invitation span", { yPercent: 110 });
         gsap.set(".brand-interlude", { opacity: 0, scale: 0.96 });
         gsap.set(".brand-interlude__owl", { rotate: -18, scale: 0.82 });
-        gsap.set(".brand-interlude__wordmark-far", { opacity: 1, scale: 0.94 });
-        gsap.set(".brand-interlude__wordmark-near", { opacity: 0, scale: 0.38, xPercent: -50, yPercent: -50 });
-        gsap.set(".hero-video", { opacity: 1 });
+        gsap.set(".brand-interlude__wordmark-type", { opacity: 1, scale: 0.1, xPercent: -50, yPercent: -50 });
         gsap.set(".hero__video-type", { opacity: 0 });
         gsap.set(".narrative-panel", { opacity: 0 });
         gsap.set(".narrative-about", { opacity: 1 });
@@ -331,10 +329,7 @@ export function OpeningExperience() {
           .to(".brand-interlude", { opacity: 1, scale: 1, duration: 0.26, ease: "power2.out" }, 2.64)
           .to(".brand-interlude__owl", { rotate: 0, scale: 1, duration: 0.34, ease: "power3.out" }, 2.64)
           .to(".brand-interlude__owl, .brand-interlude__rule", { opacity: 0, scale: 0.92, duration: 0.2, ease: "power2.in" }, 2.92)
-          .to(".brand-interlude__wordmark-far", { scale: 4, duration: 0.28, ease: "sine.inOut" }, 2.92)
-          .to(".brand-interlude__wordmark-near", { opacity: 1, duration: 0.12, ease: "power1.inOut" }, 3.08)
-          .to(".brand-interlude__wordmark-far", { opacity: 0, duration: 0.12, ease: "power1.inOut" }, 3.08)
-          .to(".brand-interlude__wordmark-near", { scale: 1.04, duration: 0.36, ease: "sine.inOut" }, 3.08)
+          .to(".brand-interlude__wordmark-type", { scale: 1.04, duration: 0.56, ease: "sine.inOut" }, 2.92)
           .to(".brand-interlude", { opacity: 0, duration: 0.08, ease: "power2.inOut" }, 3.44);
 
         gsap.timeline({
@@ -418,7 +413,6 @@ export function OpeningExperience() {
           <ArchitecturalSpace />
 
           <div className="hero">
-            <VideoWordmark />
             <p className="location">Athens — Mykonos — Northern Greece</p>
             <div className="hero__brand-wrap">
               <h1 className="hero__brand"><span>SOCIAL</span><span>HAUS</span></h1>
@@ -430,6 +424,7 @@ export function OpeningExperience() {
             </div>
             <div className="scroll-cue" aria-hidden="true">Scroll to enter</div>
           </div>
+          <VideoWordmark />
 
           <div className="entrance-statement">
             <p>We don&apos;t create content.</p>
@@ -452,8 +447,7 @@ export function OpeningExperience() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="brand-interlude__owl" src="/assets/brand/socialhaus-owl.png" alt="" />
             <div className="brand-interlude__wordmark">
-              <span className="brand-interlude__wordmark-far">SOCIALHAUS</span>
-              <span className="brand-interlude__wordmark-near">SOCIALHAUS</span>
+              <span className="brand-interlude__wordmark-type">SOCIALHAUS</span>
             </div>
             <span className="brand-interlude__rule" />
           </div>

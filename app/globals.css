@@ -1935,7 +1935,6 @@ body.is-loading { overflow: hidden; }
   z-index: 0;
   overflow: hidden;
   background: #030303;
-  opacity: 1;
   pointer-events: none;
   will-change: opacity;
 }
@@ -1958,12 +1957,7 @@ body.is-loading { overflow: hidden; }
 }
 
 .hero { isolation: isolate; color: #fff; mix-blend-mode: difference; }
-.hero__brand {
-  color: rgba(247,245,255,.88);
-  text-shadow:
-    0 0 1.4rem rgba(213,204,255,.14),
-    0 1.2rem 4rem rgba(0,0,0,.34);
-}
+.hero__brand { color: #fff; text-shadow: 0 1.2rem 4rem rgba(0,0,0,.5); }
 
 .brand-carousel {
   color: #111;
@@ -2093,11 +2087,11 @@ body.is-loading { overflow: hidden; }
 .plane--ceiling,
 .plane--floor { border: 0 !important; }
 
-.hero { mix-blend-mode: normal; }
+.hero { mix-blend-mode: difference; }
 .hero__video-type {
   position: absolute;
   inset: 0;
-  z-index: 4;
+  z-index: 12;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -2105,7 +2099,6 @@ body.is-loading { overflow: hidden; }
   transform: translate3d(0,0,0);
   will-change: opacity;
 }
-.hero > :not(.hero__video-type) { position: relative; z-index: 1; }
 
 .brand-carousel__heading {
   align-items: flex-end;
@@ -2149,15 +2142,11 @@ body.is-loading { overflow: hidden; }
   backface-visibility: hidden;
   will-change: transform,opacity;
 }
-.brand-interlude__wordmark-far {
-  font-size: clamp(2.3rem,4.4vw,5rem);
-}
-.brand-interlude__wordmark-near {
+.brand-interlude__wordmark-type {
   position: absolute;
   top: 50%;
   left: 50%;
   font-size: 46vw;
-  opacity: 0;
 }
 .narrative-owl {
   position: absolute;
@@ -2230,8 +2219,7 @@ body.is-loading { overflow: hidden; }
   .brand-carousel__heading { align-items: flex-start; gap: .55rem; }
   .brand-carousel__heading span { max-width: 10ch; font-size: clamp(1.9rem,10vw,3.3rem); }
   .brand-carousel__heading strong { font-size: 1.45rem; }
-  .brand-interlude__wordmark-far { font-size: clamp(2rem,10vw,3.5rem); }
-  .brand-interlude__wordmark-near { font-size: 88vw; }
+  .brand-interlude__wordmark-type { font-size: 88vw; }
   .scene-entrance { height: 500vh; }
   .narrative-services { display: block; }
   .narrative-services__list { display: block; margin-top: 4vh; }
