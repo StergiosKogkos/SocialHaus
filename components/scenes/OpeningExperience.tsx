@@ -55,6 +55,7 @@ function ChapterChrome({ chapter, label }: { chapter: string; label: string }) {
 }
 
 const interruptions = ["Strategy.", "Identity.", "Content.", "Production.", "Presence."];
+const campaignImage = "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=2200&q=90";
 
 function PresenceChapter() {
   return (
@@ -166,7 +167,10 @@ export function OpeningExperience() {
         gsap.set(".scene-entrance .architecture", { opacity: 0 });
         gsap.set(".entrance-statement", { opacity: 0, yPercent: 12, scale: 0.97 });
         gsap.set(".presence-kicker, .presence-word, .presence-meta, .presence-subline, .presence-rule", { opacity: 0 });
-        gsap.set(".presence-word", { scale: 0.62, yPercent: 14 });
+        gsap.set(".presence-letter", { opacity: 0, scale: 0.05, filter: "blur(12px)" });
+        gsap.set(".statement-image", { opacity: 0, scale: 1.14, clipPath: "inset(20% 20% 20% 20%)" });
+        gsap.set(".premium-carousel", { opacity: 0, yPercent: 12 });
+        gsap.set(".carousel-card", { opacity: 0, yPercent: 22, rotateY: -12 });
         gsap.set(".descent-gate, .descent-copy", { opacity: 0 });
         gsap.set(".descent-aperture", { scale: 0.12, yPercent: 38 });
         gsap.set(".descent-rail", { scaleY: 0 });
@@ -221,6 +225,7 @@ export function OpeningExperience() {
           .to(".hero__brand", { scale: 5.8, opacity: 0, duration: 0.16 }, 0.51)
           .to(".scene-entrance .portal", { scale: 1.18, duration: 0.25 }, 0.34)
           .to(".entrance-statement", { opacity: 1, yPercent: 0, scale: 1, duration: 0.15 }, 0.56)
+          .to(".statement-image", { opacity: 1, scale: 1, clipPath: "inset(0% 0% 0% 0%)", duration: 0.2 }, 0.58)
           .to(".entrance-statement", { opacity: 1, duration: 0.12 }, 0.71)
           .to(".entrance-statement", { opacity: 0, yPercent: -8, scale: 1.035, duration: 0.12 }, 0.83)
           .to(".scene-entrance .architecture", { opacity: 0.22, duration: 0.13 }, 0.84)
@@ -228,24 +233,33 @@ export function OpeningExperience() {
           .to(".entrance-threshold", { opacity: 0, duration: 0.08 }, 0.96)
           .to(".scene-entrance .architecture", { opacity: 0.06, duration: 0.15 }, 0.96)
           .fromTo(".presence-kicker", { yPercent: 45 }, { opacity: 1, yPercent: 0, duration: 0.13 }, 1.1)
-          .to(".presence-word", { opacity: 1, scale: 1, yPercent: 0, duration: 0.25 }, 1.18)
+          .to(".presence-word", { opacity: 1, duration: 0.08 }, 1.16)
+          .fromTo(".presence-letter", {
+            x: (index) => ((index % 2 ? 1 : -1) * (90 + index * 24)),
+            y: (index) => ((index % 3) - 1) * 110,
+            rotate: (index) => index % 2 ? 38 : -42,
+          }, { x: 0, y: 0, rotate: 0, opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.3, stagger: 0.025 }, 1.18)
           .to(".presence-word", { scale: 1.08, duration: 0.2 }, 1.43)
           .to(".presence-rule", { opacity: 1, scaleX: 1, duration: 0.14 }, 1.48)
           .fromTo(".presence-meta", { yPercent: 38 }, { opacity: 1, yPercent: 0, duration: 0.16 }, 1.58)
           .fromTo(".presence-subline", { yPercent: 45 }, { opacity: 1, yPercent: 0, duration: 0.15 }, 1.7)
           .to(".scene-entrance .portal", { scale: 1.7, duration: 0.28 }, 1.15)
           .to(".scene-entrance .architecture", { opacity: 0.04, duration: 0.2 }, 1.54)
-          .to(".presence-composition", { yPercent: -14, scale: 1.04, opacity: 0.12, duration: 0.22 }, 1.9)
+          .to(".presence-composition", { yPercent: -14, scale: 1.04, opacity: 0.08, duration: 0.18 }, 1.9)
+          .to(".premium-carousel", { opacity: 1, yPercent: 0, duration: 0.18 }, 1.96)
+          .to(".carousel-card", { opacity: 1, yPercent: 0, rotateY: 0, duration: 0.3, stagger: 0.035 }, 2.0)
+          .to(".carousel-track", { xPercent: -18, duration: 0.34 }, 2.08)
+          .to(".premium-carousel", { opacity: 0, yPercent: -10, duration: 0.18 }, 2.33)
           .to(".chrome", { opacity: 0, yPercent: -20, duration: 0.16 }, 1.9)
-          .to(".descent-gate", { opacity: 1, duration: 0.12 }, 1.94)
-          .to(".descent-aperture", { scale: 1, yPercent: 0, duration: 0.3 }, 1.94)
-          .to(".descent-rail", { scaleY: 1, duration: 0.24 }, 2.0)
-          .to(".descent-copy", { opacity: 1, yPercent: 0, duration: 0.18 }, 2.08)
-          .fromTo(".descent-copy", { yPercent: 35 }, { yPercent: 0 }, 2.08)
-          .to(".descent-copy", { opacity: 0, yPercent: -20, duration: 0.12 }, 2.26)
-          .to(".descent-aperture", { scale: 4.2, yPercent: -4, duration: 0.3 }, 2.22)
-          .to(".descent-rail", { opacity: 0, duration: 0.14 }, 2.34)
-          .to(".descent-gate", { backgroundColor: "#e8e3da", duration: 0.18 }, 2.38);
+          .to(".descent-gate", { opacity: 1, duration: 0.12 }, 2.42)
+          .to(".descent-aperture", { scale: 1, yPercent: 0, duration: 0.3 }, 2.42)
+          .to(".descent-rail", { scaleY: 1, duration: 0.24 }, 2.48)
+          .to(".descent-copy", { opacity: 1, yPercent: 0, duration: 0.18 }, 2.56)
+          .fromTo(".descent-copy", { yPercent: 35 }, { yPercent: 0 }, 2.56)
+          .to(".descent-copy", { opacity: 0, yPercent: -20, duration: 0.12 }, 2.72)
+          .to(".descent-aperture", { scale: 4.2, yPercent: -4, duration: 0.3 }, 2.68)
+          .to(".descent-rail", { opacity: 0, duration: 0.14 }, 2.8)
+          .to(".descent-gate", { backgroundColor: "#e8e3da", duration: 0.18 }, 2.84);
 
         const isMobile = window.matchMedia("(max-width: 720px)").matches;
 
@@ -395,8 +409,14 @@ export function OpeningExperience() {
     <main ref={root} className="experience">
       {showLoader && <Loader complete={introComplete} />}
       <div className="noise" aria-hidden="true" />
+      <header className="site-nav">
+        <a href="#top" className="site-nav__logo">SH®</a>
+        <nav aria-label="Primary navigation">
+          <a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a>
+        </nav>
+      </header>
 
-      <section className="cinematic-scene scene-entrance" aria-label="Scene 01 — Entrance">
+      <section id="top" className="cinematic-scene scene-entrance" aria-label="Scene 01 — Entrance">
         <div className="scene-viewport">
           <ArchitecturalSpace />
           <ChapterChrome chapter="01" label="Entrance" />
@@ -416,14 +436,27 @@ export function OpeningExperience() {
 
           <div className="entrance-statement">
             <p>We don&apos;t create content.</p>
+            <div className="statement-image"><img src={campaignImage} alt="SocialHaus campaign atmosphere" /></div>
           </div>
 
           <div className="presence-composition">
             <p className="presence-kicker">We create</p>
-            <h2 className="presence-word">Presence.</h2>
+            <h2 className="presence-word" aria-label="Presence.">{"Presence.".split("").map((letter, index) => <span className="presence-letter" key={`${letter}-${index}`}>{letter}</span>)}</h2>
             <div className="presence-rule" aria-hidden="true" />
             <p className="presence-meta">Athens — Mykonos — Northern Greece</p>
             <p className="presence-subline">One studio. Three distinct worlds.</p>
+          </div>
+
+          <div className="premium-carousel" aria-label="Selected campaign images">
+            <div className="carousel-heading"><span>Selected atmospheres</span><strong>Inside the Haus</strong></div>
+            <div className="carousel-track">
+              {["01", "02", "03", "04", "05"].map((item, index) => (
+                <figure className={`carousel-card carousel-card--${index + 1}`} key={item}>
+                  <img src={campaignImage} alt="" />
+                  <figcaption><span>SocialHaus / {item}</span><span>Presence study</span></figcaption>
+                </figure>
+              ))}
+            </div>
           </div>
 
           <div className="descent-gate" aria-hidden="true">
@@ -444,7 +477,18 @@ export function OpeningExperience() {
           <div className="threshold entrance-threshold">Threshold / 01</div>
         </div>
       </section>
-      <PresenceChapter />
+      <div id="work"><PresenceChapter /></div>
+      <footer id="contact" className="site-footer">
+        <div id="about" className="site-footer__headline"><span>Let&apos;s create</span><strong>something felt.</strong></div>
+        <a className="site-footer__email" href="mailto:hello@socialhaus.gr">hello@socialhaus.gr</a>
+        <div className="site-footer__grid">
+          <div><span>Call</span><a href="tel:+302310000000">+30 2310 000 000</a></div>
+          <div><span>Find us</span><p>Athens · Mykonos<br />Northern Greece</p></div>
+          <div><span>Follow</span><a href="#top">Instagram ↗</a><a href="#top">LinkedIn ↗</a></div>
+          <div><span>Studio hours</span><p>Mon — Fri<br />10:00 — 18:00</p></div>
+        </div>
+        <div className="site-footer__base"><span>© 2026 SocialHaus</span><span>Creative studio / Greece</span><a href="#top">Back to top ↑</a></div>
+      </footer>
     </main>
   );
 }

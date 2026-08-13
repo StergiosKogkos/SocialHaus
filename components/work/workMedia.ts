@@ -19,6 +19,7 @@ export const workMedia: WorkMediaItem[] = [
   {
     id: "placeholder-01",
     kind: "video",
+    src: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=2200&q=90",
     alt: "Reserved full-screen campaign film",
     aspectRatio: "16 / 9",
     objectPosition: "50% 50%",
@@ -29,6 +30,7 @@ export const workMedia: WorkMediaItem[] = [
   {
     id: "placeholder-02",
     kind: "image",
+    src: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1800&q=90",
     alt: "Reserved portrait hospitality campaign image",
     aspectRatio: "4 / 5",
     objectPosition: "50% 44%",
@@ -39,6 +41,7 @@ export const workMedia: WorkMediaItem[] = [
   {
     id: "placeholder-03",
     kind: "video",
+    src: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=90",
     alt: "Reserved vertical social film",
     aspectRatio: "9 / 16",
     objectPosition: "50% 50%",
@@ -49,6 +52,7 @@ export const workMedia: WorkMediaItem[] = [
   {
     id: "placeholder-04",
     kind: "image",
+    src: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=2200&q=90",
     alt: "Reserved panoramic lifestyle campaign image",
     aspectRatio: "21 / 9",
     objectPosition: "58% 50%",
@@ -59,6 +63,7 @@ export const workMedia: WorkMediaItem[] = [
   {
     id: "placeholder-05",
     kind: "image",
+    src: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=90",
     alt: "Reserved brand identity image",
     aspectRatio: "3 / 4",
     objectPosition: "50% 50%",
@@ -69,6 +74,7 @@ export const workMedia: WorkMediaItem[] = [
   {
     id: "placeholder-06",
     kind: "video",
+    src: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=2000&q=90",
     alt: "Reserved production sequence",
     aspectRatio: "16 / 10",
     objectPosition: "50% 50%",

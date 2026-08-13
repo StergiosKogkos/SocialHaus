@@ -21,7 +21,7 @@ export function WorkMedia({ item, className = "", priority = false }: WorkMediaP
       aria-label={`${item.client}, ${item.project}`}
     >
       <div className="work-media__surface">
-        {item.kind === "image" && item.src ? (
+        {item.src ? (
           // Local campaign paths are supplied by the work manifest.
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -32,7 +32,7 @@ export function WorkMedia({ item, className = "", priority = false }: WorkMediaP
           />
         ) : null}
 
-        {item.kind === "video" && item.src ? (
+        {false && item.kind === "video" && item.src ? (
           <video
             muted
             playsInline
