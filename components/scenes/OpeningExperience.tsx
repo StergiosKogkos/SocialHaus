@@ -20,15 +20,6 @@ function ArchitecturalSpace({ className = "" }: { className?: string }) {
   );
 }
 
-function ChapterChrome({ chapter, label }: { chapter: string; label: string }) {
-  return (
-    <div className="chrome" aria-hidden="true">
-      <div className="chapter">Scene <span>{chapter}</span> / {label}</div>
-      <div className="chrome__mark" />
-    </div>
-  );
-}
-
 const services = [
   ["01", "Content Creation", "Σχεδιάζουμε περιεχόμενο με αφηγηματική συνέπεια και αισθητική επιμέλεια, που αντικατοπτρίζει με ακρίβεια τον χαρακτήρα του brand."],
   ["02", "Social Media Management", "Αναλαμβάνουμε την ολιστική διαχείριση της παρουσίας σας στα social media, με προσεκτικό σχεδιασμό περιεχομένου, στρατηγική δημοσιεύσεων και συνεχή ανάλυση απόδοσης."],
@@ -99,11 +90,6 @@ function NarrativeChapter() {
       <span id="about" className="narrative-anchor narrative-anchor--about" />
       <span id="services" className="narrative-anchor narrative-anchor--services" />
       <div className="scene-viewport scene-viewport--narrative">
-        <div className="chrome chrome--narrative" aria-hidden="true">
-          <div className="chapter">Scene <span>03</span> / The studio</div>
-          <div className="chrome__mark" />
-        </div>
-
         <article className="narrative-panel narrative-about">
           <p className="narrative-eyebrow">About us / SocialHaus</p>
           <h2><span>This is what</span><em>presence looks like.</em></h2>
@@ -189,7 +175,9 @@ export function OpeningExperience() {
         gsap.set(".brand-carousel", { opacity: 0, yPercent: 8 });
         gsap.set(".brand-slide", { opacity: 0, yPercent: 18, rotateY: -10 });
         gsap.set(".brand-invitation span", { yPercent: 110 });
-        gsap.set(".chrome--narrative, .narrative-panel", { opacity: 0 });
+        gsap.set(".brand-interlude", { opacity: 0, scale: 0.96 });
+        gsap.set(".brand-interlude__owl", { rotate: -18, scale: 0.82 });
+        gsap.set(".narrative-panel", { opacity: 0 });
         gsap.set(".narrative-blackout", { opacity: 0, scale: 1.08 });
         gsap.set(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 120 });
         gsap.set(".narrative-about .narrative-copy p, .narrative-signoff", { opacity: 0, yPercent: 24 });
@@ -207,6 +195,8 @@ export function OpeningExperience() {
               fastScrollEnd: false,
             },
           })
+          .to(".hero-video__media", { scale: 1.07, duration: 0.28 }, 0.02)
+          .to(".hero-video", { opacity: 0, duration: 0.26, ease: "power2.inOut" }, 0.04)
           .to(".hero__brand", { scale: 1.08, duration: 0.13 }, 0.04)
           .fromTo(
             ".scene-entrance .location",
@@ -237,8 +227,6 @@ export function OpeningExperience() {
           .to(".entrance-statement", { opacity: 1, duration: 0.12 }, 0.71)
           .to(".entrance-statement", { opacity: 0, yPercent: -8, scale: 1.035, duration: 0.12 }, 0.83)
           .to(".scene-entrance .architecture", { opacity: 0.22, duration: 0.13 }, 0.84)
-          .to(".entrance-threshold", { opacity: 1, duration: 0.08 }, 0.82)
-          .to(".entrance-threshold", { opacity: 0, duration: 0.08 }, 0.96)
           .to(".scene-entrance .architecture", { opacity: 0.06, duration: 0.15 }, 0.96)
           .fromTo(".presence-kicker", { yPercent: 45 }, { opacity: 1, yPercent: 0, duration: 0.13 }, 1.1)
           .to(".presence-word", { opacity: 1, clipPath: "inset(0 0% 0 0)", filter: "blur(0px)", letterSpacing: "-0.095em", duration: 0.34, ease: "power2.inOut" }, 1.19)
@@ -256,8 +244,10 @@ export function OpeningExperience() {
           .to(".brand-carousel__track", { xPercent: -54, duration: 0.56 }, 2.13)
           .to(".brand-invitation span", { yPercent: 0, duration: 0.3, stagger: 0.08 }, 2.24)
           .to(".brand-carousel", { opacity: 0, yPercent: -4, duration: 0.2 }, 2.6)
-          .to(".chrome", { opacity: 0, yPercent: -20, duration: 0.16 }, 1.9)
-          .to(".scene-entrance .architecture", { opacity: 0, duration: 0.2 }, 2.56);
+          .to(".scene-entrance .architecture", { opacity: 0, duration: 0.2 }, 2.56)
+          .to(".brand-interlude", { opacity: 1, scale: 1, duration: 0.26, ease: "power2.out" }, 2.64)
+          .to(".brand-interlude__owl", { rotate: 0, scale: 1, duration: 0.34, ease: "power3.out" }, 2.64)
+          .to(".brand-interlude", { opacity: 0, scale: 1.035, duration: 0.2, ease: "power2.inOut" }, 2.98);
 
         gsap.timeline({
             defaults: { ease: "none", force3D: true },
@@ -271,7 +261,6 @@ export function OpeningExperience() {
               fastScrollEnd: false,
             },
           })
-          .to(".chrome--narrative", { opacity: 1, duration: 0.15 }, 0.05)
           .to(".narrative-about", { opacity: 1, duration: 0.18 }, 0.08)
           .to(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 0, duration: 0.34, stagger: 0.08 }, 0.12)
           .to(".narrative-about .narrative-copy p", { opacity: 1, yPercent: 0, duration: 0.28, stagger: 0.1 }, 0.35)
@@ -283,8 +272,7 @@ export function OpeningExperience() {
           .to(".narrative-service", { opacity: 1, yPercent: 0, duration: 0.28, stagger: 0.025 }, 1.3)
           .to(".narrative-services", { opacity: 1, duration: 0.2 }, 1.62)
           .to(".narrative-services", { opacity: 0, yPercent: -2, scale: 0.99, duration: 0.24 }, 1.84)
-          .to(".narrative-blackout", { opacity: 1, scale: 1, duration: 0.42, ease: "power2.inOut" }, 1.78)
-          .to(".chrome--narrative", { opacity: 0, duration: 0.18 }, 1.98);
+          .to(".narrative-blackout", { opacity: 1, scale: 1, duration: 0.42, ease: "power2.inOut" }, 1.78);
 
         if (window.matchMedia("(pointer: fine)").matches) {
           const cursorDotX = gsap.quickTo(".haus-cursor__dot", "x", { duration: .18, ease: "power3.out" });
@@ -300,7 +288,6 @@ export function OpeningExperience() {
           cleanups.push(() => { window.removeEventListener("pointermove", cursorMove); cursorTargets.forEach((target) => { target.removeEventListener("pointerenter", cursorEnter); target.removeEventListener("pointerleave", cursorLeave); }); });
         }
 
-        gsap.to(".scroll-progress__fill", { scaleY: 1, ease: "none", scrollTrigger: { trigger: root.current, start: "top top", end: "bottom bottom", scrub: .25 } });
       }, root);
 
       const refreshFrame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
@@ -324,22 +311,29 @@ export function OpeningExperience() {
     <main ref={root} className="experience">
       <div className="noise" aria-hidden="true" />
       <div className="haus-cursor" aria-hidden="true"><i className="haus-cursor__ring" /><i className="haus-cursor__dot" /></div>
-      <div className="scroll-progress" aria-hidden="true"><span>SH</span><i><b className="scroll-progress__fill" /></i><span>06</span></div>
       <header className="site-nav">
-        <a href="#top" className="site-nav__logo">SH®</a>
         <nav aria-label="Primary navigation">
-          <a href="#about">About</a>
-          <a href="#services">Services</a>
           <a className="instagram-link" href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">
             <span aria-hidden="true"><i /></span>
           </a>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
         </nav>
       </header>
+      <a className="owl-mark" href="#top" aria-label="Back to the SocialHaus entrance">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/assets/brand/socialhaus-owl.png" alt="" />
+      </a>
 
-      <section id="top" className="cinematic-scene scene-entrance" aria-label="Scene 01 — Entrance">
+      <section id="top" className="cinematic-scene scene-entrance" aria-label="SocialHaus entrance">
         <div className="scene-viewport">
+          <div className="hero-video" aria-hidden="true">
+            <video className="hero-video__media" autoPlay muted loop playsInline preload="auto" poster="/assets/brand/socialhaus-hero-poster.jpg">
+              <source src="/assets/brand/socialhaus-hero.mp4" type="video/mp4" />
+            </video>
+            <div className="hero-video__veil" />
+          </div>
           <ArchitecturalSpace />
-          <ChapterChrome chapter="01" label="Entrance" />
 
           <div className="hero">
             <p className="location">Athens — Mykonos — Northern Greece</p>
@@ -370,18 +364,25 @@ export function OpeningExperience() {
 
           <PartnerCarousel />
 
-          <div className="threshold entrance-threshold">Threshold / 01</div>
+          <div className="brand-interlude" aria-hidden="true">
+            <span className="brand-interlude__rule" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="brand-interlude__owl" src="/assets/brand/socialhaus-owl.png" alt="" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="brand-interlude__wordmark" src="/assets/brand/socialhaus-wordmark.png" alt="" />
+            <span className="brand-interlude__rule" />
+          </div>
+
         </div>
       </section>
       <NarrativeChapter />
       <footer id="contact" className="site-footer">
         <div className="site-footer__headline"><span>Let&apos;s create</span><strong>something felt.</strong></div>
-        <a className="site-footer__email" href="mailto:hello@socialhaus.gr">hello@socialhaus.gr</a>
+        <a className="site-footer__email" href="mailto:aposskamnos@gmail.com">aposskamnos@gmail.com</a>
         <div className="site-footer__grid">
-          <div><span>Call</span><a href="tel:+302310000000">+30 2310 000 000</a></div>
-          <div><span>Find us</span><p>Athens · Mykonos<br />Northern Greece</p></div>
-          <div><span>Follow</span><a href="#top">Instagram ↗</a><a href="#top">LinkedIn ↗</a></div>
-          <div><span>Studio hours</span><p>Mon — Fri<br />10:00 — 18:00</p></div>
+          <div><span>Call</span><a href="tel:+306980183236">+30 698 018 3236</a></div>
+          <div><span>Find us</span><p>Νήλεως 32<br />Αθήνα</p></div>
+          <div><span>Follow</span><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram ↗</a></div>
         </div>
         <div className="site-footer__base"><span>© 2026 SocialHaus</span><span>Creative studio / Greece</span><a href="#top">Back to top ↑</a></div>
       </footer>
