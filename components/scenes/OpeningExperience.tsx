@@ -9,24 +9,6 @@ import { workMedia } from "../work/workMedia";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function Loader({ complete }: { complete: boolean }) {
-  return (
-    <div
-      className={`loader${complete ? " loader--complete" : ""}`}
-      role="status"
-      aria-live="polite"
-      aria-label="SocialHaus is opening"
-    >
-      <div className="loader__inner">
-        <p className="loader__index">SH / 00 — Athens</p>
-        <p className="loader__brand" aria-hidden="true">SOCIALHAUS</p>
-        <div className="loader__line" aria-hidden="true" />
-        <p className="loader__status">Preparing the threshold</p>
-      </div>
-    </div>
-  );
-}
-
 function ArchitecturalSpace({ className = "" }: { className?: string }) {
   return (
     <div className={`architecture ${className}`} aria-hidden="true">
@@ -105,26 +87,12 @@ function PresenceChapter() {
 export function OpeningExperience() {
   const root = useRef<HTMLElement>(null);
   const [introComplete, setIntroComplete] = useState(false);
-  const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    document.body.classList.add("is-loading");
-
-    const revealTimer = window.setTimeout(() => {
-      setIntroComplete(true);
-      document.body.classList.remove("is-loading");
-    }, reducedMotion ? 80 : 2300);
-
-    const removeTimer = window.setTimeout(
-      () => setShowLoader(false),
-      reducedMotion ? 120 : 3300,
-    );
+    const revealTimer = window.setTimeout(() => setIntroComplete(true), 40);
 
     return () => {
       window.clearTimeout(revealTimer);
-      window.clearTimeout(removeTimer);
-      document.body.classList.remove("is-loading");
     };
   }, []);
 
@@ -167,13 +135,11 @@ export function OpeningExperience() {
         gsap.set(".scene-entrance .architecture", { opacity: 0 });
         gsap.set(".entrance-statement", { opacity: 0, yPercent: 12, scale: 0.97 });
         gsap.set(".presence-kicker, .presence-word, .presence-meta, .presence-subline, .presence-rule", { opacity: 0 });
-        gsap.set(".presence-letter", { opacity: 0, scale: 0.05, filter: "blur(12px)" });
+        gsap.set(".presence-word", { clipPath: "inset(0 100% 0 0)", filter: "blur(10px)", letterSpacing: "0.04em" });
+        gsap.set(".presence-particle", { opacity: 0, scale: 0 });
         gsap.set(".statement-image", { opacity: 0, scale: 1.14, clipPath: "inset(20% 20% 20% 20%)" });
         gsap.set(".premium-carousel", { opacity: 0, yPercent: 12 });
         gsap.set(".carousel-card", { opacity: 0, yPercent: 22, rotateY: -12 });
-        gsap.set(".descent-gate, .descent-copy", { opacity: 0 });
-        gsap.set(".descent-aperture", { scale: 0.12, yPercent: 38 });
-        gsap.set(".descent-rail", { scaleY: 0 });
         gsap.set(".chrome--presence, .showreel-intro, .chapter-outro", { opacity: 0 });
         gsap.set(".showreel-intro__label", { yPercent: 70 });
         gsap.set(".showreel-intro h2 span", { yPercent: 115 });
@@ -233,12 +199,10 @@ export function OpeningExperience() {
           .to(".entrance-threshold", { opacity: 0, duration: 0.08 }, 0.96)
           .to(".scene-entrance .architecture", { opacity: 0.06, duration: 0.15 }, 0.96)
           .fromTo(".presence-kicker", { yPercent: 45 }, { opacity: 1, yPercent: 0, duration: 0.13 }, 1.1)
-          .to(".presence-word", { opacity: 1, duration: 0.08 }, 1.16)
-          .fromTo(".presence-letter", {
-            x: (index) => ((index % 2 ? 1 : -1) * (90 + index * 24)),
-            y: (index) => ((index % 3) - 1) * 110,
-            rotate: (index) => index % 2 ? 38 : -42,
-          }, { x: 0, y: 0, rotate: 0, opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.3, stagger: 0.025 }, 1.18)
+          .to(".presence-particle", { opacity: 1, scale: 1, duration: 0.08, stagger: 0.006 }, 1.14)
+          .to(".presence-particle", { x: 0, y: 0, duration: 0.28, stagger: 0.004, ease: "power2.inOut" }, 1.16)
+          .to(".presence-word", { opacity: 1, clipPath: "inset(0 0% 0 0)", filter: "blur(0px)", letterSpacing: "-0.095em", duration: 0.34, ease: "power2.inOut" }, 1.19)
+          .to(".presence-particle", { opacity: 0, scale: 0.2, duration: 0.16, stagger: 0.002 }, 1.43)
           .to(".presence-word", { scale: 1.08, duration: 0.2 }, 1.43)
           .to(".presence-rule", { opacity: 1, scaleX: 1, duration: 0.14 }, 1.48)
           .fromTo(".presence-meta", { yPercent: 38 }, { opacity: 1, yPercent: 0, duration: 0.16 }, 1.58)
@@ -248,18 +212,10 @@ export function OpeningExperience() {
           .to(".presence-composition", { yPercent: -14, scale: 1.04, opacity: 0.08, duration: 0.18 }, 1.9)
           .to(".premium-carousel", { opacity: 1, yPercent: 0, duration: 0.18 }, 1.96)
           .to(".carousel-card", { opacity: 1, yPercent: 0, rotateY: 0, duration: 0.3, stagger: 0.035 }, 2.0)
-          .to(".carousel-track", { xPercent: -18, duration: 0.34 }, 2.08)
-          .to(".premium-carousel", { opacity: 0, yPercent: -10, duration: 0.18 }, 2.33)
+          .to(".premium-carousel", { opacity: 1, duration: 0.34 }, 2.08)
+          .to(".premium-carousel", { opacity: 0, scale: 1.035, filter: "blur(10px)", duration: 0.24 }, 2.46)
           .to(".chrome", { opacity: 0, yPercent: -20, duration: 0.16 }, 1.9)
-          .to(".descent-gate", { opacity: 1, duration: 0.12 }, 2.42)
-          .to(".descent-aperture", { scale: 1, yPercent: 0, duration: 0.3 }, 2.42)
-          .to(".descent-rail", { scaleY: 1, duration: 0.24 }, 2.48)
-          .to(".descent-copy", { opacity: 1, yPercent: 0, duration: 0.18 }, 2.56)
-          .fromTo(".descent-copy", { yPercent: 35 }, { yPercent: 0 }, 2.56)
-          .to(".descent-copy", { opacity: 0, yPercent: -20, duration: 0.12 }, 2.72)
-          .to(".descent-aperture", { scale: 4.2, yPercent: -4, duration: 0.3 }, 2.68)
-          .to(".descent-rail", { opacity: 0, duration: 0.14 }, 2.8)
-          .to(".descent-gate", { backgroundColor: "#e8e3da", duration: 0.18 }, 2.84);
+          .to(".scene-entrance .architecture", { opacity: 0, duration: 0.22 }, 2.44);
 
         const isMobile = window.matchMedia("(max-width: 720px)").matches;
 
@@ -407,12 +363,11 @@ export function OpeningExperience() {
 
   return (
     <main ref={root} className="experience">
-      {showLoader && <Loader complete={introComplete} />}
       <div className="noise" aria-hidden="true" />
       <header className="site-nav">
         <a href="#top" className="site-nav__logo">SH®</a>
         <nav aria-label="Primary navigation">
-          <a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a>
+          <a href="#work">Work</a><a href="#about">About</a><a className="nav-contact" href="#contact"><span>Info &amp; contact</span><i>↘</i></a>
         </nav>
       </header>
 
@@ -441,7 +396,8 @@ export function OpeningExperience() {
 
           <div className="presence-composition">
             <p className="presence-kicker">We create</p>
-            <h2 className="presence-word" aria-label="Presence.">{"Presence.".split("").map((letter, index) => <span className="presence-letter" key={`${letter}-${index}`}>{letter}</span>)}</h2>
+            <div className="presence-particles" aria-hidden="true">{Array.from({ length: 64 }, (_, index) => <i className="presence-particle" key={index} style={{ transform: `translate(${((index * 47) % 620) - 310}px, ${((index * 83) % 360) - 180}px)` }} />)}</div>
+            <h2 className="presence-word">Presence.</h2>
             <div className="presence-rule" aria-hidden="true" />
             <p className="presence-meta">Athens — Mykonos — Northern Greece</p>
             <p className="presence-subline">One studio. Three distinct worlds.</p>
@@ -450,28 +406,13 @@ export function OpeningExperience() {
           <div className="premium-carousel" aria-label="Selected campaign images">
             <div className="carousel-heading"><span>Selected atmospheres</span><strong>Inside the Haus</strong></div>
             <div className="carousel-track">
-              {["01", "02", "03", "04", "05"].map((item, index) => (
+              {["01", "02", "03", "04", "05", "06", "07", "08", "09", "10"].map((item, index) => (
                 <figure className={`carousel-card carousel-card--${index + 1}`} key={item}>
                   <img src={campaignImage} alt="" />
                   <figcaption><span>SocialHaus / {item}</span><span>Presence study</span></figcaption>
                 </figure>
               ))}
             </div>
-          </div>
-
-          <div className="descent-gate" aria-hidden="true">
-            <div className="descent-aperture">
-              <div className="descent-aperture__frame descent-aperture__frame--one" />
-              <div className="descent-aperture__frame descent-aperture__frame--two" />
-              <div className="descent-aperture__void" />
-            </div>
-            <div className="descent-rail descent-rail--left" />
-            <div className="descent-rail descent-rail--right" />
-          </div>
-
-          <div className="descent-copy">
-            <span>Next passage</span>
-            <strong>Descend into the worlds</strong>
           </div>
 
           <div className="threshold entrance-threshold">Threshold / 01</div>
