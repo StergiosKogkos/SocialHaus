@@ -253,6 +253,7 @@ export function OpeningExperience() {
         gsap.set(".brand-interlude__owl", { rotate: -18, scale: 0.82 });
         gsap.set(".brand-interlude__wordmark-far", { opacity: 1, scale: 0.94 });
         gsap.set(".brand-interlude__wordmark-near", { opacity: 0, scale: 0.38, xPercent: -50, yPercent: -50 });
+        gsap.set(".hero-video", { opacity: 1 });
         gsap.set(".hero__video-type", { opacity: 0 });
         gsap.set(".narrative-panel", { opacity: 0 });
         gsap.set(".narrative-about", { opacity: 1 });

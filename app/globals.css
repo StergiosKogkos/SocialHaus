@@ -1935,6 +1935,7 @@ body.is-loading { overflow: hidden; }
   z-index: 0;
   overflow: hidden;
   background: #030303;
+  opacity: 1;
   pointer-events: none;
   will-change: opacity;
 }
@@ -1957,7 +1958,12 @@ body.is-loading { overflow: hidden; }
 }
 
 .hero { isolation: isolate; color: #fff; mix-blend-mode: difference; }
-.hero__brand { color: #fff; text-shadow: 0 1.2rem 4rem rgba(0,0,0,.5); }
+.hero__brand {
+  color: rgba(247,245,255,.88);
+  text-shadow:
+    0 0 1.4rem rgba(213,204,255,.14),
+    0 1.2rem 4rem rgba(0,0,0,.34);
+}
 
 .brand-carousel {
   color: #111;

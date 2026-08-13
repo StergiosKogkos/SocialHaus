@@ -71,6 +71,7 @@ test("keeps motion, responsiveness, and reduced-motion support intentional", asy
   assert.doesNotMatch(scene, /narrative-services__list", \{ yPercent/);
   assert.match(scene, /narrative-blackout/);
   assert.match(scene, /hero-video__media/);
+  assert.match(scene, /gsap\.set\("\.hero-video", \{ opacity: 1 \}\)/);
   assert.match(scene, /hero__video-type/);
   assert.match(scene, /hero__video-type", \{ opacity: 1, duration: 0\.14/);
   assert.match(scene, /hero__video-type", \{ opacity: 0, duration: 0\.14[\s\S]*\}, 0\.55\)/);
@@ -90,6 +91,7 @@ test("keeps motion, responsiveness, and reduced-motion support intentional", asy
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(css, /@media \(max-width: 720px\)/);
   assert.match(css, /\.hero-video/);
+  assert.match(css, /\.hero__brand \{[\s\S]*color: rgba\(247,245,255,\.88\)/);
   assert.match(css, /\.owl-mark/);
   assert.match(css, /\.brand-interlude/);
   assert.match(css, /\.narrative-services__list[\s\S]*grid-template-columns: repeat\(2,minmax\(0,1fr\)\)/);
