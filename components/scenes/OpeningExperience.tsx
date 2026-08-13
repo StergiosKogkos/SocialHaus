@@ -38,6 +38,18 @@ function ChapterChrome({ chapter, label }: { chapter: string; label: string }) {
 
 const interruptions = ["Strategy.", "Identity.", "Content.", "Production.", "Presence."];
 const campaignImage = "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=2200&q=90";
+const services = [
+  ["01", "Content Creation", "Περιεχόμενο με αφηγηματική συνέπεια και αισθητική ακρίβεια."],
+  ["02", "Social Media Management", "Ολιστική διαχείριση, στρατηγική δημοσιεύσεων και ανάλυση απόδοσης."],
+  ["03", "Photography", "Φωτογραφικό υλικό υψηλής αισθητικής για προϊόντα, χώρους και events."],
+  ["04", "Drone & Aerial", "Σπάνιες εναέριες οπτικές για hospitality, real estate και εμπειρίες."],
+  ["05", "Graphic Design", "Μία συνεπής οπτική γλώσσα που παραμένει αναγνωρίσιμη παντού."],
+  ["06", "Campaign Design", "Προωθητικό υλικό που μεταφέρει το μήνυμα με σαφήνεια και στιλ."],
+  ["07", "Branding", "Λογότυπο, παλέτα, τυπογραφία και guidelines διαχρονικής αξίας."],
+  ["08", "Strategic Communications", "Όραμα, μήνυμα και κοινό σε μία μετρήσιμη στρατηγική."],
+];
+const partnerNames = ["Στην Αυλή", "Myconian", "Nuera Mykonos", "Maya Experience", "Casa di Giorgio", "Anema", "Tabu Mykonos", "Εμπορικό Βιομηχανικό Επιμελητήριο Ροδόπης", "You Nails Hair", "Promenade Mykonos", "BOHO Nature Seaside", "Moana", "La Corte", "Βιβλιοχαρτεμπορική"];
+const partnerLogos = partnerNames.map((name, index) => ({ name, src: `/assets/partners/${String(index + 1).padStart(2, "0")}.png` }));
 
 function PresenceChapter() {
   return (
@@ -81,6 +93,45 @@ function PresenceChapter() {
         </div>
       </div>
     </section>
+  );
+}
+
+function StudioChapters() {
+  return (
+    <>
+      <section id="about" className="manifesto-section">
+        <div className="manifesto-orbit" aria-hidden="true"><span>DETAIL</span><span>CONSISTENCY</span><span>STRATEGY</span></div>
+        <p className="section-index">03 / The studio</p>
+        <div className="manifesto-copy">
+          <p className="manifesto-lead">Η πολυτέλεια δεν είναι αισθητική επιλογή.</p>
+          <h2>Είναι το αποτέλεσμα της <em>λεπτομέρειας.</em></h2>
+          <div className="manifesto-body">
+            <p>Η SocialHaus είναι ένα creative studio μάρκετινγκ που χτίζει brands με ταυτότητα, χαρακτήρα και διάρκεια.</p>
+            <p>Αθήνα, Μύκονος και Βόρεια Ελλάδα ενώνονται σε μία εξειδικευμένη προσέγγιση — από τη στρατηγική έως το τελικό visual.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="services-section" aria-label="Οι υπηρεσίες μας">
+        <header><p className="section-index">04 / Capabilities</p><h2>Everything a brand needs.<br /><em>Nothing it doesn&apos;t.</em></h2></header>
+        <div className="services-list">
+          {services.map(([number, title, description]) => <article className="service-row" key={number}>
+            <span>{number}</span><h3>{title}</h3><p>{description}</p><i>↗</i>
+          </article>)}
+        </div>
+      </section>
+
+      <section className="partners-section" aria-label="Selected collaborations">
+        <div className="partners-sticky">
+          <p className="section-index">05 / House of brands</p>
+          <h2>Trusted to shape<br /><em>their presence.</em></h2>
+          <div className="partner-wall">
+            {partnerLogos.map((logo) => <figure key={logo.src}><img src={logo.src} alt={logo.name} /></figure>)}
+          </div>
+          <p className="partners-note">Selected collaborations · Hospitality · Food &amp; Beverage · Lifestyle · Culture</p>
+        </div>
+      </section>
+    </>
   );
 }
 
@@ -332,6 +383,11 @@ export function OpeningExperience() {
           .to(".chapter-outro > p:last-child", { opacity: 1, yPercent: 0, duration: 0.22 }, 4.9)
           .to(".chapter-outro", { opacity: 1, duration: 0.4 }, 5.08);
 
+        gsap.fromTo(".manifesto-copy h2", { yPercent: 18, opacity: 0 }, { yPercent: 0, opacity: 1, ease: "power3.out", scrollTrigger: { trigger: ".manifesto-section", start: "top 68%", end: "top 28%", scrub: 1 } });
+        gsap.fromTo(".manifesto-body p", { y: 70, opacity: 0 }, { y: 0, opacity: 1, stagger: .12, ease: "power3.out", scrollTrigger: { trigger: ".manifesto-body", start: "top 88%", end: "top 58%", scrub: 1 } });
+        gsap.fromTo(".service-row", { xPercent: -5, opacity: .15 }, { xPercent: 0, opacity: 1, stagger: .04, ease: "none", scrollTrigger: { trigger: ".services-list", start: "top 82%", end: "center 55%", scrub: 1 } });
+        gsap.fromTo(".partner-wall figure", { scale: .78, opacity: 0 }, { scale: 1, opacity: 1, stagger: .025, ease: "power2.out", scrollTrigger: { trigger: ".partner-wall", start: "top 86%", end: "center 60%", scrub: 1 } });
+
         if (window.matchMedia("(pointer: fine)").matches) {
           const portalX = gsap.quickTo(".portal", "x", { duration: 0.9, ease: "power3.out" });
           const portalY = gsap.quickTo(".portal", "y", { duration: 0.9, ease: "power3.out" });
@@ -419,8 +475,9 @@ export function OpeningExperience() {
         </div>
       </section>
       <div id="work"><PresenceChapter /></div>
+      <StudioChapters />
       <footer id="contact" className="site-footer">
-        <div id="about" className="site-footer__headline"><span>Let&apos;s create</span><strong>something felt.</strong></div>
+        <div className="site-footer__headline"><span>Let&apos;s create</span><strong>something felt.</strong></div>
         <a className="site-footer__email" href="mailto:hello@socialhaus.gr">hello@socialhaus.gr</a>
         <div className="site-footer__grid">
           <div><span>Call</span><a href="tel:+302310000000">+30 2310 000 000</a></div>
