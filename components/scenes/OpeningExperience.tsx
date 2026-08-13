@@ -25,9 +25,9 @@ function Loader({ complete }: { complete: boolean }) {
   );
 }
 
-function ArchitecturalSpace() {
+function ArchitecturalSpace({ className = "" }: { className?: string }) {
   return (
-    <div className="architecture" aria-hidden="true">
+    <div className={`architecture ${className}`} aria-hidden="true">
       <div className="plane plane--left" />
       <div className="plane plane--right" />
       <div className="plane plane--ceiling" />
@@ -39,6 +39,15 @@ function ArchitecturalSpace() {
         <div className="portal__ring portal__ring--2" />
         <div className="portal__ring portal__ring--3" />
       </div>
+    </div>
+  );
+}
+
+function ChapterChrome({ chapter, label }: { chapter: string; label: string }) {
+  return (
+    <div className="chrome" aria-hidden="true">
+      <div className="chapter">Scene <span>{chapter}</span> / {label}</div>
+      <div className="chrome__mark" />
     </div>
   );
 }
@@ -73,90 +82,146 @@ export function OpeningExperience() {
     if (!introComplete || !root.current) return;
 
     const media = gsap.matchMedia();
-    let lenis: Lenis | undefined;
-    let raf: ((time: number) => void) | undefined;
+    const cleanups: Array<() => void> = [];
 
     media.add("(prefers-reduced-motion: no-preference)", () => {
-      lenis = new Lenis({ duration: 1.05, smoothWheel: true, touchMultiplier: 1.1 });
-      lenis.on("scroll", ScrollTrigger.update);
-      raf = (time: number) => lenis?.raf(time * 1000);
+      const lenis = new Lenis({
+        autoRaf: false,
+        duration: 1.15,
+        smoothWheel: true,
+        syncTouch: false,
+        touchMultiplier: 1,
+        wheelMultiplier: 0.88,
+      });
+
+      const updateScrollTrigger = () => ScrollTrigger.update();
+      const raf = (time: number) => lenis.raf(time * 1000);
+
+      lenis.on("scroll", updateScrollTrigger);
       gsap.ticker.add(raf);
       gsap.ticker.lagSmoothing(0);
 
       const context = gsap.context(() => {
         gsap
           .timeline({ defaults: { ease: "power3.out" } })
-          .to(".location", { opacity: 1, duration: 0.9 }, 0.1)
+          .to(".scene-entrance .location", { opacity: 1, duration: 0.9 }, 0.1)
           .fromTo(
             ".hero__brand",
-            { opacity: 0, yPercent: 115, rotate: 1.5 },
-            { opacity: 1, yPercent: 0, rotate: 0, duration: 1.25 },
+            { opacity: 0, yPercent: 110, rotate: 1.2 },
+            { opacity: 1, yPercent: 0, rotate: 0, duration: 1.35 },
             0.16,
           )
-          .to(".entry", { opacity: 1, duration: 0.8 }, 0.75)
-          .to(".scroll-cue", { opacity: 1, duration: 0.7 }, 1.05);
+          .to(".entry", { opacity: 1, duration: 0.85 }, 0.78)
+          .to(".scroll-cue", { opacity: 1, duration: 0.7 }, 1.08);
+
+        gsap.set(".scene-entrance .architecture", { opacity: 0 });
+        gsap.set(".entrance-statement", { opacity: 0, yPercent: 12, scale: 0.97 });
 
         gsap
           .timeline({
-            defaults: { ease: "none" },
+            defaults: { ease: "none", force3D: true },
             scrollTrigger: {
-              trigger: ".opening",
+              id: "scene-entrance",
+              trigger: ".scene-entrance",
               start: "top top",
               end: "bottom bottom",
-              scrub: 0.25,
+              scrub: 1.15,
               invalidateOnRefresh: true,
+              fastScrollEnd: false,
             },
           })
-          .to(".hero__brand", { scale: 1.45, yPercent: -95, opacity: 0, duration: 0.17 }, 0.02)
-          .to(".location", { y: -80, opacity: 0, duration: 0.1 }, 0.03)
-          .to(".entry, .scroll-cue", { y: 55, opacity: 0, duration: 0.1 }, 0.03)
-          .to(".architecture", { opacity: 1, duration: 0.12 }, 0.08)
-          .fromTo(".portal", { scale: 0.42 }, { scale: 1, duration: 0.24 }, 0.08)
-          .fromTo(".plane--left", { xPercent: -18 }, { xPercent: 0, duration: 0.22 }, 0.08)
-          .fromTo(".plane--right", { xPercent: 18 }, { xPercent: 0, duration: 0.22 }, 0.08)
-          .fromTo(".plane--ceiling", { yPercent: -22 }, { yPercent: 0, duration: 0.22 }, 0.08)
-          .fromTo(".plane--floor", { yPercent: 22 }, { yPercent: 0, duration: 0.22 }, 0.08)
+          .to(".hero__brand", { scale: 1.08, duration: 0.13 }, 0.04)
           .fromTo(
-            ".frame--one",
-            { y: 60, scale: 0.97 },
-            { opacity: 1, y: 0, scale: 1, duration: 0.13 },
-            0.23,
+            ".scene-entrance .location",
+            { yPercent: 0, opacity: 1 },
+            { yPercent: -35, opacity: 0, duration: 0.13 },
+            0.07,
           )
-          .to(".frame--one", { opacity: 0, y: -45, scale: 1.05, duration: 0.1 }, 0.43)
-          .to(".portal", { scale: 2.55, duration: 0.28 }, 0.43)
-          .to(".portal__ring", { scale: 1.35, opacity: 0, duration: 0.24 }, 0.44)
-          .to(".plane--left", { xPercent: -32, scaleX: 1.18, duration: 0.26 }, 0.44)
-          .to(".plane--right", { xPercent: 32, scaleX: -1.18, duration: 0.26 }, 0.44)
-          .to(".plane--ceiling", { yPercent: -34, scaleY: 1.25, duration: 0.26 }, 0.44)
-          .to(".plane--floor", { yPercent: 34, scaleY: 1.25, duration: 0.26 }, 0.44)
           .fromTo(
-            ".frame--two",
-            { y: 80, scale: 0.94 },
-            { opacity: 1, y: 0, scale: 1, duration: 0.14 },
-            0.58,
+            ".entry, .scroll-cue",
+            { yPercent: 0, opacity: 1 },
+            { yPercent: 35, opacity: 0, duration: 0.12 },
+            0.07,
           )
-          .to(".threshold", { opacity: 1, duration: 0.09 }, 0.76)
-          .to(".architecture", { filter: "brightness(0.55)", duration: 0.18 }, 0.79);
+          .to(".scene-entrance .architecture", { opacity: 1, duration: 0.2 }, 0.12)
+          .fromTo(".scene-entrance .portal", { scale: 0.48 }, { scale: 0.86, duration: 0.24 }, 0.12)
+          .fromTo(".scene-entrance .plane--left", { xPercent: -16 }, { xPercent: 0, duration: 0.24 }, 0.12)
+          .fromTo(".scene-entrance .plane--right", { xPercent: 16 }, { xPercent: 0, duration: 0.24 }, 0.12)
+          .fromTo(".scene-entrance .plane--ceiling", { yPercent: -18 }, { yPercent: 0, duration: 0.24 }, 0.12)
+          .fromTo(".scene-entrance .plane--floor", { yPercent: 18 }, { yPercent: 0, duration: 0.24 }, 0.12)
+          .to(".hero__brand", { scale: 1.65, duration: 0.17 }, 0.17)
+          .fromTo(
+            ".hero__brand",
+            { scale: 1.65, opacity: 1 },
+            { scale: 3.15, opacity: 0.72, duration: 0.17, immediateRender: false },
+            0.34,
+          )
+          .to(".hero__brand", { scale: 5.8, opacity: 0, duration: 0.16 }, 0.51)
+          .to(".scene-entrance .portal", { scale: 1.18, duration: 0.25 }, 0.34)
+          .to(".entrance-statement", { opacity: 1, yPercent: 0, scale: 1, duration: 0.15 }, 0.56)
+          .to(".entrance-statement", { opacity: 1, duration: 0.12 }, 0.71)
+          .to(".entrance-statement", { opacity: 0, yPercent: -8, scale: 1.035, duration: 0.12 }, 0.83)
+          .to(".scene-entrance .architecture", { opacity: 0.22, duration: 0.13 }, 0.84)
+          .to(".entrance-threshold", { opacity: 1, duration: 0.08 }, 0.82);
+
+        gsap.set(".presence-kicker, .scene-presence .chrome", { opacity: 0 });
+        gsap.set(".presence-word", { opacity: 0, scale: 0.62, yPercent: 14 });
+        gsap.set(".presence-meta, .presence-subline, .presence-rule", { opacity: 0 });
+        gsap.set(".scene-presence .architecture", { opacity: 0 });
+
+        gsap
+          .timeline({
+            defaults: { ease: "none", force3D: true },
+            scrollTrigger: {
+              id: "scene-presence",
+              trigger: ".scene-presence",
+              start: "top top",
+              end: "bottom bottom",
+              scrub: 1.25,
+              invalidateOnRefresh: true,
+              fastScrollEnd: false,
+            },
+          })
+          .to(".scene-presence .architecture", { opacity: 0.16, duration: 0.15 }, 0.12)
+          .to(".scene-presence .portal", { scale: 1.7, duration: 0.24 }, 0.12)
+          .to(".scene-presence .chrome", { opacity: 1, duration: 0.12 }, 0.17)
+          .to(".presence-kicker", { opacity: 1, yPercent: 0, duration: 0.12 }, 0.2)
+          .fromTo(".presence-kicker", { yPercent: 45 }, { yPercent: 0 }, 0.2)
+          .to(".presence-word", { opacity: 1, scale: 1, yPercent: 0, duration: 0.22 }, 0.26)
+          .to(".presence-word", { scale: 1.08, duration: 0.18 }, 0.48)
+          .to(".presence-rule", { opacity: 1, scaleX: 1, duration: 0.12 }, 0.54)
+          .to(".presence-meta", { opacity: 1, yPercent: 0, duration: 0.15 }, 0.61)
+          .fromTo(".presence-meta", { yPercent: 38 }, { yPercent: 0 }, 0.61)
+          .to(".presence-subline", { opacity: 1, yPercent: 0, duration: 0.13 }, 0.72)
+          .fromTo(".presence-subline", { yPercent: 45 }, { yPercent: 0 }, 0.72)
+          .to(".scene-presence .architecture", { opacity: 0.05, duration: 0.15 }, 0.76)
+          .to(".presence-continuation", { opacity: 1, duration: 0.1 }, 0.86);
 
         if (window.matchMedia("(pointer: fine)").matches) {
-          const portalX = gsap.quickTo(".portal", "x", { duration: 0.8, ease: "power3.out" });
-          const portalY = gsap.quickTo(".portal", "y", { duration: 0.8, ease: "power3.out" });
+          const portalX = gsap.quickTo(".portal", "x", { duration: 0.9, ease: "power3.out" });
+          const portalY = gsap.quickTo(".portal", "y", { duration: 0.9, ease: "power3.out" });
           const move = (event: PointerEvent) => {
-            portalX((event.clientX / window.innerWidth - 0.5) * 10);
-            portalY((event.clientY / window.innerHeight - 0.5) * 7);
+            portalX((event.clientX / window.innerWidth - 0.5) * 8);
+            portalY((event.clientY / window.innerHeight - 0.5) * 5);
           };
           window.addEventListener("pointermove", move, { passive: true });
-          return () => window.removeEventListener("pointermove", move);
+          cleanups.push(() => window.removeEventListener("pointermove", move));
         }
       }, root);
 
-      ScrollTrigger.refresh();
-      return () => context.revert();
+      const refreshFrame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
+
+      cleanups.push(() => {
+        window.cancelAnimationFrame(refreshFrame);
+        context.revert();
+        gsap.ticker.remove(raf);
+        lenis.off("scroll", updateScrollTrigger);
+        lenis.destroy();
+      });
     });
 
     return () => {
-      if (raf) gsap.ticker.remove(raf);
-      lenis?.destroy();
+      cleanups.reverse().forEach((cleanup) => cleanup());
       media.revert();
     };
   }, [introComplete]);
@@ -166,18 +231,15 @@ export function OpeningExperience() {
       {showLoader && <Loader complete={introComplete} />}
       <div className="noise" aria-hidden="true" />
 
-      <section className="opening" aria-label="Enter the SocialHaus opening experience">
-        <div className="opening__viewport">
+      <section className="cinematic-scene scene-entrance" aria-label="Scene 01 — Entrance">
+        <div className="scene-viewport">
           <ArchitecturalSpace />
-          <div className="chrome" aria-hidden="true">
-            <div className="chapter">Chapter <span>01</span></div>
-            <div className="chrome__mark" />
-          </div>
+          <ChapterChrome chapter="01" label="Entrance" />
 
           <div className="hero">
             <p className="location">Athens — Mykonos — Northern Greece</p>
             <div className="hero__brand-wrap">
-              <h1 className="hero__brand">SOCIALHAUS</h1>
+              <h1 className="hero__brand"><span>SOCIAL</span><span>HAUS</span></h1>
             </div>
             <div className="entry">
               <span className="entry__line" />
@@ -187,15 +249,31 @@ export function OpeningExperience() {
             <div className="scroll-cue" aria-hidden="true">Scroll to enter</div>
           </div>
 
-          <div className="frame frame--one">
-            <p className="frame__text">We don&apos;t create content.</p>
+          <div className="entrance-statement">
+            <p>We don&apos;t create content.</p>
           </div>
-          <div className="frame frame--two">
-            <p className="frame__text">We create presence.</p>
-          </div>
-          <div className="threshold">Threshold / 01</div>
+          <div className="threshold entrance-threshold">Threshold / 01</div>
         </div>
       </section>
+
+      <section className="cinematic-scene scene-presence" aria-label="Scene 02 — Presence">
+        <div className="scene-viewport">
+          <ArchitecturalSpace className="architecture--presence" />
+          <ChapterChrome chapter="02" label="Presence" />
+
+          <div className="presence-composition">
+            <p className="presence-kicker">We create</p>
+            <h2 className="presence-word">Presence.</h2>
+            <div className="presence-rule" aria-hidden="true" />
+            <p className="presence-meta">Athens — Mykonos — Northern Greece</p>
+            <p className="presence-subline">One studio. Three distinct worlds.</p>
+          </div>
+
+          <div className="threshold presence-continuation">The worlds / Next</div>
+        </div>
+      </section>
+
+      <div className="continuation-space" aria-hidden="true" />
     </main>
   );
 }
