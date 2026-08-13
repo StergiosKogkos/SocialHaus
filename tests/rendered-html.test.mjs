@@ -29,6 +29,9 @@ test("server-renders the SocialHaus narrative journey", async () => {
   assert.doesNotMatch(html, /presence-particle/);
   assert.match(html, /One studio\. Three distinct worlds\./);
   assert.match(html, /Selected collaborations/);
+  assert.match(html, /Who we work with\./);
+  assert.match(html, /instagram\.com\/casadigiorgio\.mykonos/);
+  assert.match(html, /instagram\.com\/promenademykonos/);
   assert.match(html, /Your brand/);
   assert.match(html, /belongs here\./);
   assert.match(html, /This is what/);
@@ -57,6 +60,8 @@ test("keeps motion, responsiveness, and reduced-motion support intentional", asy
   assert.match(scene, /id: "scene-narrative"/);
   assert.match(scene, /scrub: 1\.2/);
   assert.match(scene, /partnerLogos\.map/);
+  assert.doesNotMatch(scene, /narrative-services__list", \{ yPercent/);
+  assert.match(scene, /narrative-blackout/);
   assert.doesNotMatch(scene, /campaignImage|premium-carousel|statement-image/);
   assert.match(scene, /gsap\.ticker\.add/);
   assert.match(scene, /lenis\.on\("scroll", updateScrollTrigger\)/);

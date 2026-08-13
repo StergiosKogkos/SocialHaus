@@ -39,8 +39,22 @@ const services = [
   ["07", "Logo Creation & Branding", "Αποτυπώνουμε την ουσία του brand σας σε μια οπτική ταυτότητα διαχρονικής αξίας — λογότυπο, χρωματική παλέτα, τυπογραφία και brand guidelines που χτίζουν εμπιστοσύνη."],
   ["08", "Strategic Communications", "Σχεδιάζουμε στρατηγικές επικοινωνίας που ευθυγραμμίζουν όραμα, μήνυμα και κοινό-στόχο, με έμφαση στα μετρήσιμα, μακροπρόθεσμα αποτελέσματα."],
 ];
-const partnerNames = ["Στην Αυλή", "Myconian", "Nuera Mykonos", "Maya Experience", "Casa di Giorgio", "Anema", "Tabu Mykonos", "Εμπορικό Βιομηχανικό Επιμελητήριο Ροδόπης", "You Nails Hair", "Promenade Mykonos", "BOHO Nature Seaside", "Moana", "La Corte", "Βιβλιοχαρτεμπορική"];
-const partnerLogos = partnerNames.map((name, index) => ({ name, src: `/assets/partners/${String(index + 1).padStart(2, "0")}.png` }));
+const partnerLogos = [
+  { name: "Στην Εντατική", src: "/assets/partners/01.png", href: "https://www.facebook.com/avantgardekomotini/", linkLabel: "Official" },
+  { name: "Myconian", src: "/assets/partners/02.png", href: "https://www.instagram.com/myconiancollectionhotels/", linkLabel: "Instagram" },
+  { name: "Nuera Mykonos", src: "/assets/partners/03.png", href: "https://www.instagram.com/nueramykonos/", linkLabel: "Instagram" },
+  { name: "Maya Experience", src: "/assets/partners/04.png", href: "https://www.instagram.com/explore/search/keyword/?q=Maya%20Experience%20Greece", linkLabel: "Find" },
+  { name: "Casa di Giorgio", src: "/assets/partners/05.png", href: "https://www.instagram.com/casadigiorgio.mykonos/", linkLabel: "Instagram" },
+  { name: "Anema", src: "/assets/partners/06.png", href: "https://www.instagram.com/anemabbqmykonos/", linkLabel: "Instagram" },
+  { name: "Tabu Mykonos", src: "/assets/partners/07.png", href: "https://www.instagram.com/tabu.myk/", linkLabel: "Instagram" },
+  { name: "Εμπορικό Βιομηχανικό Επιμελητήριο Ροδόπης", src: "/assets/partners/08.png", href: "https://www.rodopichamber.gr/", linkLabel: "Official" },
+  { name: "You Nails Hair", src: "/assets/partners/09.png", href: "https://www.instagram.com/younailsyouhair/", linkLabel: "Instagram" },
+  { name: "Promenade Mykonos", src: "/assets/partners/10.png", href: "https://www.instagram.com/promenademykonos/", linkLabel: "Instagram" },
+  { name: "BOHO Nature Seaside", src: "/assets/partners/11.png", href: "https://www.facebook.com/bohonatureseaside/", linkLabel: "Official" },
+  { name: "Moana", src: "/assets/partners/12.png", href: "https://www.instagram.com/moana_beachhouse/", linkLabel: "Instagram" },
+  { name: "La Corte", src: "/assets/partners/13.png", href: "https://www.instagram.com/la.corte.experience/", linkLabel: "Instagram" },
+  { name: "Βιβλιοχαρτεμπορική", src: "/assets/partners/14.png", href: "https://www.instagram.com/explore/search/keyword/?q=%CE%92%CE%B9%CE%B2%CE%BB%CE%B9%CE%BF%CF%87%CE%B1%CF%81%CF%84%CE%B5%CE%BC%CF%80%CE%BF%CF%81%CE%B9%CE%BA%CE%AE", linkLabel: "Find" },
+];
 
 const aboutParagraphs = [
   "Η SocialHaus είναι ένα creative studio μάρκετινγκ που χτίζει brands με ταυτότητα, χαρακτήρα και διάρκεια. Με έδρα την Αθήνα και παρουσία στη Μύκονο και στη Βόρεια Ελλάδα, συνδυάζουμε τον παλμό της πρωτεύουσας, τη διεθνή αύρα του νησιού και τη δυναμική της βόρειας αγοράς σε μία ενιαία, εξειδικευμένη προσέγγιση.",
@@ -52,18 +66,19 @@ function PartnerCarousel() {
   return (
     <div className="brand-carousel" aria-label="Selected collaborations">
       <div className="brand-carousel__heading">
-        <span>Selected collaborations</span>
-        <strong>Inside the Haus</strong>
+        <span>Selected collaborations / 01—14</span>
+        <strong>Who we work with.</strong>
       </div>
       <div className="brand-carousel__track">
         {partnerLogos.map((logo, index) => (
-          <figure className="brand-slide" key={logo.src}>
+          <a className="brand-slide" href={logo.href} target="_blank" rel="noreferrer" key={logo.src} aria-label={`Open ${logo.name} ${logo.linkLabel}`}>
             <span>{String(index + 1).padStart(2, "0")}</span>
+            <i className="brand-slide__link">{logo.linkLabel} ↗</i>
             {/* Local partner marks are supplied as transparent PNG assets. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={logo.src} alt={logo.name} />
             <figcaption>{logo.name}</figcaption>
-          </figure>
+          </a>
         ))}
         <a className="brand-slide brand-slide--invitation" href="#contact">
           <span>15 / Next</span>
@@ -111,6 +126,7 @@ function NarrativeChapter() {
             ))}
           </div>
         </article>
+        <div className="narrative-blackout" aria-hidden="true" />
       </div>
     </section>
   );
@@ -174,6 +190,7 @@ export function OpeningExperience() {
         gsap.set(".brand-slide", { opacity: 0, yPercent: 18, rotateY: -10 });
         gsap.set(".brand-invitation span", { yPercent: 110 });
         gsap.set(".chrome--narrative, .narrative-panel", { opacity: 0 });
+        gsap.set(".narrative-blackout", { opacity: 0, scale: 1.08 });
         gsap.set(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 120 });
         gsap.set(".narrative-about .narrative-copy p, .narrative-signoff", { opacity: 0, yPercent: 24 });
         gsap.set(".narrative-services header, .narrative-service", { opacity: 0, yPercent: 16 });
@@ -236,12 +253,11 @@ export function OpeningExperience() {
           .to(".presence-composition", { yPercent: -8, scale: 1.09, opacity: 0, duration: 0.24 }, 1.9)
           .to(".brand-carousel", { opacity: 1, yPercent: 0, duration: 0.22 }, 1.98)
           .to(".brand-slide", { opacity: 1, yPercent: 0, rotateY: 0, duration: 0.34, stagger: 0.018 }, 2.02)
-          .to(".brand-carousel__track", { xPercent: -54, duration: 0.72 }, 2.15)
+          .to(".brand-carousel__track", { xPercent: -54, duration: 0.56 }, 2.13)
           .to(".brand-invitation span", { yPercent: 0, duration: 0.3, stagger: 0.08 }, 2.24)
-          .to(".brand-carousel", { opacity: 1, duration: 0.3 }, 2.48)
-          .to(".brand-carousel", { opacity: 0, yPercent: -5, duration: 0.22 }, 2.78)
+          .to(".brand-carousel", { opacity: 0, yPercent: -4, duration: 0.2 }, 2.6)
           .to(".chrome", { opacity: 0, yPercent: -20, duration: 0.16 }, 1.9)
-          .to(".scene-entrance .architecture", { opacity: 0, duration: 0.22 }, 2.72);
+          .to(".scene-entrance .architecture", { opacity: 0, duration: 0.2 }, 2.56);
 
         gsap.timeline({
             defaults: { ease: "none", force3D: true },
@@ -260,14 +276,15 @@ export function OpeningExperience() {
           .to(".narrative-about h2 span, .narrative-about h2 em", { yPercent: 0, duration: 0.34, stagger: 0.08 }, 0.12)
           .to(".narrative-about .narrative-copy p", { opacity: 1, yPercent: 0, duration: 0.28, stagger: 0.1 }, 0.35)
           .to(".narrative-signoff", { opacity: 1, yPercent: 0, duration: 0.2 }, 0.62)
-          .to(".narrative-about", { opacity: 1, duration: 0.32 }, 0.8)
-          .to(".narrative-about", { opacity: 0, yPercent: -10, scale: 0.98, duration: 0.3 }, 1.18)
-          .to(".narrative-services", { opacity: 1, duration: 0.2 }, 1.38)
-          .to(".narrative-services header", { opacity: 1, yPercent: 0, duration: 0.28 }, 1.42)
-          .to(".narrative-service", { opacity: 1, yPercent: 0, duration: 0.38, stagger: 0.045 }, 1.58)
-          .to(".narrative-services__list", { yPercent: -28, duration: 0.75 }, 1.78)
-          .to(".narrative-services", { opacity: 1, duration: 0.32 }, 2.38)
-          .to(".chrome--narrative", { opacity: 0, duration: 0.18 }, 2.55);
+          .to(".narrative-about", { opacity: 1, duration: 0.18 }, 0.8)
+          .to(".narrative-about", { opacity: 0, yPercent: -8, scale: 0.985, duration: 0.26 }, 0.98)
+          .to(".narrative-services", { opacity: 1, duration: 0.18 }, 1.16)
+          .to(".narrative-services header", { opacity: 1, yPercent: 0, duration: 0.24 }, 1.18)
+          .to(".narrative-service", { opacity: 1, yPercent: 0, duration: 0.28, stagger: 0.025 }, 1.3)
+          .to(".narrative-services", { opacity: 1, duration: 0.2 }, 1.62)
+          .to(".narrative-services", { opacity: 0, yPercent: -2, scale: 0.99, duration: 0.24 }, 1.84)
+          .to(".narrative-blackout", { opacity: 1, scale: 1, duration: 0.42, ease: "power2.inOut" }, 1.78)
+          .to(".chrome--narrative", { opacity: 0, duration: 0.18 }, 1.98);
 
         if (window.matchMedia("(pointer: fine)").matches) {
           const cursorDotX = gsap.quickTo(".haus-cursor__dot", "x", { duration: .18, ease: "power3.out" });
