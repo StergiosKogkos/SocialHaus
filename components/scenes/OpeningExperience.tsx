@@ -127,6 +127,7 @@ function StudioChapters() {
           <h2>Trusted to shape<br /><em>their presence.</em></h2>
           <div className="partner-wall">
             {partnerLogos.map((logo) => <figure key={logo.src}><img src={logo.src} alt={logo.name} /></figure>)}
+            <a className="partner-next" href="#contact"><span>15</span><strong>Your brand<br />belongs here.</strong><i>Start a project ↗</i></a>
           </div>
           <p className="partners-note">Selected collaborations · Hospitality · Food &amp; Beverage · Lifestyle · Culture</p>
         </div>
@@ -397,7 +398,21 @@ export function OpeningExperience() {
           };
           window.addEventListener("pointermove", move, { passive: true });
           cleanups.push(() => window.removeEventListener("pointermove", move));
+
+          const cursorDotX = gsap.quickTo(".haus-cursor__dot", "x", { duration: .18, ease: "power3.out" });
+          const cursorDotY = gsap.quickTo(".haus-cursor__dot", "y", { duration: .18, ease: "power3.out" });
+          const cursorRingX = gsap.quickTo(".haus-cursor__ring", "x", { duration: .55, ease: "power3.out" });
+          const cursorRingY = gsap.quickTo(".haus-cursor__ring", "y", { duration: .55, ease: "power3.out" });
+          const cursorMove = (event: PointerEvent) => { cursorDotX(event.clientX); cursorDotY(event.clientY); cursorRingX(event.clientX); cursorRingY(event.clientY); };
+          const cursorEnter = () => root.current?.classList.add("cursor-is-active");
+          const cursorLeave = () => root.current?.classList.remove("cursor-is-active");
+          const cursorTargets = root.current?.querySelectorAll("a, .service-row, .partner-wall figure") ?? [];
+          cursorTargets.forEach((target) => { target.addEventListener("pointerenter", cursorEnter); target.addEventListener("pointerleave", cursorLeave); });
+          window.addEventListener("pointermove", cursorMove, { passive: true });
+          cleanups.push(() => { window.removeEventListener("pointermove", cursorMove); cursorTargets.forEach((target) => { target.removeEventListener("pointerenter", cursorEnter); target.removeEventListener("pointerleave", cursorLeave); }); });
         }
+
+        gsap.to(".scroll-progress__fill", { scaleY: 1, ease: "none", scrollTrigger: { trigger: root.current, start: "top top", end: "bottom bottom", scrub: .25 } });
       }, root);
 
       const refreshFrame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
@@ -420,6 +435,8 @@ export function OpeningExperience() {
   return (
     <main ref={root} className="experience">
       <div className="noise" aria-hidden="true" />
+      <div className="haus-cursor" aria-hidden="true"><i className="haus-cursor__ring" /><i className="haus-cursor__dot" /></div>
+      <div className="scroll-progress" aria-hidden="true"><span>SH</span><i><b className="scroll-progress__fill" /></i><span>06</span></div>
       <header className="site-nav">
         <a href="#top" className="site-nav__logo">SH®</a>
         <nav aria-label="Primary navigation">
