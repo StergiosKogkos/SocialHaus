@@ -28,7 +28,17 @@ test("server-renders the SocialHaus opening", async () => {
   assert.match(html, /Presence\./);
   assert.match(html, /One studio\. Three distinct worlds\./);
   assert.match(html, /Descend into the worlds/);
-  assert.doesNotMatch(html, /Scene 02 — Presence/);
+  assert.match(html, /Scene 02 — Presence/);
+  assert.match(html, /Selected moments \/ SocialHaus/);
+  assert.match(html, /This is what/);
+  assert.match(html, /presence looks like\./);
+  assert.match(html, /Strategy\./);
+  assert.match(html, /Identity\./);
+  assert.match(html, /Content\./);
+  assert.match(html, /Production\./);
+  assert.match(html, /From idea/);
+  assert.match(html, /to identity\./);
+  assert.match(html, /A complete creative process, built inside the Haus\./);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });
 
@@ -42,7 +52,9 @@ test("keeps the motion foundation intentional and accessible", async () => {
   assert.match(scene, /ScrollTrigger/);
   assert.match(scene, /new Lenis/);
   assert.match(scene, /scrub: 1\.15/);
-  assert.doesNotMatch(scene, /id: "scene-presence"/);
+  assert.match(scene, /id: "scene-presence"/);
+  assert.match(scene, /scrub: 1\.25/);
+  assert.match(scene, /workMedia\.map/);
   assert.match(scene, /gsap\.ticker\.add/);
   assert.match(scene, /lenis\.on\("scroll", updateScrollTrigger\)/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);

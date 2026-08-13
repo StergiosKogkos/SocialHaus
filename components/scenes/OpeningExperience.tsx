@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import { WorkMedia } from "../work/WorkMediaFrame";
+import { workMedia } from "../work/workMedia";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,6 +51,53 @@ function ChapterChrome({ chapter, label }: { chapter: string; label: string }) {
       <div className="chapter">Scene <span>{chapter}</span> / {label}</div>
       <div className="chrome__mark" />
     </div>
+  );
+}
+
+const interruptions = ["Strategy.", "Identity.", "Content.", "Production.", "Presence."];
+
+function PresenceChapter() {
+  return (
+    <section className="cinematic-scene scene-presence" aria-label="Scene 02 — Presence">
+      <div className="scene-viewport scene-viewport--presence">
+        <div className="chrome chrome--presence" aria-hidden="true">
+          <div className="chapter">Scene <span>02</span> / Presence</div>
+          <div className="chrome__mark" />
+        </div>
+
+        <div className="showreel-intro">
+          <p className="showreel-intro__label">Selected moments / SocialHaus</p>
+          <h2>
+            <span>This is what</span>
+            <span>presence looks like.</span>
+          </h2>
+        </div>
+
+        <div className="showreel-stage">
+          {workMedia.map((item, index) => (
+            <WorkMedia
+              key={item.id}
+              item={item}
+              priority={index === 0}
+              className={`media-frame media-frame--0${index + 1}`}
+            />
+          ))}
+        </div>
+
+        <div className="interruptions" aria-hidden="true">
+          {interruptions.map((word, index) => (
+            <p key={word} className={`interrupt interrupt--0${index + 1}`}>{word}</p>
+          ))}
+        </div>
+
+        <div className="chapter-outro">
+          <p className="chapter-outro__index">End frame / 02</p>
+          <h2><span>From idea</span><span>to identity.</span></h2>
+          <div className="chapter-outro__rule" aria-hidden="true" />
+          <p>A complete creative process, built inside the Haus.</p>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -121,6 +170,15 @@ export function OpeningExperience() {
         gsap.set(".descent-gate, .descent-copy", { opacity: 0 });
         gsap.set(".descent-aperture", { scale: 0.12, yPercent: 38 });
         gsap.set(".descent-rail", { scaleY: 0 });
+        gsap.set(".chrome--presence, .showreel-intro, .chapter-outro", { opacity: 0 });
+        gsap.set(".showreel-intro__label", { yPercent: 70 });
+        gsap.set(".showreel-intro h2 span", { yPercent: 115 });
+        gsap.set(".media-frame", { opacity: 0, force3D: true });
+        gsap.set(".media-frame--01", { opacity: 1, scale: 1.04 });
+        gsap.set(".interrupt", { opacity: 0, yPercent: 20 });
+        gsap.set(".chapter-outro h2 span", { yPercent: 115 });
+        gsap.set(".chapter-outro__index, .chapter-outro > p:last-child", { opacity: 0, yPercent: 40 });
+        gsap.set(".chapter-outro__rule", { scaleX: 0 });
 
         gsap.timeline({
             defaults: { ease: "none", force3D: true },
@@ -184,7 +242,125 @@ export function OpeningExperience() {
           .to(".descent-rail", { scaleY: 1, duration: 0.24 }, 2.0)
           .to(".descent-copy", { opacity: 1, yPercent: 0, duration: 0.18 }, 2.08)
           .fromTo(".descent-copy", { yPercent: 35 }, { yPercent: 0 }, 2.08)
-          .to(".descent-aperture", { scale: 1.28, duration: 0.2 }, 2.22);
+          .to(".descent-copy", { opacity: 0, yPercent: -20, duration: 0.12 }, 2.26)
+          .to(".descent-aperture", { scale: 4.2, yPercent: -4, duration: 0.3 }, 2.22)
+          .to(".descent-rail", { opacity: 0, duration: 0.14 }, 2.34)
+          .to(".descent-gate", { backgroundColor: "#0a0a09", duration: 0.18 }, 2.38);
+
+        const isMobile = window.matchMedia("(max-width: 720px)").matches;
+
+        gsap.timeline({
+            defaults: { ease: "none", force3D: true },
+            scrollTrigger: {
+              id: "scene-presence",
+              trigger: ".scene-presence",
+              start: "top top",
+              end: "bottom bottom",
+              scrub: 1.25,
+              invalidateOnRefresh: true,
+              fastScrollEnd: false,
+            },
+          })
+          .to(".chrome--presence", { opacity: 1, duration: 0.16 }, 0.08)
+          .to(".showreel-intro", { opacity: 1, duration: 0.14 }, 0.12)
+          .to(".showreel-intro__label", { yPercent: 0, duration: 0.16 }, 0.12)
+          .to(".showreel-intro h2 span", { yPercent: 0, duration: 0.28, stagger: 0.07 }, 0.18)
+          .to(".media-frame--01", { scale: 1, duration: 0.34 }, 0)
+          .to(".showreel-intro", { opacity: 0, yPercent: -10, duration: 0.18 }, 0.68)
+          .to(".media-frame--01", {
+            scale: isMobile ? 0.58 : 0.38,
+            xPercent: isMobile ? -24 : -68,
+            yPercent: isMobile ? -18 : 8,
+            duration: 0.44,
+          }, 0.72)
+          .fromTo(".media-frame--02", {
+            opacity: 0,
+            xPercent: isMobile ? 110 : 135,
+            yPercent: isMobile ? 20 : 8,
+            scale: 0.82,
+          }, {
+            opacity: 1,
+            xPercent: isMobile ? 24 : 45,
+            yPercent: isMobile ? 20 : 8,
+            scale: 1,
+            duration: 0.48,
+          }, 0.84)
+          .to(".interrupt--01", { opacity: 1, yPercent: 0, duration: 0.16 }, 1.02)
+          .to(".interrupt--01", { opacity: 0, yPercent: -18, duration: 0.16 }, 1.36)
+          .to(".media-frame--01", { yPercent: isMobile ? -42 : -22, opacity: 0.3, duration: 0.38 }, 1.2)
+          .to(".media-frame--02", {
+            xPercent: isMobile ? 0 : 4,
+            yPercent: 0,
+            scale: isMobile ? 1.82 : 2.35,
+            duration: 0.54,
+          }, 1.36)
+          .to(".interrupt--02", { opacity: 1, yPercent: 0, duration: 0.18 }, 1.66)
+          .fromTo(".media-frame--03", {
+            opacity: 0,
+            xPercent: isMobile ? -95 : -130,
+            yPercent: 38,
+            scale: 0.72,
+          }, {
+            opacity: 1,
+            xPercent: isMobile ? -20 : -48,
+            yPercent: isMobile ? 18 : 22,
+            scale: 1,
+            duration: 0.48,
+          }, 1.72)
+          .to(".media-frame--02", { xPercent: isMobile ? 32 : 55, scale: isMobile ? 0.78 : 0.72, duration: 0.48 }, 1.82)
+          .to(".interrupt--02", { opacity: 0, yPercent: -18, duration: 0.16 }, 2.02)
+          .fromTo(".media-frame--04", { opacity: 0, xPercent: 120 }, {
+            opacity: 1,
+            xPercent: isMobile ? 18 : 28,
+            duration: 0.5,
+          }, 2.12)
+          .to(".media-frame--03", { yPercent: -18, duration: 0.55 }, 2.12)
+          .to(".interrupt--03", { opacity: 1, yPercent: 0, duration: 0.18 }, 2.34)
+          .to(".media-frame--04", { xPercent: isMobile ? -18 : -34, scale: 1.18, duration: 0.55 }, 2.52)
+          .to(".interrupt--03", { opacity: 0, yPercent: -16, duration: 0.16 }, 2.76)
+          .to(".media-frame--02, .media-frame--03", { opacity: 0, duration: 0.28 }, 2.74)
+          .fromTo(".media-frame--05", {
+            opacity: 0,
+            xPercent: isMobile ? -75 : -105,
+            yPercent: -28,
+            scale: 0.68,
+          }, {
+            opacity: 1,
+            xPercent: isMobile ? -20 : -48,
+            yPercent: isMobile ? -14 : -20,
+            scale: 1,
+            duration: 0.46,
+          }, 2.86)
+          .fromTo(".media-frame--06", {
+            opacity: 0,
+            xPercent: isMobile ? 100 : 125,
+            yPercent: 34,
+            scale: 0.76,
+          }, {
+            opacity: 1,
+            xPercent: isMobile ? 18 : 42,
+            yPercent: isMobile ? 25 : 18,
+            scale: 1,
+            duration: 0.46,
+          }, 2.96)
+          .to(".interrupt--04", { opacity: 1, yPercent: 0, duration: 0.18 }, 3.15)
+          .to(".media-frame--04", { yPercent: -34, scale: 0.82, duration: 0.58 }, 3.1)
+          .to(".media-frame--05", { yPercent: isMobile ? 8 : 12, scale: 1.14, duration: 0.58 }, 3.18)
+          .to(".media-frame--06", { yPercent: isMobile ? -12 : -18, scale: 1.18, duration: 0.58 }, 3.18)
+          .to(".interrupt--04", { opacity: 0, yPercent: -16, duration: 0.16 }, 3.55)
+          .to(".interrupt--05", { opacity: 1, yPercent: 0, scale: 1, duration: 0.22 }, 3.62)
+          .to(".media-frame--05", { xPercent: isMobile ? -60 : -95, duration: 0.46 }, 3.64)
+          .to(".media-frame--06", { xPercent: isMobile ? 52 : 74, duration: 0.46 }, 3.64)
+          .to(".media-frame--04", { scale: 1.7, opacity: 0.18, duration: 0.48 }, 3.64)
+          .to(".interrupt--05", { scale: isMobile ? 1.18 : 1.34, duration: 0.4 }, 3.72)
+          .to(".media-frame, .interrupt--05", { opacity: 0, duration: 0.42 }, 4.12)
+          .to(".chrome--presence", { opacity: 0, duration: 0.24 }, 4.12)
+          .to(".chapter-outro", { opacity: 1, duration: 0.2 }, 4.44)
+          .to(".chapter-outro__index", { opacity: 1, yPercent: 0, duration: 0.18 }, 4.48)
+          .to(".chapter-outro h2 span", { yPercent: 0, duration: 0.32, stagger: 0.08 }, 4.52)
+          .to(".chapter-outro__rule", { scaleX: 1, duration: 0.26 }, 4.78)
+          .to(".chapter-outro > p:last-child", { opacity: 1, yPercent: 0, duration: 0.22 }, 4.9)
+          .to(".chapter-outro", { opacity: 1, duration: 0.4 }, 5.08);
 
         if (window.matchMedia("(pointer: fine)").matches) {
           const portalX = gsap.quickTo(".portal", "x", { duration: 0.9, ease: "power3.out" });
@@ -268,8 +444,7 @@ export function OpeningExperience() {
           <div className="threshold entrance-threshold">Threshold / 01</div>
         </div>
       </section>
-
-      <div className="continuation-space" aria-hidden="true" />
+      <PresenceChapter />
     </main>
   );
 }
