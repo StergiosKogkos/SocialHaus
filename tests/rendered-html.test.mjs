@@ -26,6 +26,7 @@ test("server-renders the SocialHaus narrative journey", async () => {
   assert.match(html, /property="og:image" content="https:\/\/socialhaus-enter-haus\.skogkos03\.chatgpt\.site\/og\.jpg"/i);
   assert.match(html, /rel="manifest" href="\/manifest\.webmanifest"/i);
   assert.match(html, /name="twitter:card" content="summary_large_image"/i);
+  assert.match(html, /name="google-site-verification" content="8HsE0UpzBIqCWKVCP4wpf9DuNcx5S6uZIuvrqW_GOwE"/i);
   assert.match(html, /"@type":"Organization"/i);
   assert.match(html, /"@type":"WebSite"/i);
   assert.match(html, /"@type":"ProfessionalService"/i);
