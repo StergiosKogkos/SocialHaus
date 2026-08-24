@@ -1,5 +1,12 @@
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import {
+  cpSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { resolve } from "node:path";
 
 const root = process.cwd();
@@ -16,6 +23,21 @@ const noJekyllPath = resolve(clientDir, ".nojekyll");
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "").replace(/\/$/, "");
 const assetPrefix = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/$/, "");
 
+// Vinext nests `_next` under assetPrefix during static export. GitHub Pages
+// already mounts the artifact at the repository path, so flatten it once to
+// avoid `/repo/repo/_next/*` URLs in project sites.
+if (assetPrefix) {
+  const prefixDirectory = resolve(clientDir, assetPrefix.replace(/^\/+/, ""));
+  const prefixedNextDirectory = resolve(prefixDirectory, "_next");
+  const rootNextDirectory = resolve(clientDir, "_next");
+
+  if (existsSync(prefixedNextDirectory)) {
+    mkdirSync(rootNextDirectory, { recursive: true });
+    cpSync(prefixedNextDirectory, rootNextDirectory, { recursive: true });
+    rmSync(prefixDirectory, { recursive: true, force: true });
+  }
+}
+
 if (!siteUrl.startsWith("https://")) {
   console.error("NEXT_PUBLIC_SITE_URL must be an absolute HTTPS URL.");
   process.exit(1);
@@ -29,6 +51,7 @@ const exportIsValid =
   (indexHtml.includes(`href="${siteUrl}"`) ||
     indexHtml.includes(`href="${siteUrl}/"`)) &&
   indexHtml.includes('href="#contact"') &&
+  existsSync(resolve(clientDir, "_next")) &&
   existsSync(noJekyllPath);
 
 if (!exportIsValid) {
