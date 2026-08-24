@@ -1,30 +1,107 @@
-import type { Metadata } from "next";
-import { headers } from "next/headers";
+import type { Metadata, Viewport } from "next";
+import { assetPath, siteUrl } from "../lib/site";
 import "./globals.css";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host = requestHeaders.get("host") ?? "localhost:3000";
-  const protocol = requestHeaders.get("x-forwarded-proto") ?? "http";
-  const origin = `${protocol}://${host}`;
+const title = "SocialHaus | Creative Studio σε Αθήνα, Μύκονο & Βόρεια Ελλάδα";
+const description =
+  "Η SocialHaus είναι creative studio μάρκετινγκ για στρατηγική, branding, content creation και social media σε Αθήνα, Μύκονο και Βόρεια Ελλάδα.";
 
-  return {
-    title: "SocialHaus — Enter the Haus",
-    description:
-      "SocialHaus is a creative studio shaping presence across Athens, Mykonos and Northern Greece.",
-    openGraph: {
-      title: "SocialHaus — Enter the Haus",
-      description: "We don't create content. We create presence.",
-      images: [`${origin}/og.png`],
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  applicationName: "SocialHaus",
+  alternates: { canonical: siteUrl },
+  icons: {
+    icon: [{ url: assetPath("/assets/brand/socialhaus-owl.png"), type: "image/png" }],
+    apple: [{ url: assetPath("/assets/brand/socialhaus-owl.png"), type: "image/png" }],
+  },
+  openGraph: {
+    type: "website",
+    locale: "el_GR",
+    url: siteUrl,
+    siteName: "SocialHaus",
+    title,
+    description,
+    images: [
+      {
+        url: `${siteUrl}/og.jpg`,
+        width: 1200,
+        height: 630,
+        alt: "SocialHaus — Enter the Haus",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: [`${siteUrl}/og.jpg`],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
     },
-    twitter: {
-      card: "summary_large_image",
-      title: "SocialHaus — Enter the Haus",
-      description: "We don't create content. We create presence.",
-      images: [`${origin}/og.png`],
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#050505",
+  colorScheme: "dark light",
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: "SocialHaus",
+      url: siteUrl,
+      logo: `${siteUrl}/assets/brand/socialhaus-owl.png`,
+      email: "mailto:aposskamnos@gmail.com",
+      telephone: "+306980183236",
     },
-  };
-}
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: "SocialHaus",
+      description,
+      inLanguage: ["el", "en"],
+      publisher: { "@id": `${siteUrl}/#organization` },
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": `${siteUrl}/#business`,
+      name: "SocialHaus",
+      url: siteUrl,
+      image: `${siteUrl}/og.jpg`,
+      email: "aposskamnos@gmail.com",
+      telephone: "+306980183236",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Νήλεως 32",
+        addressLocality: "Αθήνα",
+        addressCountry: "GR",
+      },
+      areaServed: [
+        { "@type": "City", name: "Αθήνα" },
+        { "@type": "Place", name: "Μύκονος" },
+        { "@type": "AdministrativeArea", name: "Βόρεια Ελλάδα" },
+      ],
+      parentOrganization: { "@id": `${siteUrl}/#organization` },
+    },
+  ],
+};
 
 export default function RootLayout({
   children,
@@ -32,8 +109,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>{children}</body>
+    <html lang="el" suppressHydrationWarning>
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

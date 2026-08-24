@@ -1,6 +1,6 @@
 # SocialHaus — Enter the Haus
 
-Phase 1 of the SocialHaus digital experience: a restrained loader, cinematic opening hero, and scroll-driven architectural threshold.
+Production-ready SocialHaus digital experience with a cinematic opening, scroll-driven brand narrative, selected collaborations, services and contact information.
 
 ## Foundation
 
@@ -10,7 +10,10 @@ Phase 1 of the SocialHaus digital experience: a restrained loader, cinematic ope
 - Lenis smooth scrolling synchronized to GSAP
 - Dedicated desktop and mobile composition rules
 - Reduced-motion fallback
+- SEO metadata, social previews, Schema.org data, robots.txt and sitemap.xml
+- Accessible navigation, focus states and semantic landmarks
 - Cloudflare Sites-compatible production output
+- Conditional static export for GitHub Pages
 
 ## Commands
 
@@ -18,6 +21,7 @@ Phase 1 of the SocialHaus digital experience: a restrained loader, cinematic ope
 pnpm dev
 pnpm build
 pnpm test
+pnpm build:pages
 ```
 
-The next phase should extend the scene system in `components/scenes` without adding Services, About, Clients, or Contact to this opening sequence.
+`pnpm build` keeps the Cloudflare Sites output. The GitHub Pages workflow sets the repository base path and creates a static export in `dist/client` on every push to `main`.

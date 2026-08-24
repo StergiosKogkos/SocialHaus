@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import { assetPath } from "../../lib/site";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -33,6 +34,14 @@ function VideoWordmark() {
     void video.play().catch(() => undefined);
 
     let animationFrame = 0;
+    let isVisible = true;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+      },
+      { rootMargin: "20% 0px" },
+    );
+    observer.observe(canvas);
     const drawLetteredText = (text: string, x: number, baseline: number, letterSpacing: number) => {
       let cursor = x;
       for (const character of text) {
@@ -43,7 +52,7 @@ function VideoWordmark() {
 
     const draw = () => {
       const opacity = Number.parseFloat(canvas.style.opacity || "0");
-      if (opacity > 0.001 && video.readyState >= 2 && video.videoWidth > 0) {
+      if (isVisible && opacity > 0.001 && video.readyState >= 2 && video.videoWidth > 0) {
         const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
         const width = window.innerWidth;
         const height = window.innerHeight;
@@ -84,7 +93,10 @@ function VideoWordmark() {
     };
 
     animationFrame = window.requestAnimationFrame(draw);
-    return () => window.cancelAnimationFrame(animationFrame);
+    return () => {
+      observer.disconnect();
+      window.cancelAnimationFrame(animationFrame);
+    };
   }, []);
 
   return <canvas ref={canvasRef} className="hero__video-type" aria-hidden="true" />;
@@ -101,20 +113,20 @@ const services = [
   ["08", "Strategic Communications", "Σχεδιάζουμε στρατηγικές επικοινωνίας που ευθυγραμμίζουν όραμα, μήνυμα και κοινό-στόχο, με έμφαση στα μετρήσιμα, μακροπρόθεσμα αποτελέσματα."],
 ];
 const partnerLogos = [
-  { name: "Στην Εντατική", src: "/assets/partners/01.png", href: "https://www.facebook.com/avantgardekomotini/", linkLabel: "Official" },
-  { name: "Myconian", src: "/assets/partners/02.png", href: "https://www.instagram.com/myconiancollectionhotels/", linkLabel: "Instagram" },
-  { name: "Nuera Mykonos", src: "/assets/partners/03.png", href: "https://www.instagram.com/nueramykonos/", linkLabel: "Instagram" },
-  { name: "Maya Experience", src: "/assets/partners/04.png", href: "https://www.instagram.com/explore/search/keyword/?q=Maya%20Experience%20Greece", linkLabel: "Find" },
-  { name: "Casa di Giorgio", src: "/assets/partners/05.png", href: "https://www.instagram.com/casadigiorgio.mykonos/", linkLabel: "Instagram" },
-  { name: "Anema", src: "/assets/partners/06.png", href: "https://www.instagram.com/anemabbqmykonos/", linkLabel: "Instagram" },
-  { name: "Tabu Mykonos", src: "/assets/partners/07.png", href: "https://www.instagram.com/tabu.myk/", linkLabel: "Instagram" },
-  { name: "Εμπορικό Βιομηχανικό Επιμελητήριο Ροδόπης", src: "/assets/partners/08.png", href: "https://www.rodopichamber.gr/", linkLabel: "Official" },
-  { name: "You Nails Hair", src: "/assets/partners/09.png", href: "https://www.instagram.com/younailsyouhair/", linkLabel: "Instagram" },
-  { name: "Promenade Mykonos", src: "/assets/partners/10.png", href: "https://www.instagram.com/promenademykonos/", linkLabel: "Instagram" },
-  { name: "BOHO Nature Seaside", src: "/assets/partners/11.png", href: "https://www.facebook.com/bohonatureseaside/", linkLabel: "Official" },
-  { name: "Moana", src: "/assets/partners/12.png", href: "https://www.instagram.com/moana_beachhouse/", linkLabel: "Instagram" },
-  { name: "La Corte", src: "/assets/partners/13.png", href: "https://www.instagram.com/la.corte.experience/", linkLabel: "Instagram" },
-  { name: "Βιβλιοχαρτεμπορική", src: "/assets/partners/14.png", href: "https://www.instagram.com/explore/search/keyword/?q=%CE%92%CE%B9%CE%B2%CE%BB%CE%B9%CE%BF%CF%87%CE%B1%CF%81%CF%84%CE%B5%CE%BC%CF%80%CE%BF%CF%81%CE%B9%CE%BA%CE%AE", linkLabel: "Find" },
+  { name: "Στην Εντατική", src: assetPath("/assets/partners/01.png"), href: "https://www.facebook.com/avantgardekomotini/", linkLabel: "Official" },
+  { name: "Myconian", src: assetPath("/assets/partners/02.png"), href: "https://www.instagram.com/myconiancollectionhotels/", linkLabel: "Instagram" },
+  { name: "Nuera Mykonos", src: assetPath("/assets/partners/03.png"), href: "https://www.instagram.com/nueramykonos/", linkLabel: "Instagram" },
+  { name: "Maya Experience", src: assetPath("/assets/partners/04.png"), href: "https://www.instagram.com/explore/search/keyword/?q=Maya%20Experience%20Greece", linkLabel: "Find" },
+  { name: "Casa di Giorgio", src: assetPath("/assets/partners/05.png"), href: "https://www.instagram.com/casadigiorgio.mykonos/", linkLabel: "Instagram" },
+  { name: "Anema", src: assetPath("/assets/partners/06.png"), href: "https://www.instagram.com/anemabbqmykonos/", linkLabel: "Instagram" },
+  { name: "Tabu Mykonos", src: assetPath("/assets/partners/07.png"), href: "https://www.instagram.com/tabu.myk/", linkLabel: "Instagram" },
+  { name: "Εμπορικό Βιομηχανικό Επιμελητήριο Ροδόπης", src: assetPath("/assets/partners/08.png"), href: "https://www.rodopichamber.gr/", linkLabel: "Official" },
+  { name: "You Nails Hair", src: assetPath("/assets/partners/09.png"), href: "https://www.instagram.com/younailsyouhair/", linkLabel: "Instagram" },
+  { name: "Promenade Mykonos", src: assetPath("/assets/partners/10.png"), href: "https://www.instagram.com/promenademykonos/", linkLabel: "Instagram" },
+  { name: "BOHO Nature Seaside", src: assetPath("/assets/partners/11.png"), href: "https://www.facebook.com/bohonatureseaside/", linkLabel: "Official" },
+  { name: "Moana", src: assetPath("/assets/partners/12.png"), href: "https://www.instagram.com/moana_beachhouse/", linkLabel: "Instagram" },
+  { name: "La Corte", src: assetPath("/assets/partners/13.png"), href: "https://www.instagram.com/la.corte.experience/", linkLabel: "Instagram" },
+  { name: "Βιβλιοχαρτεμπορική", src: assetPath("/assets/partners/14.png"), href: "https://www.instagram.com/explore/search/keyword/?q=%CE%92%CE%B9%CE%B2%CE%BB%CE%B9%CE%BF%CF%87%CE%B1%CF%81%CF%84%CE%B5%CE%BC%CF%80%CE%BF%CF%81%CE%B9%CE%BA%CE%AE", linkLabel: "Find" },
 ];
 
 const aboutParagraphs = [
@@ -137,8 +149,8 @@ function PartnerCarousel() {
             <i className="brand-slide__link">{logo.linkLabel} ↗</i>
             {/* Local partner marks are supplied as transparent PNG assets. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={logo.src} alt={logo.name} />
-            <figcaption>{logo.name}</figcaption>
+            <img src={logo.src} alt={`${logo.name} — συνεργασία SocialHaus`} width="500" height="500" loading="lazy" decoding="async" />
+            <span className="brand-slide__caption">{logo.name}</span>
           </a>
         ))}
         <a className="brand-slide brand-slide--invitation" href="#contact">
@@ -184,7 +196,7 @@ function NarrativeChapter() {
         </article>
         <div className="narrative-owl" aria-hidden="true">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/brand/socialhaus-owl.png" alt="" />
+          <img src={assetPath("/assets/brand/socialhaus-owl.png")} alt="" width="500" height="500" loading="lazy" decoding="async" />
         </div>
         <div className="narrative-blackout" aria-hidden="true" />
       </div>
@@ -385,7 +397,8 @@ export function OpeningExperience() {
   }, [introComplete]);
 
   return (
-    <main ref={root} className="experience">
+    <main id="main-content" ref={root} className="experience">
+      <a className="skip-link" href="#about">Μετάβαση στο περιεχόμενο</a>
       <div className="noise" aria-hidden="true" />
       <div className="haus-cursor" aria-hidden="true"><i className="haus-cursor__dot" /></div>
       <header className="site-nav">
@@ -395,18 +408,19 @@ export function OpeningExperience() {
           </a>
           <a href="#about">About</a>
           <a href="#services">Services</a>
+          <a className="nav-contact" href="#contact">Contact <i aria-hidden="true">↘</i></a>
         </nav>
       </header>
       <a className="owl-mark" href="#top" aria-label="Back to the SocialHaus entrance">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/brand/socialhaus-owl.png" alt="" />
+        <img src={assetPath("/assets/brand/socialhaus-owl.png")} alt="" width="500" height="500" decoding="async" />
       </a>
 
       <section id="top" className="cinematic-scene scene-entrance" aria-label="SocialHaus entrance">
         <div className="scene-viewport">
           <div className="hero-video" aria-hidden="true">
-            <video className="hero-video__media" autoPlay muted loop playsInline preload="auto" poster="/assets/brand/socialhaus-hero-poster.jpg">
-              <source src="/assets/brand/socialhaus-hero.mp4" type="video/mp4" />
+            <video className="hero-video__media" autoPlay muted loop playsInline preload="metadata" poster={assetPath("/assets/brand/socialhaus-hero-poster.jpg")}>
+              <source src={assetPath("/assets/brand/socialhaus-hero.mp4")} type="video/mp4" />
             </video>
             <div className="hero-video__veil" />
           </div>
@@ -445,7 +459,7 @@ export function OpeningExperience() {
           <div className="brand-interlude" aria-hidden="true">
             <span className="brand-interlude__rule" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="brand-interlude__owl" src="/assets/brand/socialhaus-owl.png" alt="" />
+            <img className="brand-interlude__owl" src={assetPath("/assets/brand/socialhaus-owl.png")} alt="" width="500" height="500" decoding="async" />
             <div className="brand-interlude__wordmark">
               <span className="brand-interlude__wordmark-type">SOCIALHAUS</span>
             </div>
@@ -456,13 +470,16 @@ export function OpeningExperience() {
       </section>
       <NarrativeChapter />
       <footer id="contact" className="site-footer">
-        <div className="site-footer__headline"><span>Let&apos;s create</span><strong>something felt.</strong></div>
-        <a className="site-footer__email" href="mailto:aposskamnos@gmail.com">aposskamnos@gmail.com</a>
-        <div className="site-footer__grid">
-          <div><span>Call</span><a href="tel:+306980183236">+30 698 018 3236</a></div>
-          <div><span>Find us</span><p>Νήλεως 32<br />Αθήνα</p></div>
-          <div><span>Follow</span><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram ↗</a></div>
-        </div>
+        <p className="site-footer__eyebrow">Contact / SocialHaus</p>
+        <h2 className="site-footer__headline"><span>Let&apos;s create</span><strong>something felt.</strong></h2>
+        <address className="site-footer__contact">
+          <a className="site-footer__email" href="mailto:aposskamnos@gmail.com" aria-label="Email SocialHaus at aposs kamnos at gmail dot com">aposskamnos@gmail.com</a>
+          <div className="site-footer__grid">
+            <div><span>Call</span><a href="tel:+306980183236" aria-label="Call SocialHaus at +30 698 018 3236">+30 698 018 3236</a></div>
+            <div><span>Find us</span><p>Νήλεως 32<br />Αθήνα</p></div>
+            <div><span>Follow</span><a href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Open SocialHaus on Instagram">Instagram ↗</a></div>
+          </div>
+        </address>
         <div className="site-footer__base"><span>© 2026 SocialHaus</span><span>Creative studio / Greece</span><a href="#top">Back to top ↑</a></div>
       </footer>
     </main>

@@ -20,7 +20,14 @@ test("server-renders the SocialHaus narrative journey", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>SocialHaus.*Enter the Haus<\/title>/i);
+  assert.match(html, /<title>SocialHaus \| Creative Studio/i);
+  assert.match(html, /<html lang="el">/i);
+  assert.match(html, /rel="canonical" href="https:\/\/socialhaus-enter-haus\.skogkos03\.chatgpt\.site"/i);
+  assert.match(html, /property="og:image" content="https:\/\/socialhaus-enter-haus\.skogkos03\.chatgpt\.site\/og\.jpg"/i);
+  assert.match(html, /name="twitter:card" content="summary_large_image"/i);
+  assert.match(html, /"@type":"Organization"/i);
+  assert.match(html, /"@type":"WebSite"/i);
+  assert.match(html, /"@type":"ProfessionalService"/i);
   assert.match(html, /SOCIAL.*HAUS/s);
   assert.match(html, /Enter the Haus/);
   assert.match(html, /We don&#x27;t create content\./);
@@ -43,10 +50,13 @@ test("server-renders the SocialHaus narrative journey", async () => {
   assert.match(html, /Strategic Communications/);
   assert.match(html, /href="#about"/);
   assert.match(html, /href="#services"/);
+  assert.match(html, /class="nav-contact" href="#contact"/);
+  assert.match(html, /Contact \/ SocialHaus/);
   assert.match(html, /aria-label="Instagram"/);
   assert.match(html, /socialhaus-hero\.mp4/);
   assert.match(html, /socialhaus-hero-poster\.jpg/);
   assert.match(html, /socialhaus-owl\.png/);
+  assert.match(html, /loading="lazy" decoding="async"/);
   assert.match(html, /aposskamnos@gmail\.com/);
   assert.match(html, /\+30 698 018 3236/);
   assert.match(html, /Νήλεως 32/);
