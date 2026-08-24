@@ -1,5 +1,5 @@
 export const DEFAULT_SITE_URL =
-  "https://socialhaus-enter-haus.skogkos03.chatgpt.site";
+  "https://social-haus.gr";
 
 export const siteUrl = (
   process.env.NEXT_PUBLIC_SITE_URL ?? DEFAULT_SITE_URL
