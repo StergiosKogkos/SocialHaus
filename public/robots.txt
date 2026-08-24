@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://socialhaus-enter-haus.skogkos03.chatgpt.site/sitemap.xml
-Host: https://socialhaus-enter-haus.skogkos03.chatgpt.site
+Sitemap: https://socialhaus.gr/sitemap.xml
