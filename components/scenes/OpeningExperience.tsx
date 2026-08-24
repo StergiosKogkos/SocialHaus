@@ -408,7 +408,7 @@ export function OpeningExperience() {
           </a>
           <a href="#about">About</a>
           <a href="#services">Services</a>
-          <a className="nav-contact" href="#contact">Contact <i aria-hidden="true">↘</i></a>
+          <a href="#contact">Contact</a>
         </nav>
       </header>
       <a className="owl-mark" href="#top" aria-label="Back to the SocialHaus entrance">

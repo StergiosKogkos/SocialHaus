@@ -50,7 +50,8 @@ test("server-renders the SocialHaus narrative journey", async () => {
   assert.match(html, /Strategic Communications/);
   assert.match(html, /href="#about"/);
   assert.match(html, /href="#services"/);
-  assert.match(html, /class="nav-contact" href="#contact"/);
+  assert.match(html, /<a href="#contact">Contact<\/a>/);
+  assert.doesNotMatch(html, /nav-contact/);
   assert.match(html, /Contact \/ SocialHaus/);
   assert.match(html, /aria-label="Instagram"/);
   assert.match(html, /socialhaus-hero\.mp4/);

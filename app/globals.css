@@ -874,21 +874,6 @@ body.is-loading { overflow: hidden; }
     0 70px 110px rgba(0,0,0,.22);
 }
 
-.nav-contact {
-  display: inline-flex;
-  align-items: center;
-  gap: .8rem;
-  margin-top: -.55rem;
-  margin-right: -.65rem;
-  padding: .62rem .68rem .62rem 1rem;
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  background: rgba(255,255,255,.06);
-  backdrop-filter: blur(10px);
-}
-.nav-contact i { display: grid; width: 1.4rem; height: 1.4rem; place-items: center; border-radius: 50%; background: currentColor; color: #f2efe8; font-style: normal; }
-.site-nav nav .nav-contact::after { display: none; }
-
 .statement-image {
   top: 50%;
   right: auto;
@@ -1506,8 +1491,7 @@ body.is-loading { overflow: hidden; }
 .media-frame--01 .work-media__surface::after { inset: 0; width: auto; height: auto; background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.03) 45%, rgba(0,0,0,.46)); }
 
 @media (max-width: 720px) {
-  .site-nav nav > a:not(.nav-contact) { display: none; }
-  .nav-contact { margin-top: -.4rem; }
+  .site-nav nav > a { display: none; }
   .statement-image { top: 50%; left: 50%; width: 82vw; height: 58vh; transform: translate(-50%,-50%); }
   .entrance-statement p { transform: none; }
   .carousel-track { height: 68vh; }
@@ -2278,13 +2262,6 @@ a:focus-visible {
   justify-content: center;
 }
 
-.site-nav .nav-contact {
-  margin-top: 0;
-  margin-right: 0;
-  min-height: 2.5rem;
-  padding: .5rem .55rem .5rem .9rem;
-}
-
 .brand-slide img,
 .owl-mark img,
 .brand-interlude__owl,
@@ -2325,19 +2302,12 @@ a:focus-visible {
     padding: .78rem .75rem;
   }
   .site-nav nav { gap: .32rem; font-size: .52rem; letter-spacing: .11em; }
-  .site-nav nav > a,
-  .site-nav nav > a:not(.nav-contact) {
+  .site-nav nav > a {
     display: inline-flex !important;
     min-height: 2.75rem;
     padding: 0 .24rem;
   }
   .site-nav .instagram-link { width: 2.45rem; margin-top: 0; padding: 0; }
-  .site-nav .nav-contact {
-    min-height: 2.75rem;
-    margin: 0 0 0 .1rem;
-    padding: .42rem .42rem .42rem .62rem;
-  }
-  .nav-contact i { width: 1.18rem; height: 1.18rem; }
   .owl-mark { top: .92rem; right: .85rem; width: 2.2rem; }
 
   .hero { padding-right: 1rem; padding-left: 1rem; }
@@ -2408,8 +2378,6 @@ a:focus-visible {
   .site-nav { right: 3.45rem; padding-right: .45rem; padding-left: .45rem; }
   .site-nav nav { gap: .18rem; font-size: .49rem; letter-spacing: .08em; }
   .site-nav .instagram-link { width: 2.1rem; }
-  .site-nav .nav-contact { padding-left: .48rem; }
-  .nav-contact i { display: none; }
   .owl-mark { right: .65rem; width: 2.05rem; }
 }
 
