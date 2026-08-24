@@ -3,14 +3,14 @@
   "short_name": "SocialHaus",
   "description": "Creative studio για στρατηγική, branding, content creation και social media marketing.",
   "lang": "el",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#050505",
   "theme_color": "#050505",
   "icons": [
     {
-      "src": "/assets/brand/socialhaus-owl.png",
+      "src": "./assets/brand/socialhaus-owl.png",
       "sizes": "500x500",
       "type": "image/png",
       "purpose": "any"
